@@ -1,9 +1,9 @@
-import MyNavbar from '../../components/navbar/MyNavbar';
+import CustomNavbar from '../../components/navbar/CustomNavbar';
 
 export default function SimpleLayout({ children }) {
     return (
         <>
-            <MyNavbar/>
+            <CustomNavbar/>
             <main>{children}</main>
         </>
     );

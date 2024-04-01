@@ -1,4 +1,4 @@
-import SimpleLayout from "./layout/simpleLayout/simpleLayout";
+import SimpleLayout from "./layout/simpleLayout/SimpleLayout";
 import './assets/App.css';
 
 function App() {
