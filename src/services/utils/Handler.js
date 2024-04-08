@@ -4,12 +4,12 @@
 import * as https from "https";
 import * as fs from 'fs';
 
+
 export class Handler {
     _headers = {
         'Accept': '*/*',
         'Content-Type': 'application/json'
     };
-
 
 
     constructor() {
