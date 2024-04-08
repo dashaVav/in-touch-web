@@ -1,0 +1,49 @@
+.profile-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.profile-container > * {
+    margin: 10px;
+}
+
+.photo {
+    margin: 20px;
+}
+
+.username-data {
+    display: flex;
+    flex-direction: column;
+}
+
+.username-data > * {
+    margin-bottom: 4px;
+}
+
+.name-text-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.real-name {
+    font-family: "Poppins Medium", serif;
+    font-size: 20px;
+    color: white;
+}
+
+.user-name {
+    font-family: "Poppins Regular", serif;
+    font-size: 13px;
+    color: white;
+}
+
+.tags-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.tags-container > * {
+    margin-right: 15px;
+}
