@@ -1,9 +1,9 @@
-
 import {Handler} from "./utils/Handler.js";
 import {AuthApi} from "./api/AuthApi.js";
 import {AuthRequest} from "./dto/AuthRequest.js";
 import {AuthResponse} from "./dto/AuthResponse.js";
-async function login(login, password) {
+
+export async function login(login, password) {
     const authRequest = new AuthRequest(login, password, 1);
     const handler = new Handler();
     const authApi = new AuthApi(handler, authRequest);
