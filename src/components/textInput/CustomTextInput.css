@@ -1,0 +1,20 @@
+.text-input-container {
+    position: relative;
+}
+
+.text-input {
+    background-color: #2F303B;
+    border: 2px #2F303B;
+    border-radius: 8px;
+    position: relative;
+    width: 200px;
+    padding: 10px;
+
+    font-family: "Poppins Regular", serif;
+    font-size: 15px;
+    color: white;
+}
+
+.text-input:hover, .text-input:focus {
+    background-color: #373846;
+}

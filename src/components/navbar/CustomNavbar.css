@@ -1,21 +1,31 @@
-.nav-bar{
-    alignment: left;
+.nav-bar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 85vw;
+    background-color: #2F303B;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 15vw;
 }
 
 .nav-bar-container {
     display: flex;
-    /*justify-content: center; !* Выравнивание элементов по горизонтали *!*/
-    align-items: center; /* Выравнивание элементов по вертикали */
-    height: 100px; /* Установите высоту контейнера, чтобы увидеть эффект центрирования */
+    alignment: left;
+    align-items: center;
+}
+
+.nav-bar-container > * {
+    margin-right: 10px;
 }
 
 .nav-bar-image{
-    width: 50px;
-    height: 50px;
+    width: 30px;
+    height: 30px;
 }
 
 .nav-bar-text{
-    font-family: "Poppins SemiBold", serif;
-    font-size: 25px;
+    font-family: "Poppins Medium", serif;
+    font-size: 20px;
     color: white;
 }
