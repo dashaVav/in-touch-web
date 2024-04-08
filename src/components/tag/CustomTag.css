@@ -1,0 +1,22 @@
+.tag {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-top: 10px;
+    justify-content: center;
+}
+
+.tag > * {
+    margin-right: 10px;
+}
+
+.tag-image {
+    width: 16px;
+    height: 16px;
+}
+
+.tag-text {
+    font-family: "Poppins Regular", serif;
+    font-size: 12px;
+    color: lightgray;
+}
