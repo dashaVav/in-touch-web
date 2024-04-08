@@ -1,0 +1,19 @@
+.buttons-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    margin-top: 60px;
+
+    margin-left: calc(15vw - 10px);
+    background-color: #212229;
+    flex-direction: column;
+
+
+    display: flex;
+    alignment: left;
+}
+
+.buttons-container > * {
+    padding-left: 10px;
+    margin-bottom: 2px;
+}
