@@ -1,0 +1,42 @@
+.button-data-container {
+    display: flex;
+    alignment: left;
+    align-items: center;
+    /*margin-left: calc(15vw - 10px);*/
+    /*padding-left: 10px;*/
+    width: 170px;
+
+    /*background-color: red;*/
+    border-radius: 8px;
+}
+
+.button-data-container > * {
+    margin-right: 5px;
+}
+
+.button-image {
+    width: 25px;
+    height: 25px;
+}
+
+.simple-button {
+    background-color: transparent;
+    border: none;
+    color: white;
+    padding: 10px;
+    text-align: left;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
+    cursor: pointer;
+
+    transition-duration: 0.4s;
+}
+
+.button-data-container:hover {
+    background-color: #2F303B;
+}
+
+.button-data-container:active {
+    background-color: #2F303B;
+}
