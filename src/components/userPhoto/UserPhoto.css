@@ -1,0 +1,15 @@
+.user-photo {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background-color: #919191;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.user-photo-text {
+    font-family: "Poppins Medium", serif;
+    font-size: 30px;
+    color: white;
+}
