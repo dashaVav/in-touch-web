@@ -1,8 +1,8 @@
-import MainLayout from "./layout/mainLayout/MainLayout";
+import MainLayout from "./layout/mainLayout/MainLayout.js";
 import './assets/App.css';
-import {LoginLayout} from "./layout/loginLayout/LoginLayout";
+import {LoginLayout} from "./layout/loginLayout/LoginLayout.js";
 import {useState} from "react";
-import {MessengerLayout} from "./layout/messengerLayout/MessengerLayout";
+import {MessengerLayout} from "./layout/messengerLayout/MessengerLayout.js";
 
 function App() {
     // State для хранения состояния вошел ли пользователь в систему или нет

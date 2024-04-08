@@ -1,6 +1,6 @@
 import {Component} from "react";
-import CustomTextInput from "../../components/textInput/CustomTextInput";
-import CustomButton from "../../components/button/CustomButton";
+import CustomTextInput from "../../components/textInput/CustomTextInput.js";
+import CustomButton from "../../components/button/CustomButton.js";
 import "./LoginLayout.css"
 
 /**

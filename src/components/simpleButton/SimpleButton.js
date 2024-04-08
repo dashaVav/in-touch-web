@@ -1,5 +1,5 @@
 import {Component} from "react";
-import Button from "react-bootstrap/Button";
+import {Button} from "react-bootstrap";
 import "./SimpleButton.css"
 
 /**

@@ -1,4 +1,4 @@
-import CustomNavbar from '../../components/navbar/CustomNavbar';
+import CustomNavbar from '../../components/navbar/CustomNavbar.js';
 import "./MainLayout.css"
 
 /**
