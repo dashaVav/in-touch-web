@@ -11,44 +11,4 @@ export class User {
         this.profilePhotoId = profilePhotoId;
         this.thumbnailPhotoId = thumbnailPhotoId;
     }
-
-    getId() {
-        return this.id;
-    }
-
-    getUsername() {
-        return this.username;
-    }
-
-    getRealName() {
-        return this.realName;
-    }
-
-    getSurname() {
-        return this.surname;
-    }
-
-    getDateOfBirth() {
-        return this.dateOfBirth;
-    }
-
-    getPhoneNumber() {
-        return this.phoneNumber;
-    }
-
-    getIsOnline() {
-        return this.isOnline;
-    }
-
-    getPatronymic() {
-        return this.patronymic;
-    }
-
-    getProfilePhotoId() {
-        return this.profilePhotoId;
-    }
-
-    getThumbnailPhotoId() {
-        return this.thumbnailPhotoId;
-    }
 }
