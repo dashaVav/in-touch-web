@@ -8,6 +8,6 @@ export class AuthApi {
     }
 
     async auth() {
-        return await this._handler.postRequest('https://195.133.196.67:8081/chat_api/v1/auth/login', this._authRequest.toJSON());
+        return await this._handler.postRequest('http://195.133.196.67:8881/chat_api/v1/auth/login', this._authRequest.toJSON());
     }
 }

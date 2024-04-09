@@ -2,7 +2,7 @@ import {Component} from "react";
 import CustomTextInput from "../../components/textInput/CustomTextInput.js";
 import CustomButton from "../../components/button/CustomButton.js";
 import "./LoginLayout.css"
-import {login} from "../../services/main.js";
+import {login, user} from "../../services/main.js";
 
 /**
  * Класс визуального представления экрана для логина
@@ -37,8 +37,8 @@ export class LoginLayout extends Component {
      */
     handleButtonClick= async () => {
         try {
-            const user = await login(this.state.loginText.toString(), this.state.passwordText.toString());
-
+            await login(this.state.loginText.toString(), this.state.passwordText.toString());
+            //todo это авторизованный юзер
             console.log(user);
             this.props.onLogin();
         } catch (error) {
