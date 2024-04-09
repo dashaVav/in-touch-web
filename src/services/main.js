@@ -4,12 +4,14 @@ import {AuthRequest} from "./dto/AuthRequest.js";
 import {AuthResponse} from "./dto/AuthResponse.js";
 import {User} from "./dto/User.js";
 
-export var user = new User();
-export var resp;
-export var id = 1;
+export var user;
+export var company;
+export var allUsers;
+
+const handler = new Handler();
+
 export async function login(login, password) {
     const authRequest = new AuthRequest(login, password, 1);
-    const handler = new Handler();
     const authApi = new AuthApi(handler, authRequest);
     const response = await authApi.auth();
     const data = await response.json();
@@ -26,13 +28,32 @@ export async function login(login, password) {
         data.user.thumbnailPhotoId
     );
     const authResponse = new AuthResponse(data.token, user1, data.company, data.admin);
-    resp = authResponse;
-    console.log(authResponse);
+    company = authResponse.company;
     user = authResponse.user;
+    handler.token = authResponse.token;
+    handler.setToken();
     // return authResponse.user;
 }
 
+export async function users() {
+    const data = await handler.getRequest("/chat_api/v1/users");
+    const jsonArray = await data.json();
+    allUsers = jsonArray.map(data => new User(
+        data.id,
+        data.username,
+        data.realName,
+        data.surname,
+        data.dateOfBirth,
+        data.phoneNumber,
+        data.isOnline,
+        data.patronymic,
+        data.profilePhotoId,
+        data.thumbnailPhotoId
+    ));
+}
+//
 // (async () => {
-//     const user = await login("Egorka", "1111");
-//     console.log(user);
+//     await login("Egorka", "1111");
+//     await users();
+//     console.log(allUsers);
 // })();
