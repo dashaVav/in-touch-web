@@ -1,6 +1,6 @@
 .user-photo {
-    width: 100px;
-    height: 100px;
+    /*width: 100px;*/
+    /*height: 100px;*/
     border-radius: 50%;
     background-color: #919191;
     display: flex;
@@ -10,6 +10,6 @@
 
 .user-photo-text {
     font-family: "Poppins Medium", serif;
-    font-size: 30px;
+    /*font-size: 30px;*/
     color: white;
 }
