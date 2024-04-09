@@ -8,7 +8,7 @@ import profileIcon from "../../assets/profile-icon.svg"
 import logoutIcon from "../../assets/logout-icon.svg"
 import "./MessengerLayout.css"
 import {ProfileLayout} from "../profileLayout/ProfileLayout.js";
-import {user as mySelf} from "../../services/main.js";
+import {allUsers, user as mySelf} from "../../services/main.js";
 import {UsersLayout} from "../usersLayout/UsersLayout.js";
 
 /**
@@ -66,7 +66,6 @@ export class MessengerLayout extends Component {
 
         console.log(currentLayout)
 
-        const listOfUsers = [];
         return (
             <div>
                 <div className="buttons-container">
@@ -79,7 +78,7 @@ export class MessengerLayout extends Component {
                 <div className="content">
                     {currentLayout === 'profile' && <ProfileLayout selectedUser={this.state.selectedUser}/>}
                     {/*{currentLayout === 'chats' && <ChatsLayout />}*/}
-                    {currentLayout === 'users' && <UsersLayout userList={listOfUsers} onUserClicked={user => this.handleProfileButtonClicked(user)}/>}
+                    {currentLayout === 'users' && <UsersLayout userList={allUsers} onUserClicked={user => this.handleProfileButtonClicked(user)}/>}
                     {/*{currentLayout === 'new chat' && <CreateChatLayout />}*/}
                 </div>
             </div>
