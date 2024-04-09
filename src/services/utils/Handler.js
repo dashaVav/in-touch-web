@@ -1,9 +1,3 @@
-// const https = require('https');
-// const fs = require('fs');
-
-// import * as https from "https";
-// import * as fs from 'fs';
-
 
 export class Handler {
     _headers = {
@@ -11,6 +5,18 @@ export class Handler {
         'Content-Type': 'application/json'
     };
 
+    _baseurl = 'http://195.133.196.67:8881';
+
+    token;
+
+    setToken() {
+
+        this._headers = {
+            'Accept': '*/*',
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + this.token
+        }
+    }
 
     constructor() {
         // process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
@@ -29,11 +35,19 @@ export class Handler {
     }
 
     async postRequest(url, body) {
-        return fetch(url, {
+        return fetch(this._baseurl + url, {
             method: 'POST',
             headers: this._headers,
             body: JSON.stringify(body),
             // agent: this._sslConfiguredAgent,
         })
     }
+
+    async getRequest(url) {
+        return fetch(this._baseurl + url, {
+            method: 'GET',
+            headers: this._headers
+        })
+    }
+
 }
