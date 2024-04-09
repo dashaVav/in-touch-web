@@ -8,6 +8,7 @@ import profileIcon from "../../assets/profile-icon.svg"
 import logoutIcon from "../../assets/logout-icon.svg"
 import "./MessengerLayout.css"
 import {ProfileLayout} from "../profileLayout/ProfileLayout.js";
+import {user} from "../../services/main.js";
 
 /**
  * Класс отвечающий за представления главного и самого первого экрана приложения
@@ -69,7 +70,7 @@ export class MessengerLayout extends Component {
                     <SimpleButton buttonText="Logout" logoUrl={logoutIcon} onClick={this.handleLogoutButtonClicked}/>
                 </div>
                 <div className="content">
-                    {currentLayout === 'profile' && <ProfileLayout />}
+                    {currentLayout === 'profile' && <ProfileLayout selectedUser={user}/>}
                     {/*{currentLayout === 'chats' && <ChatsLayout />}*/}
                     {/*{currentLayout === 'users' && <UsersLayout />}*/}
                     {/*{currentLayout === 'new chat' && <CreateChatLayout />}*/}

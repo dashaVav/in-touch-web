@@ -7,49 +7,34 @@ import birthdayIcon from "../../assets/birthday-icon.svg"
 import companyIcon from "../../assets/company-icon.svg"
 
 export class ProfileLayout extends Component {
-    getInitials = () => {
-        // TODO получание инициалов, user взять из модели???
-        return "ED";
+    getInitials = (user) => {
+        if (user.realName == null || user.surname == null)
+            return "-"
+        return user.realName.toString().charAt(0).toUpperCase() + user.surname.toString().charAt(0).toUpperCase();
     }
 
-    getRealName = () => {
-        // TODO получение имени пользователя, user взять из модели???
-        return "Dementev Egor Vasilievich";
-    }
-
-    getUserName = () => {
-        // TODO получение login пользователя, взять из модели???
-        return "Egorka_2003";
-    }
-
-    getPhoneNumber = () => {
-        // TODO получение phone пользователя, взять из модели???
-        return "8-915-901-56-51";
-    }
-
-    getBirthday = () => {
-        // TODO получение birthday пользователя, взять из модели???
-        return "23.06.2003";
-    }
-
-    getCompany = () => {
-        // TODO получение company пользователя, взять из модели???
-        return "In Touch";
+    getRealName = (user) => {
+        return (user.surname != null ? user.surname : "-") + " " +
+            (user.realName != null ? user.realName : "-")  + " " +
+            (user.patronymic != null ? user.patronymic : "-") ;
     }
 
     render() {
+        const selectedUser = this.props.selectedUser;
         return (
             <div className="profile-container">
-                <UserPhoto className="photo" text={this.getInitials()}/>
+                <UserPhoto className="photo" text={this.getInitials(selectedUser)}/>
                 <div className="username-data">
                     <div className="name-text-container">
-                        <text className="real-name">{this.getRealName()}</text>
-                        <text className="user-name">{this.getUserName()}</text>
+                        <text className="real-name">{this.getRealName(selectedUser)}</text>
+                        <text className="user-name">
+                            {selectedUser.username != null ? "@" + selectedUser.username : "no data"}
+                        </text>
                     </div>
                     <div className="tags-container">
-                        <CustomTag icon={phoneIcon} text={this.getPhoneNumber()}/>
-                        <CustomTag icon={birthdayIcon} text={this.getBirthday()}/>
-                        <CustomTag icon={companyIcon} text={this.getCompany()}/>
+                        <CustomTag icon={phoneIcon} text={selectedUser.phoneNumber != null ? selectedUser.phoneNumber : "no data"}/>
+                        <CustomTag icon={birthdayIcon} text={selectedUser.dateOfBirth != null ? selectedUser.dateOfBirth : "no data"}/>
+                        <CustomTag icon={companyIcon} text={"In Touch"}/>
                     </div>
                 </div>
             </div>
