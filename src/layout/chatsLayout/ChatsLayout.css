@@ -1,0 +1,8 @@
+.chats-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.chats-container > * {
+    margin-bottom: 10px;
+}

@@ -10,6 +10,11 @@ import "./MessengerLayout.css"
 import {ProfileLayout} from "../profileLayout/ProfileLayout.js";
 import {allUsers, user as mySelf} from "../../services/main.js";
 import {UsersLayout} from "../usersLayout/UsersLayout.js";
+import {ChatsLayout} from "../chatsLayout/ChatsLayout.js";
+import {Chat} from "../../services/dto/Chat.js";
+import {User} from "../../services/dto/User.js";
+import {Message} from "../../services/dto/Message.js";
+import {GroupChatInfo} from "../../services/dto/GroupChatInfo.js";
 
 /**
  * Класс отвечающий за представления главного и самого первого экрана приложения
@@ -61,9 +66,25 @@ export class MessengerLayout extends Component {
         this.props.onLogout();
     }
 
+    handleSelectChat(chat) {
+        console.log("Clicked on chat: ", chat)
+        //TODO открытие чата
+    }
+
+    getChatList() {
+        return [new Chat(111, true,
+            [new User(4, "Egorka", "Egor", "Dementev", "23-06-2003", "8888", true, "Vasilievich", null, null),
+                new User(234, "Dasha", "Dasha", "vavilova", "23-06-2003", "8888", true, "Vasilievich", null, null)],
+            null, new Message(123, "last message 1", "23-05-2024", new User(4, "Egorka", "Egor", "Dementev", "23-06-2003", "8888", true, "Vasilievich", null, null), 111), 2),
+            new Chat(222, false,
+                [new User(4, "Egorka", "Egor", "Dementev", "23-06-2003", "8888", true, "Vasilievich", null, null),
+                    new User(234, "Dasha", "Dasha", "vavilova", "23-06-2003", "8888", true, "Vasilievich", null, null)],
+                new GroupChatInfo("Dyshnily", "23-06-2003", new User(4, "Egorka", "Egor", "Dementev", "23-06-2003", "8888", true, "Vasilievich", null, null)), new Message(456, "last message 2", "23-05-2024",
+                    new User(234, "Dasha", "Dasha", "vavilova", "23-06-2003", "8888", true, "Vasilievich", null, null), 222), 4)];
+    }
+
     render() {
         const { currentLayout } = this.state;
-
         console.log(currentLayout)
 
         return (
@@ -77,7 +98,7 @@ export class MessengerLayout extends Component {
                 </div>
                 <div className="content">
                     {currentLayout === 'profile' && <ProfileLayout selectedUser={this.state.selectedUser}/>}
-                    {/*{currentLayout === 'chats' && <ChatsLayout />}*/}
+                    {currentLayout === 'chats' && <ChatsLayout chatList={this.getChatList()} onChatClicked={chat => this.handleSelectChat(chat)}/>}
                     {currentLayout === 'users' && <UsersLayout userList={allUsers} onUserClicked={user => this.handleProfileButtonClicked(user)}/>}
                     {/*{currentLayout === 'new chat' && <CreateChatLayout />}*/}
                 </div>
