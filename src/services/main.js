@@ -36,7 +36,7 @@ export async function login(login, password) {
 }
 
 export async function users() {
-    const data = await handler.getRequest("/chat_api/v1/users");
+    const data = await handler.getRequest("/chat_api/v1/company/" + company.id + "/users");
     const jsonArray = await data.json();
     allUsers = jsonArray.map(data => new User(
         data.id,
