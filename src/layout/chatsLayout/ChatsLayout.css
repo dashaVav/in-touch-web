@@ -1,8 +1,26 @@
 .chats-container {
     display: flex;
     flex-direction: column;
+    overflow-y: auto;
 }
 
 .chats-container > * {
     margin-bottom: 10px;
+}
+
+.chats-container::-webkit-scrollbar {
+    width: 5px;
+}
+
+.chats-container::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.chats-container::-webkit-scrollbar-thumb {
+    background: lightgray;
+    border-radius: 5px;
+}
+
+.chats-container::-webkit-scrollbar-thumb:hover {
+    background: darkgray;
 }

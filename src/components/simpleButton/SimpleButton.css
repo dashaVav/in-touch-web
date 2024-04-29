@@ -8,6 +8,7 @@
 
     /*background-color: red;*/
     border-radius: 8px;
+    cursor: pointer;
 }
 
 .button-data-container > * {

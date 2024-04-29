@@ -12,7 +12,7 @@ export class UsersLayout extends Component {
         for (let i = 0; i < userList.length; i++) {
             const user = userList[i];
             usersCells.push(
-                <UserCell key={user.id} user={user} onClicked={() => this.props.onUserClicked(user)}/>
+                <UserCell key={user.id} user={user} onClicked={() => this.props.onUserClicked(user)} onGoToClicked={() => this.props.onGoTOChatClicked(user)}/>
             );
         }
 

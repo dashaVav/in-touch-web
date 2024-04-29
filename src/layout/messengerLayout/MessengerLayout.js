@@ -15,6 +15,7 @@ import {Chat} from "../../services/dto/Chat.js";
 import {User} from "../../services/dto/User.js";
 import {Message} from "../../services/dto/Message.js";
 import {GroupChatInfo} from "../../services/dto/GroupChatInfo.js";
+import {OpenedChatLayout} from "../openedChatLayout/OpenedChatLayout.js";
 
 /**
  * Класс отвечающий за представления главного и самого первого экрана приложения
@@ -24,7 +25,8 @@ export class MessengerLayout extends Component {
         super(props);
         this.state = {
             currentLayout: 'profile',
-            selectedUser: mySelf
+            selectedUser: mySelf,
+            selectedChat: null
         };
     }
 
@@ -68,7 +70,18 @@ export class MessengerLayout extends Component {
 
     handleSelectChat(chat) {
         console.log("Clicked on chat: ", chat)
-        //TODO открытие чата
+        this.setState({ currentLayout: 'open chat' });
+        this.setState({ selectedChat: chat})
+        //TODO открытие чата из списка чатов
+    }
+
+    handleGoToChatButton(user) {
+        console.log("Переход на чат с изльзоваталем из списка пользователей", user)
+        //TODO открытие чата с пользователем из списка пользователей
+    }
+
+    handleChatInfoClicked(chat) {
+        console.log("просмотр информации о чате", chat)
     }
 
     getChatList() {
@@ -98,9 +111,19 @@ export class MessengerLayout extends Component {
                 </div>
                 <div className="content">
                     {currentLayout === 'profile' && <ProfileLayout selectedUser={this.state.selectedUser}/>}
-                    {currentLayout === 'chats' && <ChatsLayout chatList={this.getChatList()} onChatClicked={chat => this.handleSelectChat(chat)}/>}
-                    {currentLayout === 'users' && <UsersLayout userList={allUsers} onUserClicked={user => this.handleProfileButtonClicked(user)}/>}
+
+                    {currentLayout === 'chats' && <ChatsLayout
+                        chatList={this.getChatList()}
+                        onChatClicked={chat => this.handleSelectChat(chat)}/>}
+
+                    {currentLayout === 'users' && <UsersLayout
+                        userList={allUsers} onUserClicked={user => this.handleProfileButtonClicked(user)}
+                        onGoTOChatClicked={user => this.handleGoToChatButton(user)}/>}
+
+                    {currentLayout === 'open chat' && <OpenedChatLayout currentChat={this.state.selectedChat} onChatInfoClicked={chat => this.handleChatInfoClicked(chat)}/>}
+
                     {/*{currentLayout === 'new chat' && <CreateChatLayout />}*/}
+
                 </div>
             </div>
         );
