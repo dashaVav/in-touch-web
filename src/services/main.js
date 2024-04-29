@@ -3,10 +3,12 @@ import {AuthApi} from "./api/AuthApi.js";
 import {AuthRequest} from "./dto/AuthRequest.js";
 import {AuthResponse} from "./dto/AuthResponse.js";
 import {User} from "./dto/User.js";
+import {Chat} from "./dto/Chat.js";
 
 export var user;
 export var company;
 export var allUsers;
+export var allChats;
 
 const handler = new Handler();
 
@@ -51,9 +53,19 @@ export async function users() {
         data.thumbnailPhotoId
     ));
 }
-//
+
+export async function chats() {
+    const data = await handler.getRequest("/chat_api/v1/users/" + user.id + "/chats");
+    const jsonArray = await data.json();
+    allChats = jsonArray.map(data => Chat.fromJSON(data))
+}
+
+
+
+
+
 // (async () => {
 //     await login("Egorka", "1111");
-//     await users();
-//     console.log(allUsers);
+//     await chats();
+//     console.log(allChats);
 // })();

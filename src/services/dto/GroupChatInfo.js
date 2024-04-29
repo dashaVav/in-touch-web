@@ -5,4 +5,12 @@ export class GroupChatInfo {
         this.creator = creator;
     }
 
+    static fromJson(json) {
+        return new GroupChatInfo(
+            json.name,
+            json.creationDate,
+            json.creator
+        )
+    }
+
 }

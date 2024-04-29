@@ -8,13 +8,9 @@ import profileIcon from "../../assets/profile-icon.svg"
 import logoutIcon from "../../assets/logout-icon.svg"
 import "./MessengerLayout.css"
 import {ProfileLayout} from "../profileLayout/ProfileLayout.js";
-import {allUsers, user as mySelf} from "../../services/main.js";
+import {allChats, allUsers, chats, user as mySelf} from "../../services/main.js";
 import {UsersLayout} from "../usersLayout/UsersLayout.js";
 import {ChatsLayout} from "../chatsLayout/ChatsLayout.js";
-import {Chat} from "../../services/dto/Chat.js";
-import {User} from "../../services/dto/User.js";
-import {Message} from "../../services/dto/Message.js";
-import {GroupChatInfo} from "../../services/dto/GroupChatInfo.js";
 import {OpenedChatLayout} from "../openedChatLayout/OpenedChatLayout.js";
 
 /**
@@ -84,16 +80,15 @@ export class MessengerLayout extends Component {
         console.log("просмотр информации о чате", chat)
     }
 
-    getChatList() {
-        return [new Chat(111, true,
-            [new User(4, "Egorka", "Egor", "Dementev", "23-06-2003", "8888", true, "Vasilievich", null, null),
-                new User(234, "Dasha", "Dasha", "vavilova", "23-06-2003", "8888", true, "Vasilievich", null, null)],
-            null, new Message(123, "last message 1", "23-05-2024", new User(4, "Egorka", "Egor", "Dementev", "23-06-2003", "8888", true, "Vasilievich", null, null), 111), 2),
-            new Chat(222, false,
-                [new User(4, "Egorka", "Egor", "Dementev", "23-06-2003", "8888", true, "Vasilievich", null, null),
-                    new User(234, "Dasha", "Dasha", "vavilova", "23-06-2003", "8888", true, "Vasilievich", null, null)],
-                new GroupChatInfo("Dyshnily", "23-06-2003", new User(4, "Egorka", "Egor", "Dementev", "23-06-2003", "8888", true, "Vasilievich", null, null)), new Message(456, "last message 2", "23-05-2024",
-                    new User(234, "Dasha", "Dasha", "vavilova", "23-06-2003", "8888", true, "Vasilievich", null, null), 222), 4)];
+    async getChatList () {
+        try {
+            await chats();
+            console.log(await allChats);
+            return await allChats;
+        } catch (e) {
+            console.log("error")
+            console.log(e);
+        }
     }
 
     render() {
@@ -113,8 +108,11 @@ export class MessengerLayout extends Component {
                     {currentLayout === 'profile' && <ProfileLayout selectedUser={this.state.selectedUser}/>}
 
                     {currentLayout === 'chats' && <ChatsLayout
+                        onChatClicked={chat => {
+                            this.handleSelectChat(chat)
+                        }}
                         chatList={this.getChatList()}
-                        onChatClicked={chat => this.handleSelectChat(chat)}/>}
+                    />}
 
                     {currentLayout === 'users' && <UsersLayout
                         userList={allUsers} onUserClicked={user => this.handleProfileButtonClicked(user)}

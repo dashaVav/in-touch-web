@@ -1,4 +1,7 @@
 import {user as mySelf} from "../main.js";
+import {User} from "./User.js";
+import {GroupChatInfo} from "./GroupChatInfo.js";
+import {Message} from "./Message.js";
 
 export class Chat {
     constructor(id, isPrivate, listOfUsers, group, lastMessage, unreadCount) {
@@ -21,5 +24,16 @@ export class Chat {
         return (this.isPrivate === false) ? this.group.name.toString() :
             this.members.filter(u => u.id !== mySelf.id)
                 .map(u => u.realName.toString() + " " + u.surname.toString()).join("");
+    }
+
+    static fromJSON(json) {
+        return new Chat(
+            json.id,
+            json.isPrivate,
+            json.members.map(data => User.fromJson(data)),
+            json.group != null ? GroupChatInfo.fromJson(json.group) : json.group,
+            json.lastMessage != null ? Message.fromJson(json.lastMessage) : json.lastMessage,
+            json.unreadCount
+        );
     }
 }
