@@ -1,0 +1,73 @@
+.chat-cell {
+    display: flex;
+    flex-direction: row;
+    padding: 10px 15px;
+
+    background-color: #2F303B;
+    border-radius: 8px;
+    margin-bottom: 5px;
+
+    align-items: center;
+    justify-content: space-between;
+}
+
+.chat-cell:hover, .chat-cell:focus {
+    background-color: #3E46FF;
+}
+
+.simple-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.text-container {
+    display: flex;
+    flex-direction: column;
+    margin-left: 15px;
+}
+
+.text-container > * {
+    margin-bottom: 5px;
+}
+
+.chat-name {
+    font-family: "Poppins Medium", serif;
+    font-size: 20px;
+    color: white;
+}
+
+.last-message-text {
+    font-family: "Poppins Regular", serif;
+    font-size: 15px;
+    color: lightgray;
+}
+
+.chat-data-container {
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+    flex-grow: 1;
+}
+
+.chat-data-container > * {
+    margin-bottom: 5px;
+    margin-right: 15px;
+}
+
+.date {
+    font-family: "Poppins Medium", serif;
+    font-size: 20px;
+    color: white;
+}
+
+.unread-count-text {
+    display: inline-block;
+    width: 20px;
+    background-color: #3E46FF;
+    color: white;
+    border-radius: 50%;
+    text-align: center;
+    font-family: "Poppins Regular", serif;
+    font-size: 15px;
+}
