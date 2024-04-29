@@ -10,6 +10,7 @@ export var user;
 export var company;
 export var allUsers;
 export var allChats;
+export var openedChat;
 
 const handler = new Handler();
 
@@ -39,6 +40,7 @@ export async function chats() {
 }
 
 export async function openChat(chatId) {
+    openedChat = chatId;
     const data = await handler.getRequest("/chat_api/v1/chats/" + chatId + "/messages")
     const jsonArray = await data.json();
     return jsonArray.map(data => Message.fromJson(data))

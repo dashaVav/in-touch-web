@@ -3,9 +3,7 @@ import {Component} from "react";
 import {UserPhoto} from "../../components/userPhoto/UserPhoto.js";
 import IconButton from "../../components/iconButton/IconButton.js";
 import infoIcon from "../../assets/info-icon.svg"
-import {user as mySelf} from "../../services/model.js";
-import {Message} from "../../services/dto/Message.js";
-import {User} from "../../services/dto/User.js";
+import {openChat, user as mySelf} from "../../services/model.js";
 import {MessageCell} from "../../components/messageCell/MessageCell.js";
 import sendIcon from "../../assets/icon-send-message.svg"
 export class OpenedChatLayout extends Component {
@@ -33,33 +31,7 @@ export class OpenedChatLayout extends Component {
         const status = (currentChat.isPrivate) ? currentChat.members.filter(u => u.id !== mySelf.id)
             .map(u => (u.isOnline) ? "online" : "offline") : currentChat.members.size + " members";
 
-        const messageList = [
-            new Message(1, "Hello!", "23-05-2024",
-                new User(234, "Dasha", "Dasha", "vavilova", "23-06-2003", "8888", true, "Vasilievich", null, null),
-                1),
-            new Message(2, "Привет! Как у тебя дела????", "23-05-2024",
-                new User(4, "Egorka", "Egor", "Dementev", "23-06-2003", "8888", true, "Vasilievich", null, null),
-                1),
-            new Message(3, "Пока не родила)))))", "23-05-2024",
-                new User(234, "Dasha", "Dasha", "vavilova", "23-06-2003", "8888", true, "Vasilievich", null, null),
-                1),
-            new Message(4, "ппхпхпххп", "23-05-2024",
-                new User(4, "Egorka", "Egor", "Dementev", "23-06-2003", "8888", true, "Vasilievich", null, null),
-                1),
-            new Message(5, "что там с курсовой, когда кнопочки будут готовы, аааа asdjkghjf sdfjkhsdfkhksdf sdfkhsdfhskdhf sdfkjhsdjkfh dfsdfgdfgdf edgdfgdf dfghfhfghfgh rhhfghfgh ??", "23-05-2024",
-                new User(234, "Dasha", "Dasha", "vavilova", "23-06-2003", "8888", true, "Vasilievich", null, null),
-                1),
-            new Message(6, "в процессе", "23-05-2024",
-                new User(4, "Egorka", "Egor", "Dementev", "23-06-2003", "8888", true, "Vasilievich", null, null),
-                1),
-            new Message(7, "тээээш", "23-05-2024",
-                new User(234, "Dasha", "Dasha", "vavilova", "23-06-2003", "8888", true, "Vasilievich", null, null),
-                1),
-            new Message(8, "мда", "23-05-2024",
-                new User(4, "Egorka", "Egor", "Dementev", "23-06-2003", "8888", true, "Vasilievich", null, null),
-                1)
-        ]
-
+        const messageList = openChat(1);
         const messageCells = [];
 
         const rightStyle = {
