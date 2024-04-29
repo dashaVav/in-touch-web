@@ -1,0 +1,38 @@
+.message-cell {
+    display: flex;
+    flex-direction: row;
+    padding: 10px 15px;
+
+    background-color: #2F303B;
+    margin-bottom: 20px;
+
+    align-items: end;
+}
+
+.message-text {
+    margin-left: 15px;
+    margin-bottom: 5px;
+
+    display: inline-block;
+    background-color: #3E46FF;
+    color: white;
+    border-radius: 8px;
+    text-align: left;
+    font-family: "Poppins Regular", serif;
+    font-size: 14px;
+    max-width: 300px;
+
+    padding: 10px;
+}
+
+.message-date-time {
+    margin-left: 15px;
+    color: lightgray;
+    text-align: left;
+    font-family: "Poppins Regular", serif;
+    font-size: 10px;
+}
+
+.message-cell > .user-photo {
+    transform: translateY(-65%);
+}
