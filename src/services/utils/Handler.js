@@ -5,7 +5,7 @@ export class Handler {
         'Content-Type': 'application/json'
     };
 
-    _baseurl = 'http://195.133.196.67:8881';
+    _baseurl = 'https://195.133.196.67:8081';
 
     token;
 
@@ -39,6 +39,9 @@ export class Handler {
             method: 'POST',
             headers: this._headers,
             body: JSON.stringify(body),
+            rejectUnauthorized: false,
+            requestCert: true,
+            agent: false
             // agent: this._sslConfiguredAgent,
         })
     }
