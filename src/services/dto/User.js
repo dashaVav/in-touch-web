@@ -11,4 +11,9 @@ export class User {
         this.profilePhotoId = profilePhotoId;
         this.thumbnailPhotoId = thumbnailPhotoId;
     }
+
+    getInitials() {
+        return (this.realName == null || this.surname == null) ? "-" :
+            this.realName.toString().charAt(0).toUpperCase() + this.surname.toString().charAt(0).toUpperCase();
+    }
 }

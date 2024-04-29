@@ -8,10 +8,12 @@
     margin-bottom: 5px;
 
     align-items: center;
+    justify-content: space-between;
 }
 
 .user-cell:hover, .user-cell:focus {
-    background-color: #3E46FF;
+    /*background-color: #3E46FF;*/
+    cursor: pointer;
 }
 
 .text-container {
@@ -21,17 +23,32 @@
 }
 
 .text-container > * {
-    margin-bottom: 5px;
+    /*margin-bottom: 5px;*/
 }
 
 .real-user-name {
     font-family: "Poppins Medium", serif;
-    font-size: 20px;
+    font-size: 16px;
     color: white;
 }
 
 .login-text {
     font-family: "Poppins Regular", serif;
-    font-size: 15px;
+    font-size: 12px;
     color: lightgray;
+}
+
+.simple-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    /*background-color: red;*/
+    width: 100%;
+}
+
+.button-area {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 200px;
 }

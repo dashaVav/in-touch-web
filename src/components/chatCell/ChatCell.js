@@ -1,17 +1,9 @@
 import './ChatCell.css'
 import {UserPhoto} from "../userPhoto/UserPhoto.js";
-import {user as mySelf} from "../../services/main.js";
 
 export const ChatCell = ({ chat, onClicked  }) => {
 
-    const initials = (chat.isPrivate === false) ? chat.group.name.toString().charAt(0).toUpperCase() :
-            chat.members.filter(u => u.id !== mySelf.id)
-                .map(u => u.realName.toString().charAt(0).toUpperCase() + u.surname.toString().charAt(0).toUpperCase())
-                .join("")
-
-    const chatName = (chat.isPrivate === false) ? chat.group.name.toString() :
-            chat.members.filter(u => u.id !== mySelf.id)
-                .map(u => u.realName.toString() + " " + u.surname.toString()).join("")
+    const curChat = chat;
 
     const lastMessage = (chat.lastMessage) ? chat.lastMessage.text.toString() : "no messages";
 
@@ -22,10 +14,10 @@ export const ChatCell = ({ chat, onClicked  }) => {
     return (
         <div className="chat-cell" onClick={onClicked}>
             <div className="simple-container">
-                <UserPhoto text={initials} size={70} textSize={20}/>
+                <UserPhoto text={curChat.getInitials()} size={60} textSize={16}/>
                 <div className="text-container">
                     <text className="chat-name">
-                        {chatName}
+                        {curChat.getChatName()}
                     </text>
                     <text className="last-message-text">
                         {lastMessage}
