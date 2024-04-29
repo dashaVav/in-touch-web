@@ -3,7 +3,7 @@ import {Component} from "react";
 import {UserPhoto} from "../../components/userPhoto/UserPhoto.js";
 import IconButton from "../../components/iconButton/IconButton.js";
 import infoIcon from "../../assets/info-icon.svg"
-import {user as mySelf} from "../../services/main.js";
+import {user as mySelf} from "../../services/model.js";
 import {Message} from "../../services/dto/Message.js";
 import {User} from "../../services/dto/User.js";
 import {MessageCell} from "../../components/messageCell/MessageCell.js";

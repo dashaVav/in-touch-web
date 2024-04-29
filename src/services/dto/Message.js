@@ -1,3 +1,5 @@
+import {User} from "./User.js";
+
 export class Message {
     constructor(id, text, dateTime, author, chatId) {
         this.id = id;
@@ -12,7 +14,7 @@ export class Message {
             json.id,
             json.text,
             json.dateTime,
-            json.author,
+            new User(json.author),
             json.chatId
         )
     }
