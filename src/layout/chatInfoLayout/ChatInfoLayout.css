@@ -1,0 +1,55 @@
+@font-face {
+    font-family: "Medium";
+    src: local("AirbnbCerealLight"),
+    url("../../../src/assets/fonts/ClearSans-Medium.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: "Regular";
+    src: local("AirbnbCerealLight"),
+    url("../../../src/assets/fonts/ClearSans-Regular.ttf") format("truetype");
+}
+
+.container-all-chat-info {
+    display: flex;
+    flex-direction: column;
+
+}
+
+.chat-information-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    margin-bottom: 20px;
+}
+
+.chat-information-container > * {
+    margin: 10px 20px 10px 15px;
+}
+
+.photo {
+    margin: 20px;
+}
+
+.data-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.chat-name-info {
+    font-family: "Medium", serif;
+    font-size: 20px;
+    color: white;
+}
+
+.chat-status {
+    font-family: "Regular", serif;
+    font-size: 13px;
+    color: lightgray;
+}
+
+.list-members-container {
+
+    width: 500px;
+}

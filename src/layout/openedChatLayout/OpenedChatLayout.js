@@ -44,9 +44,6 @@ export class OpenedChatLayout extends Component {
     render() {
         const {currentChat} = this.props;
 
-        const status = (currentChat.isPrivate) ? currentChat.members.filter(u => u.id !== mySelf.id)
-            .map(u => (u.isOnline) ? "online" : "offline") : currentChat.members.length + " members";
-
         const messageList = this.state.messageList;
         const messageCells = [];
 
@@ -88,7 +85,7 @@ export class OpenedChatLayout extends Component {
                             {currentChat.getChatName()}
                         </text>
                         <text className="status">
-                            {status}
+                            {currentChat.getStatus()}
                         </text>
                     </div>
                     <IconButton logoUrl={infoIcon} onClick={() => this.props.onChatInfoClicked(currentChat)}/>
