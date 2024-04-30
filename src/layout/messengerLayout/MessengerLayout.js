@@ -12,6 +12,7 @@ import {allChats, allUsers, chats, user as mySelf} from "../../services/model.js
 import {UsersLayout} from "../usersLayout/UsersLayout.js";
 import {ChatsLayout} from "../chatsLayout/ChatsLayout.js";
 import {OpenedChatLayout} from "../openedChatLayout/OpenedChatLayout.js";
+import {ChatInfoLayout} from "../chatInfoLayout/ChatInfoLayout.js";
 
 /**
  * Класс отвечающий за представления главного и самого первого экрана приложения
@@ -77,7 +78,15 @@ export class MessengerLayout extends Component {
     }
 
     handleChatInfoClicked(chat) {
-        console.log("просмотр информации о чате", chat)
+        console.log("Просмотр информации о чате", chat)
+        if (chat.isPrivate === true) {
+            this.setState({ currentLayout: 'profile' });
+            console.log(chat.members.filter(u => u.id !== mySelf.id));
+            this.setState({selectedUser: chat.members.filter(u => u.id !== mySelf.id)[0]});
+        }
+        else {
+            this.setState({ currentLayout: 'chat info' });
+        }
     }
 
     async getChatList () {
@@ -105,20 +114,29 @@ export class MessengerLayout extends Component {
                     <SimpleButton buttonText="Logout" logoUrl={logoutIcon} onClick={this.handleLogoutButtonClicked}/>
                 </div>
                 <div className="content">
-                    {currentLayout === 'profile' && <ProfileLayout selectedUser={this.state.selectedUser}/>}
+                    {currentLayout === 'profile' &&
+                        <ProfileLayout selectedUser={this.state.selectedUser}
+                                       onClicked={user => this.handleGoToChatButton(user)}/>}
 
                     {currentLayout === 'chats' && <ChatsLayout
                         onChatClicked={chat => {
                             this.handleSelectChat(chat)
                         }}
-                        chatList={this.getChatList()}
+                        getChatList={this.getChatList.bind(this)}
                     />}
 
                     {currentLayout === 'users' && <UsersLayout
                         userList={allUsers} onUserClicked={user => this.handleProfileButtonClicked(user)}
                         onGoTOChatClicked={user => this.handleGoToChatButton(user)}/>}
 
-                    {currentLayout === 'open chat' && <OpenedChatLayout currentChat={this.state.selectedChat} onChatInfoClicked={chat => this.handleChatInfoClicked(chat)}/>}
+                    {currentLayout === 'open chat' &&
+                        <OpenedChatLayout currentChat={this.state.selectedChat}
+                                          onChatInfoClicked={chat => this.handleChatInfoClicked(chat)}
+                        />}
+
+                    {currentLayout === 'chat info' && <ChatInfoLayout
+                        selectedChat={this.state.selectedChat}
+                        onUserClicked={user => this.handleProfileButtonClicked(user)}/>}
 
                     {/*{currentLayout === 'new chat' && <CreateChatLayout />}*/}
 

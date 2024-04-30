@@ -27,7 +27,7 @@
 
     margin-left: 27vw;
     width: 50vw;
-    height: calc(100vh - 110px);
+    /*height: calc(100vh - 110px);*/
     background-color: #2F303B;
     border-radius: 8px;
     flex-direction: column;

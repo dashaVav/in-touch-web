@@ -5,10 +5,11 @@ import {CustomTag} from "../../components/tag/CustomTag.js";
 import phoneIcon from "../../assets/phone-icon.svg"
 import birthdayIcon from "../../assets/birthday-icon.svg"
 import companyIcon from "../../assets/company-icon.svg"
+import CustomButton from "../../components/button/CustomButton.js";
 
 export class ProfileLayout extends Component {
     getInitials = (user) => {
-        if (user.realName == null || user.surname == null)
+        if (user.realName === null || user.surname === null)
             return "-"
         return user.realName.toString().charAt(0).toUpperCase() + user.surname.toString().charAt(0).toUpperCase();
     }
@@ -22,19 +23,27 @@ export class ProfileLayout extends Component {
     render() {
         const selectedUser = this.props.selectedUser;
         return (
-            <div className="profile-container">
-                <UserPhoto className="photo" text={this.getInitials(selectedUser)}/>
-                <div className="username-data">
-                    <div className="name-text-container">
-                        <text className="real-name">{this.getRealName(selectedUser)}</text>
-                        <text className="user-name">
-                            {selectedUser.username != null ? "@" + selectedUser.username : "no data"}
-                        </text>
+            <div className="main-profile-container">
+                <div className="head"/>
+                <div className="profile-container">
+                    <div className="user-info-class">
+                        <UserPhoto className="photo" text={this.getInitials(selectedUser)} size={120}/>
+                        <div className="username-data">
+                            <div className="name-text-container">
+                                <text className="real-name">{this.getRealName(selectedUser)}</text>
+                                <text className="user-name">
+                                    {selectedUser.username != null ? "@" + selectedUser.username : "no data"}
+                                </text>
+                            </div>
+                            <div className="tags-container">
+                                <CustomTag icon={phoneIcon} text={selectedUser.phoneNumber != null ? selectedUser.phoneNumber : "no data"}/>
+                                <CustomTag icon={birthdayIcon} text={selectedUser.dateOfBirth != null ? selectedUser.dateOfBirth : "no data"}/>
+                                <CustomTag icon={companyIcon} text={"In Touch"}/>
+                            </div>
+                        </div>
                     </div>
-                    <div className="tags-container">
-                        <CustomTag icon={phoneIcon} text={selectedUser.phoneNumber != null ? selectedUser.phoneNumber : "no data"}/>
-                        <CustomTag icon={birthdayIcon} text={selectedUser.dateOfBirth != null ? selectedUser.dateOfBirth : "no data"}/>
-                        <CustomTag icon={companyIcon} text={"In Touch"}/>
+                    <div className="profile-button">
+                        <CustomButton buttonText="Message" onClick={() => this.props.onClicked(selectedUser)}/>
                     </div>
                 </div>
             </div>

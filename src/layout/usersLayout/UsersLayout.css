@@ -1,3 +1,11 @@
+.main-users-container {
+    display: flex;
+    flex-direction: column;
+}
+.main-users-container > * {
+    margin-bottom: 10px;
+}
+
 .users-container {
     display: flex;
     flex-direction: column;

@@ -1,18 +1,36 @@
+@font-face {
+    font-family: "Medium";
+    src: local("AirbnbCerealLight"),
+    url("../../../src/assets/fonts/ClearSans-Medium.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: "Regular";
+    src: local("AirbnbCerealLight"),
+    url("../../../src/assets/fonts/ClearSans-Regular.ttf") format("truetype");
+}
+
 .chat-cell {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     padding: 10px 15px;
 
     background-color: #2F303B;
     border-radius: 8px;
     margin-bottom: 5px;
+}
+
+.chat-cell-container {
+    display: flex;
+    flex-direction: row;
 
     align-items: center;
     justify-content: space-between;
 }
 
+
 .chat-cell:hover, .chat-cell:focus {
-    background-color: #3E46FF;
+    background-color: #434455;
 }
 
 .simple-container {
@@ -32,13 +50,13 @@
 }
 
 .chat-name {
-    font-family: "Poppins Medium", serif;
+    font-family: "Medium", serif;
     font-size: 16px;
     color: white;
 }
 
 .last-message-text {
-    font-family: "Poppins Regular", serif;
+    font-family: "Regular", serif;
     font-size: 14px;
     color: lightgray;
 }
@@ -56,7 +74,7 @@
 }
 
 .date {
-    font-family: "Poppins Medium", serif;
+    font-family: "Medium", serif;
     font-size: 12px;
     width: 100px;
     color: lightgray;
@@ -73,6 +91,6 @@
     color: white;
     border-radius: 50%;
     text-align: center;
-    font-family: "Poppins Regular", serif;
+    font-family: "Regular", serif;
     font-size: 12px;
 }

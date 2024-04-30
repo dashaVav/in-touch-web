@@ -1,7 +1,39 @@
+@font-face {
+    font-family: "Medium";
+    src: local("AirbnbCerealLight"),
+    url("../../../src/assets/fonts/ClearSans-Medium.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: "Regular";
+    src: local("AirbnbCerealLight"),
+    url("../../../src/assets/fonts/ClearSans-Regular.ttf") format("truetype");
+}
+
+.main-profile-container {
+    display: flex;
+    flex-direction: column;
+
+    margin-bottom: 20px;
+}
+
+.head {
+    background: rgb(62,70,255);
+    background: linear-gradient(45deg, rgba(62,70,255,1) 0%, rgba(91,174,249,1) 100%);
+    height: 150px;
+    border-radius: 10px;
+    margin-top: -20px;
+    margin-left: -20px;
+    margin-right: -20px;
+}
+
 .profile-container {
     display: flex;
     flex-direction: row;
     align-items: center;
+    justify-content: space-between;
+    margin-top: -70px;
+    z-index:1;
 }
 
 .profile-container > * {
@@ -15,10 +47,12 @@
 .username-data {
     display: flex;
     flex-direction: column;
+    margin-left: 20px;
+    margin-top: 80px;
 }
 
 .username-data > * {
-    margin-bottom: 4px;
+    margin-bottom: 5px;
 }
 
 .name-text-container {
@@ -27,15 +61,15 @@
 }
 
 .real-name {
-    font-family: "Poppins Medium", serif;
-    font-size: 20px;
+    font-family: "Medium", serif;
+    font-size: 24px;
     color: white;
 }
 
 .user-name {
-    font-family: "Poppins Regular", serif;
-    font-size: 13px;
-    color: white;
+    font-family: "Regular", serif;
+    font-size: 16px;
+    color: lightgray;
 }
 
 .tags-container {
@@ -45,5 +79,15 @@
 }
 
 .tags-container > * {
-    margin-right: 10px;
+    margin-right: 15px;
+}
+
+.profile-button {
+    margin-top: 30px;
+}
+
+.user-info-class {
+    display: flex;
+    flex-direction: row;
+
 }

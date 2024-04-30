@@ -26,6 +26,11 @@ export class Chat {
                 .map(u => u.realName.toString() + " " + u.surname.toString()).join("");
     }
 
+    getStatus() {
+        return (this.isPrivate) ? this.members.filter(u => u.id !== mySelf.id)
+            .map(u => (u.isOnline) ? "online" : "offline") : this.members.length + " members";
+    }
+
     static fromJSON(json) {
         return new Chat(
             json.id,

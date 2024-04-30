@@ -1,3 +1,9 @@
+@font-face {
+    font-family: "Medium";
+    src: local("AirbnbCerealLight"),
+    url("../../../src/assets/fonts/ClearSans-Medium.ttf") format("truetype");
+}
+
 .nav-bar {
     position: absolute;
     top: 0;
@@ -25,7 +31,7 @@
 }
 
 .nav-bar-text{
-    font-family: "Poppins Medium", serif;
+    font-family: "Medium", serif;
     font-size: 20px;
     color: white;
 }
