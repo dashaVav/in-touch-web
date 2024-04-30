@@ -5,6 +5,8 @@ import {AuthResponse} from "./dto/AuthResponse.js";
 import {User} from "./dto/User.js";
 import {Chat} from "./dto/Chat.js";
 import {Message} from "./dto/Message.js";
+import {connect} from "./StopmSession.js";
+
 
 export var user;
 export var company;
@@ -25,6 +27,8 @@ export async function login(login, password) {
     user = authResponse.user;
     handler.token = authResponse.token;
     handler.setToken();
+    console.log(handler.token)
+    connect();
 }
 
 export async function users() {
@@ -49,7 +53,5 @@ export async function openChat(chatId) {
 
 // (async () => {
 //     await login("Egorka", "1111");
-//     await chats();
-//     console.log(allChats);
 //     console.log(await openChat(15));
 // })();

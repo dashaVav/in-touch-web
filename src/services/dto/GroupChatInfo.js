@@ -1,3 +1,5 @@
+import {Parse} from "../utils/Parse.js";
+
 export class GroupChatInfo {
     constructor(name, creationDate, creator) {
         this.name = name;
@@ -8,7 +10,7 @@ export class GroupChatInfo {
     static fromJson(json) {
         return new GroupChatInfo(
             json.name,
-            json.creationDate,
+            Parse.date(json.creationDate),
             json.creator
         )
     }

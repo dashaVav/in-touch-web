@@ -1,3 +1,5 @@
+import {Parse} from "../utils/Parse.js";
+
 export class User {
     constructor(id, username, realName, surname, dateOfBirth, phoneNumber, isOnline, patronymic, profilePhotoId, thumbnailPhotoId) {
         this.id = id;
@@ -18,12 +20,13 @@ export class User {
     }
 
     static fromJson(json) {
+        console.log(json.id)
         return new User(
             json.id,
             json.username,
             json.realName,
             json.surname,
-            json.dateOfBirth,
+            Parse.dateOfBirth(json.dateOfBirth),
             json.phoneNumber,
             json.isOnline,
             json.patronymic,

@@ -1,4 +1,5 @@
 import {User} from "./User.js";
+import {Parse} from "../utils/Parse.js";
 
 export class Message {
     constructor(id, text, dateTime, author, chatId) {
@@ -13,8 +14,8 @@ export class Message {
         return new Message(
             json.id,
             json.text,
-            json.dateTime,
-            new User(json.author),
+            Parse.date(json.dateTime),
+            User.fromJson(json.author),
             json.chatId
         )
     }
