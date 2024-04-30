@@ -114,7 +114,9 @@ export class MessengerLayout extends Component {
                     <SimpleButton buttonText="Logout" logoUrl={logoutIcon} onClick={this.handleLogoutButtonClicked}/>
                 </div>
                 <div className="content">
-                    {currentLayout === 'profile' && <ProfileLayout selectedUser={this.state.selectedUser}/>}
+                    {currentLayout === 'profile' &&
+                        <ProfileLayout selectedUser={this.state.selectedUser}
+                                       onClicked={user => this.handleGoToChatButton(user)}/>}
 
                     {currentLayout === 'chats' && <ChatsLayout
                         onChatClicked={chat => {
@@ -132,7 +134,9 @@ export class MessengerLayout extends Component {
                                           onChatInfoClicked={chat => this.handleChatInfoClicked(chat)}
                         />}
 
-                    {currentLayout === 'chat info' && <ChatInfoLayout selectedChat={this.state.selectedChat}/>}
+                    {currentLayout === 'chat info' && <ChatInfoLayout
+                        selectedChat={this.state.selectedChat}
+                        onUserClicked={user => this.handleProfileButtonClicked(user)}/>}
 
                     {/*{currentLayout === 'new chat' && <CreateChatLayout />}*/}
 

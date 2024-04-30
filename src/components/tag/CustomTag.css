@@ -17,12 +17,13 @@
 }
 
 .tag-image {
-    width: 16px;
-    height: 16px;
+    width: 18px;
+    height: 18px;
+    color: lightgray;
 }
 
 .tag-text {
     font-family: "Regular", serif;
-    font-size: 12px;
+    font-size: 14px;
     color: lightgray;
 }

@@ -16,7 +16,7 @@
 }
 
 .open-chat-container > * {
-    margin-bottom: 10px;
+    margin-bottom: 5px;
 }
 
 .chat-info-container {
@@ -29,7 +29,8 @@
 
     background-color: #2F303B;
 
-    /*box-shadow: 0 1px 0 darkgray;*/
+    margin-bottom: -5px;
+    margin-top: -10px;
 }
 
 .text-info-container {
@@ -55,7 +56,6 @@
     flex-direction: column;
     overflow-y: auto;
     height: calc(100vh - 250px);
-
 }
 
 .message-list-container > * {
@@ -84,6 +84,9 @@
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
+
+    margin-top: 10px;
+    margin-bottom: -6px;
 }
 
 .message-input {

@@ -1,6 +1,6 @@
 import './ChatInfoLayout.css'
 import {UserPhoto} from "../../components/userPhoto/UserPhoto.js";
-import {Component} from "react";
+import React, {Component} from "react";
 import {UserCell} from "../../components/userCell/UserCell.js";
 
 export class ChatInfoLayout extends Component {
@@ -19,14 +19,16 @@ export class ChatInfoLayout extends Component {
 
         return (
             <div className="container-all-chat-info">
+                <div className="chat-head"/>
                 <div className="chat-information-container">
-                    <UserPhoto className="photo" text={selectedChat.getInitials()} size={60} textSize={24}/>
+                    <UserPhoto className="chat-photo" text={selectedChat.getInitials()} size={120} textSize={30}/>
                     <div className="data-container">
                         <text className="chat-name-info">{selectedChat.getChatName()}</text>
                         <text className="chat-status">{selectedChat.getStatus()}</text>
                     </div>
                 </div>
-                <div className="list-members-container">
+                <text className="chat-info-text">Members</text>
+                <div>
                     {usersCells}
                 </div>
             </div>

@@ -12,19 +12,25 @@
 
 .chat-cell {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     padding: 10px 15px;
 
     background-color: #2F303B;
     border-radius: 8px;
     margin-bottom: 5px;
+}
+
+.chat-cell-container {
+    display: flex;
+    flex-direction: row;
 
     align-items: center;
     justify-content: space-between;
 }
 
+
 .chat-cell:hover, .chat-cell:focus {
-    background-color: #3E46FF;
+    background-color: #434455;
 }
 
 .simple-container {

@@ -79,7 +79,7 @@ export class OpenedChatLayout extends Component {
         return (
             <div className="open-chat-container">
                 <div className="chat-info-container">
-                    <UserPhoto text={currentChat.getInitials()} size={60} textSize={16}/>
+                    <UserPhoto text={currentChat.getInitials()} size={50} textSize={16}/>
                     <div className="text-info-container">
                         <text className="chat-name">
                             {currentChat.getChatName()}
@@ -90,9 +90,11 @@ export class OpenedChatLayout extends Component {
                     </div>
                     <IconButton logoUrl={infoIcon} onClick={() => this.props.onChatInfoClicked(currentChat)}/>
                 </div>
+                <div typeof="rectangle" className="divider"/>
                 <div className="message-list-container" ref={this.myRef}>
                     {messageCells}
                 </div>
+                <div typeof="rectangle" className="divider"/>
                 <div className="message-input-container">
                     <input
                         className="message-input"

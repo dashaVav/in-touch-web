@@ -13,25 +13,28 @@ export const ChatCell = ({ chat, onClicked  }) => {
 
     return (
         <div className="chat-cell" onClick={onClicked}>
-            <div className="simple-container">
-                <UserPhoto text={curChat.getInitials()} size={60} textSize={16}/>
-                <div className="text-container">
-                    <text className="chat-name">
-                        {curChat.getChatName()}
+            <div className="chat-cell-container">
+                <div className="simple-container">
+                    <UserPhoto text={curChat.getInitials()} size={60} textSize={16}/>
+                    <div className="text-container">
+                        <text className="chat-name">
+                            {curChat.getChatName()}
+                        </text>
+                        <text className="last-message-text">
+                            {lastMessage}
+                        </text>
+                    </div>
+                </div>
+                <div className="chat-data-container">
+                    <text className="date">
+                        {lastMesDate}
                     </text>
-                    <text className="last-message-text">
-                        {lastMessage}
+                    <text className="unread-count-text">
+                        {unreadCount}
                     </text>
                 </div>
             </div>
-            <div className="chat-data-container">
-                <text className="date">
-                    {lastMesDate}
-                </text>
-                <text className="unread-count-text">
-                    {unreadCount}
-                </text>
-            </div>
+            <div typeof="rectangle" className="divider"/>
         </div>
     );
 };
