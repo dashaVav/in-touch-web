@@ -1,3 +1,15 @@
+@font-face {
+    font-family: "Medium";
+    src: local("AirbnbCerealLight"),
+    url("../../../src/assets/fonts/ClearSans-Medium.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: "Regular";
+    src: local("AirbnbCerealLight"),
+    url("../../../src/assets/fonts/ClearSans-Regular.ttf") format("truetype");
+}
+
 .profile-container {
     display: flex;
     flex-direction: row;
@@ -27,13 +39,13 @@
 }
 
 .real-name {
-    font-family: "Poppins Medium", serif;
+    font-family: "Medium", serif;
     font-size: 20px;
     color: white;
 }
 
 .user-name {
-    font-family: "Poppins Regular", serif;
+    font-family: "Regular", serif;
     font-size: 13px;
     color: white;
 }

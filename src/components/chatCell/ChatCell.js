@@ -9,7 +9,7 @@ export const ChatCell = ({ chat, onClicked  }) => {
 
     const lastMesDate = (chat.lastMessage) ? chat.lastMessage.dateTime.toString() : "no date";
 
-    const unreadCount = chat.unreadCount.toString();
+    const unreadCount = (chat.unreadCount) ? chat.unreadCount.toString() : "";
 
     return (
         <div className="chat-cell" onClick={onClicked}>

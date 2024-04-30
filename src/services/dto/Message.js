@@ -18,4 +18,9 @@ export class Message {
             json.chatId
         )
     }
+
+    getAuthor() {
+        //TODO костыль, возвращает автора
+        return this.author.id;
+    }
 }

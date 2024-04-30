@@ -8,7 +8,7 @@ import companyIcon from "../../assets/company-icon.svg"
 
 export class ProfileLayout extends Component {
     getInitials = (user) => {
-        if (user.realName == null || user.surname == null)
+        if (user.realName === null || user.surname === null)
             return "-"
         return user.realName.toString().charAt(0).toUpperCase() + user.surname.toString().charAt(0).toUpperCase();
     }

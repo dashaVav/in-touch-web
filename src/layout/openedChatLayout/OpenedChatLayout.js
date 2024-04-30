@@ -1,5 +1,5 @@
 import './OpenedChatLayout.css'
-import {Component} from "react";
+import React, {Component} from "react";
 import {UserPhoto} from "../../components/userPhoto/UserPhoto.js";
 import IconButton from "../../components/iconButton/IconButton.js";
 import infoIcon from "../../assets/info-icon.svg"
@@ -10,11 +10,13 @@ export class OpenedChatLayout extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            messageValue: ''
+            messageValue: '',
+            messageList: []
         };
         this.handleMessageChange = this.handleMessageChange.bind(this);
         this.handleMessageSend = this.handleMessageSend.bind(this);
     }
+    myRef = React.createRef();
 
     handleMessageChange(event) {
         this.setState({ messageValue: event.target.value });
@@ -25,13 +27,27 @@ export class OpenedChatLayout extends Component {
         console.log("Send message: ", this.state.messageValue)
     }
 
+    async componentDidMount() {
+        try {
+            const messages = await openChat(this.props.currentChat.id);
+            this.setState({ messageList: messages });
+            const node = this.myRef.current;
+            if (node) {
+                node.scrollTop = node.scrollHeight;
+            }
+        } catch (e) {
+            console.error("Ошибка при загрузке списка сообщений:", e);
+        }
+    }
+
+
     render() {
         const {currentChat} = this.props;
 
         const status = (currentChat.isPrivate) ? currentChat.members.filter(u => u.id !== mySelf.id)
-            .map(u => (u.isOnline) ? "online" : "offline") : currentChat.members.size + " members";
+            .map(u => (u.isOnline) ? "online" : "offline") : currentChat.members.length + " members";
 
-        const messageList = openChat(1);
+        const messageList = this.state.messageList;
         const messageCells = [];
 
         const rightStyle = {
@@ -42,13 +58,22 @@ export class OpenedChatLayout extends Component {
             'justify-content': 'flex-start',
         }
 
+        const rightContainerStyle = {
+            'align-items': 'flex-end',
+        }
+
+        const leftContainerStyle = {
+            'align-items': 'flex-start',
+        }
+
         for (let i = 0; i < messageList.length; i++) {
             const mess = messageList[i];
-            console.log(mess.author.id, mySelf.id)
+            const author = mess.getAuthor();
+            console.log(author);
             messageCells.push(
-                 (mess.author.id.toString() === mySelf.id.toString()) ?
-                     <MessageCell key={mess.id} message={mess} style={rightStyle}/>
-                     : <MessageCell key={mess.id} message={mess} style={leftStyle}/>
+                 (author.id.toString() === mySelf.id.toString()) ?
+                     <MessageCell key={mess.id} message={mess} style={rightStyle}  styleContainer={rightContainerStyle}/>
+                     : <MessageCell key={mess.id} message={mess} style={leftStyle} styleContainer={leftContainerStyle}/>
             );
         }
 
@@ -68,7 +93,7 @@ export class OpenedChatLayout extends Component {
                     </div>
                     <IconButton logoUrl={infoIcon} onClick={() => this.props.onChatInfoClicked(currentChat)}/>
                 </div>
-                <div className="message-list-container">
+                <div className="message-list-container" ref={this.myRef}>
                     {messageCells}
                 </div>
                 <div className="message-input-container">

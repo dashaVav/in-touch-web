@@ -111,7 +111,7 @@ export class MessengerLayout extends Component {
                         onChatClicked={chat => {
                             this.handleSelectChat(chat)
                         }}
-                        chatList={this.getChatList()}
+                        getChatList={this.getChatList.bind(this)}
                     />}
 
                     {currentLayout === 'users' && <UsersLayout

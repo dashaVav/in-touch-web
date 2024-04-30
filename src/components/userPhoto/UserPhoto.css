@@ -1,3 +1,9 @@
+@font-face {
+    font-family: "Medium";
+    src: local("AirbnbCerealLight"),
+    url("../../../src/assets/fonts/ClearSans-Medium.ttf") format("truetype");
+}
+
 .user-photo {
     border-radius: 50%;
     background-color: #919191;
@@ -7,6 +13,6 @@
 }
 
 .user-photo-text {
-    font-family: "Poppins Medium", serif;
+    font-family: "Medium", serif;
     color: white;
 }

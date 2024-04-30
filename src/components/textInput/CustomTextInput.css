@@ -1,3 +1,9 @@
+@font-face {
+    font-family: "Regular";
+    src: local("AirbnbCerealLight"),
+    url("../../../src/assets/fonts/ClearSans-Regular.ttf") format("truetype");
+}
+
 .text-input-container {
     position: relative;
 }
@@ -10,7 +16,7 @@
     width: 200px;
     padding: 10px;
 
-    font-family: "Poppins Regular", serif;
+    font-family: "Regular", serif;
     font-size: 15px;
     color: white;
 }
