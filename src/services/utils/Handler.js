@@ -5,7 +5,7 @@ export class Handler {
         'Content-Type': 'application/json'
     };
 
-    _baseurl = 'https://195.133.196.67:8081';
+    _baseurl = 'https://195.133.196.67:8081/chat_api/v1';
 
     token;
 
@@ -20,18 +20,6 @@ export class Handler {
 
     constructor() {
         process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
-        // this._options = {
-        //     cert: fs.readFileSync(
-        //         "..\\..\\resources\\intouch-certificate.crt",
-        //         `utf-8`,
-        //     ),
-        //     key: null,
-        //     passphrase: '<cerf>',
-        //     rejectUnauthorized: false,
-        //     keepAlive: false
-        // };
-        //
-        // this._sslConfiguredAgent = new https.Agent(this._options);
     }
 
     async postRequest(url, body) {
@@ -42,14 +30,27 @@ export class Handler {
             rejectUnauthorized: false,
             requestCert: true,
             agent: false
-            // agent: this._sslConfiguredAgent,
         })
     }
 
     async getRequest(url) {
         return fetch(this._baseurl + url, {
             method: 'GET',
-            headers: this._headers
+            headers: this._headers,
+            rejectUnauthorized: false,
+            requestCert: true,
+            agent: false
+        })
+    }
+
+    async putRequest(url, body) {
+        return fetch(this._baseurl + url, {
+            method:'PUT',
+            headers:this._headers,
+            body: JSON.stringify(body),
+            rejectUnauthorized: false,
+            requestCert: true,
+            agent: false
         })
     }
 

@@ -6,6 +6,7 @@ import {User} from "./dto/User.js";
 import {Chat} from "./dto/Chat.js";
 import {Message} from "./dto/Message.js";
 import {connect} from "./StopmSession.js";
+import {ChangePasswordRequest} from "./dto/ChangePasswordRequest.js";
 
 
 export var user;
@@ -27,18 +28,17 @@ export async function login(login, password) {
     user = authResponse.user;
     handler.token = authResponse.token;
     handler.setToken();
-    console.log(handler.token)
-    connect();
+    // connect();
 }
 
 export async function users() {
-    const data = await handler.getRequest("/chat_api/v1/company/" + company.id + "/users");
+    const data = await handler.getRequest("/company/" + company.id + "/users");
     const jsonArray = await data.json();
     allUsers = jsonArray.map(data => User.fromJson(data));
 }
 
 export async function chats() {
-    const data = await handler.getRequest("/chat_api/v1/users/" + user.id + "/chats");
+    const data = await handler.getRequest("/users/" + user.id + "/chats");
     const jsonArray = await data.json();
     allChats = jsonArray.map(data => Chat.fromJSON(data))
 }
@@ -50,8 +50,20 @@ export async function openChat(chatId) {
     return jsonArray.map(data => Message.fromJson(data))
 }
 
+export async function changeUserInfo(newUser) {
+    const response = await handler.putRequest("/users/" + user.id, newUser);
+    user = User.fromJson(await response.json());
+    return user;
+}
 
-// (async () => {
-//     await login("Egorka", "1111");
-//     console.log(await openChat(15));
-// })();
+export async function changePassword(changePasswordRequest) {
+    await handler.putRequest("/auth/user/password", changePasswordRequest);
+}
+
+(async () => {
+    await login("Egorka", "0000");
+    console.log(user.id)
+    await changeUserInfo(new User(user.id, null, "Егорка", null, null, null, true, null, null, null));
+    await changePassword(new ChangePasswordRequest(new AuthRequest("Egorka", "0000"), "1111"));
+    console.log(user)
+})();
