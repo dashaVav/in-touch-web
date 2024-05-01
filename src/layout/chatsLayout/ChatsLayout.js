@@ -19,6 +19,7 @@ export class ChatsLayout extends Component {
     }
 
     async componentDidMount() {
+        console.log("mounting")
         try {
             const chats = await this.props.getChatList();
             this.setState({ chatList: chats });

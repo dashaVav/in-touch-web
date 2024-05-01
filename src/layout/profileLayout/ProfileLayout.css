@@ -30,7 +30,7 @@
 .profile-container {
     display: flex;
     flex-direction: row;
-    align-items: center;
+    /*align-items: center;*/
     justify-content: space-between;
     margin-top: -70px;
     z-index:1;
@@ -83,7 +83,13 @@
 }
 
 .profile-button {
-    margin-top: 30px;
+    display: flex;
+    flex-direction: column;
+    margin-top: 90px;
+}
+
+.profile-button > * {
+    margin-bottom: 10px;
 }
 
 .user-info-class {

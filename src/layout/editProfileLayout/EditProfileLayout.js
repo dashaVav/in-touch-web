@@ -71,7 +71,7 @@ export class EditProfileLayout extends Component {
                             </div>
                             <div className="edit-button-container">
                                 <CustomButton buttonText="Edit profile" onClick={() => this.props.onClicked(this.prepareUserToChange())}/>
-                            </div>
+                            </div >
                         </div>
                     </div>
                 </div>

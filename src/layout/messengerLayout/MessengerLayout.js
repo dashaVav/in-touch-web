@@ -8,12 +8,13 @@ import profileIcon from "../../assets/profile-icon.svg"
 import logoutIcon from "../../assets/logout-icon.svg"
 import "./MessengerLayout.css"
 import {ProfileLayout} from "../profileLayout/ProfileLayout.js";
-import {allChats, allUsers, changeUserInfo, chats, user as mySelf} from "../../services/Model.js";
+import {allChats, allUsers, changePassword, changeUserInfo, chats, user as mySelf} from "../../services/Model.js";
 import {UsersLayout} from "../usersLayout/UsersLayout.js";
 import {ChatsLayout} from "../chatsLayout/ChatsLayout.js";
 import {OpenedChatLayout} from "../openedChatLayout/OpenedChatLayout.js";
 import {ChatInfoLayout} from "../chatInfoLayout/ChatInfoLayout.js";
 import {EditProfileLayout} from "../editProfileLayout/EditProfileLayout.js";
+import {ChangePasswordLayout} from "../changePasswordLayout/ChangePasswordLayout.js";
 
 /**
  * Класс отвечающий за представления главного и самого первого экрана приложения
@@ -24,7 +25,9 @@ export class MessengerLayout extends Component {
         this.state = {
             currentLayout: 'profile',
             selectedUser: mySelf,
-            selectedChat: null
+            selectedChat: null,
+            isLoading: false,
+            userChanges: null
         };
     }
 
@@ -83,11 +86,41 @@ export class MessengerLayout extends Component {
         this.setState({ currentLayout: 'edit profile' });
     }
 
-    async handleChangeUserInfo(user) {
-        console.log("Запрос на изменение пользователя", user)
+    handleChangePassButton(user) {
+        console.log("Смена пароля", user)
+        this.setState({ currentLayout: 'change password' });
+    }
+
+    async handleChangePasswordRequest(request) {
+        this.setState({ currentLayout: 'profile' });
+        await this.onChangePassword(request);
+    }
+
+    handleChangeUserInfo(user) {
+        this.setState({isLoading: true})
+        this.setState({userChanges: user})
+        this.setState({ currentLayout: 'profile' });
+    }
+
+    async updateUser(user) {
+        if (this.state.isLoading === true) {
+            try {
+                await changeUserInfo(user)
+                this.setState({isLoading: false})
+                this.setState({userChanges: null})
+                return await mySelf;
+            } catch (e) {
+                console.log("error")
+                console.log(e);
+            }
+        }
+    }
+
+    async onChangePassword(request) {
+        this.setState({ currentLayout: 'profile' });
         try {
-            await changeUserInfo(user)
-            console.log(await mySelf);
+            await changePassword(request)
+            console.log("Password have been changed!")
         } catch (e) {
             console.log("error")
             console.log(e);
@@ -133,15 +166,22 @@ export class MessengerLayout extends Component {
                 <div className="content">
                     {currentLayout === 'profile' && this.state.selectedUser.id !== mySelf.id &&
                         <ProfileLayout selectedUser={this.state.selectedUser}
-                                       onClicked={user => this.handleGoToChatButton(user)}/>}
+                                       onClicked={user => this.handleGoToChatButton(user)}
+                                       onUpdateUserInfo={null}/>}
 
                     {currentLayout === 'profile' && this.state.selectedUser.id === mySelf.id &&
                         <ProfileLayout selectedUser={this.state.selectedUser}
-                                       onClicked={user => this.handleEditProfileButton(user)}/>}
+                                       onClicked={user => this.handleEditProfileButton(user)}
+                                       isLoading={this.state.isLoading} userChanges={this.state.userChanges}
+                                       onUpdateUserInfo={this.updateUser.bind(this)}
+                                       onChangePassClicked={user => this.handleChangePassButton(user)}/>}
 
                     {currentLayout === 'edit profile' &&
                         <EditProfileLayout selectedUser={this.state.selectedUser}
                                            onClicked={user => this.handleChangeUserInfo(user)}/>}
+
+                    {currentLayout === 'change password' &&
+                        <ChangePasswordLayout selectedUser={mySelf} onClicked={req => this.handleChangePasswordRequest(req)}/>}
 
                     {currentLayout === 'chats' && <ChatsLayout
                         onChatClicked={chat => {

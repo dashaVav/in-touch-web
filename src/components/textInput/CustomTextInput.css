@@ -24,3 +24,7 @@
 .text-input:hover, .text-input:focus {
     background-color: #373846;
 }
+
+.text-input::placeholder {
+    color: lightgray;
+}

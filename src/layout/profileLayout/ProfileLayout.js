@@ -9,7 +9,12 @@ import CustomButton from "../../components/button/CustomButton.js";
 import {user as mySelf} from "../../services/Model.js";
 
 export class ProfileLayout extends Component {
-
+    constructor(props) {
+        super(props);
+        this.state = {
+            selectedUser: this.props.selectedUser,
+        };
+    }
     formatDate(dateString) {
         const date = new Date(dateString);
 
@@ -20,8 +25,24 @@ export class ProfileLayout extends Component {
         });
     }
 
+    async componentDidMount() {
+        if (this.props.isLoading === true) {
+            try {
+                const newUser = await this.props.onUpdateUserInfo(this.props.userChanges);
+                this.setState({selectedUser: newUser});
+            } catch (e) {
+                console.error("Ошибка при загрузке профиля:", e);
+            }
+        }
+    }
+
     render() {
-        const selectedUser = this.props.selectedUser;
+        const selectedUser = this.state.selectedUser;
+
+        const button = (selectedUser.id === mySelf.id) ? <CustomButton
+            buttonText={(selectedUser.id === mySelf.id) ? "Change pass" : ""}
+            onClick={() => this.props.onChangePassClicked(selectedUser)}/> : ""
+
         return (
             <div className="main-profile-container">
                 <div className="head"/>
@@ -46,6 +67,7 @@ export class ProfileLayout extends Component {
                         <CustomButton
                             buttonText={(selectedUser.id === mySelf.id) ? "Edit profile" : "Message"}
                             onClick={() => this.props.onClicked(selectedUser)}/>
+                        {button}
                     </div>
                 </div>
             </div>
