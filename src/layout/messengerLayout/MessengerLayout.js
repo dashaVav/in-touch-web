@@ -16,6 +16,7 @@ import {ChatInfoLayout} from "../chatInfoLayout/ChatInfoLayout.js";
 import {EditProfileLayout} from "../editProfileLayout/EditProfileLayout.js";
 import {ChangePasswordLayout} from "../changePasswordLayout/ChangePasswordLayout.js";
 import {CreateChatLayout} from "../createChatLayout/CreateChatLayout.js";
+import {EditGroupLayout} from "../editGroupLayout/EditGroupLayout.js";
 
 /**
  * Класс отвечающий за представления главного и самого первого экрана приложения
@@ -103,6 +104,11 @@ export class MessengerLayout extends Component {
         this.setState({ currentLayout: 'profile' });
     }
 
+    handleOnEditChatClicked(chat) {
+        this.setState({ currentLayout: 'edit chat' });
+        this.setState({ selectedChat: chat})
+    }
+
     async updateUser(user) {
         if (this.state.isLoading === true) {
             try {
@@ -142,6 +148,10 @@ export class MessengerLayout extends Component {
 
     handleCreateNewChat(data) {
         console.log("Создание новгого чата!!!", data);
+    }
+
+    handleEditGroupInformation(data) {
+        console.log("Editing group request", data)
     }
 
     async getChatList () {
@@ -206,9 +216,15 @@ export class MessengerLayout extends Component {
 
                     {currentLayout === 'chat info' && <ChatInfoLayout
                         selectedChat={this.state.selectedChat}
-                        onUserClicked={user => this.handleProfileButtonClicked(user)}/>}
+                        onUserClicked={user => this.handleProfileButtonClicked(user)}
+                        onClicked={chat => this.handleOnEditChatClicked(chat)}/>}
 
-                    {currentLayout === 'new chat' && <CreateChatLayout onClicked={data => this.handleCreateNewChat(data)}/>}
+                    {currentLayout === 'new chat' &&
+                        <CreateChatLayout onClicked={data => this.handleCreateNewChat(data)}/>}
+
+                    {currentLayout === 'edit chat' &&
+                        <EditGroupLayout selectedChat={this.state.selectedChat}
+                                         onClicked={data => this.handleEditGroupInformation(data)}/>}
 
                 </div>
             </div>

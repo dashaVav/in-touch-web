@@ -2,6 +2,7 @@ import './ChatInfoLayout.css'
 import {UserPhoto} from "../../components/userPhoto/UserPhoto.js";
 import React, {Component} from "react";
 import {UserCell} from "../../components/userCell/UserCell.js";
+import CustomButton from "../../components/button/CustomButton.js";
 
 export class ChatInfoLayout extends Component {
 
@@ -25,6 +26,9 @@ export class ChatInfoLayout extends Component {
                     <div className="data-container">
                         <text className="chat-name-info">{selectedChat.getChatName()}</text>
                         <text className="chat-status">{selectedChat.getStatus()}</text>
+                    </div>
+                    <div className="edit-chat-button">
+                        <CustomButton buttonText="Edit group" onClick={() => this.props.onClicked(selectedChat)}/>
                     </div>
                 </div>
                 <text className="chat-info-text">Members</text>
