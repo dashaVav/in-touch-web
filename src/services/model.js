@@ -5,8 +5,7 @@ import {AuthResponse} from "./dto/AuthResponse.js";
 import {User} from "./dto/User.js";
 import {Chat} from "./dto/Chat.js";
 import {Message} from "./dto/Message.js";
-import {connect} from "./StopmSession.js";
-import {ChangePasswordRequest} from "./dto/ChangePasswordRequest.js";
+
 
 
 export var user;
@@ -45,7 +44,7 @@ export async function chats() {
 
 export async function openChat(chatId) {
     openedChat = chatId;
-    const data = await handler.getRequest("/chat_api/v1/chats/" + chatId + "/messages")
+    const data = await handler.getRequest("/chats/" + chatId + "/messages")
     const jsonArray = await data.json();
     return jsonArray.map(data => Message.fromJson(data))
 }
@@ -60,10 +59,10 @@ export async function changePassword(changePasswordRequest) {
     await handler.putRequest("/auth/user/password", changePasswordRequest);
 }
 
-(async () => {
-    await login("Egorka", "0000");
-    console.log(user.id)
-    await changeUserInfo(new User(user.id, null, "Егорка", null, null, null, true, null, null, null));
-    await changePassword(new ChangePasswordRequest(new AuthRequest("Egorka", "0000"), "1111"));
-    console.log(user)
-})();
+// (async () => {
+//     await login("Egorka", "0000");
+//     console.log(user.id)
+//     await changeUserInfo(new User(user.id, null, "Егорка", null, null, null, true, null, null, null));
+//     await changePassword(new ChangePasswordRequest(new AuthRequest("Egorka", "0000"), "1111"));
+//     console.log(user)
+// })();

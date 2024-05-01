@@ -3,6 +3,29 @@ import {UserPhoto} from "../userPhoto/UserPhoto.js";
 
 export const ChatCell = ({ chat, onClicked  }) => {
 
+    function formatDate(dateString) {
+        const date = new Date(dateString);
+        const now = new Date();
+        const diff = now - date;
+        const diffInSeconds = Math.floor(diff / 1000);
+        const daysPassed = Math.floor(diffInSeconds / (60 * 60 * 24));
+
+        let formattedDate;
+        if (daysPassed < 1) {
+            const hours = date.getHours().toString().padStart(2, '0');
+            const minutes = date.getMinutes().toString().padStart(2, '0');
+            formattedDate = `${hours}:${minutes}`;
+        } else if (daysPassed < 7) {
+            formattedDate = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'][date.getDay()];
+        } else {
+            const day = date.getDate().toString().padStart(2, '0');
+            const month = (date.getMonth() + 1).toString().padStart(2, '0');
+            formattedDate = `${day}.${month}`;
+        }
+
+        return formattedDate;
+    }
+
     const curChat = chat;
 
     const lastMessage = (chat.lastMessage) ? chat.lastMessage.text.toString() : "no messages";
@@ -27,7 +50,7 @@ export const ChatCell = ({ chat, onClicked  }) => {
                 </div>
                 <div className="chat-data-container">
                     <text className="date">
-                        {lastMesDate}
+                        {formatDate(lastMesDate)}
                     </text>
                     <text className="unread-count-text">
                         {unreadCount}

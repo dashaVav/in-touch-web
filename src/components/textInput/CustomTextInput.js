@@ -7,10 +7,11 @@ import "./CustomTextInput.css"
 export default class CustomTextInput extends Component {
 
     render() {
-        const { onChange, text, type } = this.props;
+        const { onChange, text, type, value } = this.props;
+
         return (
             <div className="text-input-container">
-                <input className="text-input" type={type} onChange={onChange} placeholder={text}/>
+                <input className="text-input" type={type} onChange={onChange} placeholder={text} value={value}/>
             </div>);
     }
 }
