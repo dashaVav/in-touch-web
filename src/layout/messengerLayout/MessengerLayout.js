@@ -15,6 +15,7 @@ import {OpenedChatLayout} from "../openedChatLayout/OpenedChatLayout.js";
 import {ChatInfoLayout} from "../chatInfoLayout/ChatInfoLayout.js";
 import {EditProfileLayout} from "../editProfileLayout/EditProfileLayout.js";
 import {ChangePasswordLayout} from "../changePasswordLayout/ChangePasswordLayout.js";
+import {CreateChatLayout} from "../createChatLayout/CreateChatLayout.js";
 
 /**
  * Класс отвечающий за представления главного и самого первого экрана приложения
@@ -139,6 +140,10 @@ export class MessengerLayout extends Component {
         }
     }
 
+    handleCreateNewChat(data) {
+        console.log("Создание новгого чата!!!", data);
+    }
+
     async getChatList () {
         try {
             await chats();
@@ -203,7 +208,7 @@ export class MessengerLayout extends Component {
                         selectedChat={this.state.selectedChat}
                         onUserClicked={user => this.handleProfileButtonClicked(user)}/>}
 
-                    {/*{currentLayout === 'new chat' && <CreateChatLayout />}*/}
+                    {currentLayout === 'new chat' && <CreateChatLayout onClicked={data => this.handleCreateNewChat(data)}/>}
 
                 </div>
             </div>

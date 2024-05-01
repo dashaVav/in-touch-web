@@ -1,0 +1,130 @@
+@font-face {
+    font-family: "Medium";
+    src: local("AirbnbCerealLight"),
+    url("../../../src/assets/fonts/ClearSans-Medium.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: "Regular";
+    src: local("AirbnbCerealLight"),
+    url("../../../src/assets/fonts/ClearSans-Regular.ttf") format("truetype");
+}
+
+.container-create-chat {
+    display: flex;
+    flex-direction: column;
+}
+
+.chat-creation-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    margin-top: -40px;
+    margin-left: 100px;
+}
+
+.header {
+    font-family: "Medium", serif;
+    font-size: 24px;
+    color: white;
+
+    /*margin-left: 15px;*/
+    margin-bottom: 30px;
+}
+
+.header2 {
+    font-family: "Regular", serif;
+    font-size: 16px;
+    color: white;
+    margin-bottom: 2px;
+
+    /*margin-left: 15px;*/
+    /*margin-bottom: 10px;*/
+}
+
+.chat-name-area {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 16px;
+    margin-right: 100px;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.help-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.help-container > * {
+    margin-right: 40px;
+}
+
+.added-users {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 10px;
+
+    margin-right: 100px;
+    overflow-x: auto;
+}
+
+.added-users::-webkit-scrollbar {
+    height: 5px;
+}
+
+.added-users::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.added-users::-webkit-scrollbar-thumb {
+    background: lightgray;
+    border-radius: 5px;
+}
+
+.added-users::-webkit-scrollbar-thumb:hover {
+    background: darkgray;
+}
+
+.all-users {
+    margin-top: 30px;
+    margin-right: 100px;
+    height: 300px;
+    overflow-y: auto;
+}
+
+.all-users::-webkit-scrollbar {
+    width: 5px;
+}
+
+.all-users::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.all-users::-webkit-scrollbar-thumb {
+    background: lightgray;
+    border-radius: 5px;
+}
+
+.all-users::-webkit-scrollbar-thumb:hover {
+    background: darkgray;
+}
+
+.added-user-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-bottom: 5px;
+    margin-top: 10px;
+    cursor: pointer;
+}
+
+.header3 {
+    font-family: "Regular", serif;
+    font-size: 14px;
+    color: lightgray;
+    margin-left: 10px;
+    margin-right: 20px;
+}
