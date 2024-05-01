@@ -2,7 +2,7 @@ import {Component} from "react";
 import CustomTextInput from "../../components/textInput/CustomTextInput.js";
 import CustomButton from "../../components/button/CustomButton.js";
 import "./LoginLayout.css"
-import {allUsers, login, users} from "../../services/model.js";
+import {allUsers, login, users} from "../../services/Model.js";
 
 /**
  * Класс визуального представления экрана для логина

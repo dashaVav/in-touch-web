@@ -1,4 +1,4 @@
-import {user as mySelf} from "../model.js";
+import {user as mySelf} from "../Model.js";
 import {User} from "./User.js";
 import {GroupChatInfo} from "./GroupChatInfo.js";
 import {Message} from "./Message.js";

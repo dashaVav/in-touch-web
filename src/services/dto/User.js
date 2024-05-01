@@ -20,7 +20,6 @@ export class User {
     }
 
     static fromJson(json) {
-        console.log(json.id)
         return new User(
             json.id,
             json.username,

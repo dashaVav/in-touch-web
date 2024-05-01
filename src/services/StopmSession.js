@@ -1,6 +1,6 @@
 import SockJS from 'sockjs-client';
 import Stomp from 'stompjs';
-import {user} from "./model.js";
+import {user} from "./Model.js";
 
 
 var stompClient;

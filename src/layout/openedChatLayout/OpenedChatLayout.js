@@ -3,7 +3,7 @@ import React, {Component} from "react";
 import {UserPhoto} from "../../components/userPhoto/UserPhoto.js";
 import IconButton from "../../components/iconButton/IconButton.js";
 import infoIcon from "../../assets/info-icon.svg"
-import {openChat, user as mySelf} from "../../services/model.js";
+import {openChat, user as mySelf} from "../../services/Model.js";
 import {MessageCell} from "../../components/messageCell/MessageCell.js";
 import sendIcon from "../../assets/icon-send-message.svg"
 export class OpenedChatLayout extends Component {

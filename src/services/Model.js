@@ -45,13 +45,14 @@ export async function chats() {
 
 export async function openChat(chatId) {
     openedChat = chatId;
-    const data = await handler.getRequest("/chat_api/v1/chats/" + chatId + "/messages")
+    const data = await handler.getRequest("/chats/" + chatId + "/messages")
     const jsonArray = await data.json();
     return jsonArray.map(data => Message.fromJson(data))
 }
 
 export async function changeUserInfo(newUser) {
     const response = await handler.putRequest("/users/" + user.id, newUser);
+    console.log(response)
     user = User.fromJson(await response.json());
     return user;
 }
@@ -60,10 +61,11 @@ export async function changePassword(changePasswordRequest) {
     await handler.putRequest("/auth/user/password", changePasswordRequest);
 }
 
-(async () => {
-    await login("Egorka", "0000");
-    console.log(user.id)
-    await changeUserInfo(new User(user.id, null, "Егорка", null, null, null, true, null, null, null));
-    await changePassword(new ChangePasswordRequest(new AuthRequest("Egorka", "0000"), "1111"));
-    console.log(user)
-})();
+// (async () => {
+//     await login("Egorka", "1111");
+//     // console.log(await user )
+//     // console.log(await openChat(4));
+//     await changeUserInfo(new User(user.id, null, "Егоркb", null, null, "8-915-901-56-51", true, "va", null, null));
+//     // await changePassword(new ChangePasswordRequest(new AuthRequest("Egorka", "0000"), "1111"));
+//     console.log(user)
+// })();

@@ -8,7 +8,7 @@ import profileIcon from "../../assets/profile-icon.svg"
 import logoutIcon from "../../assets/logout-icon.svg"
 import "./MessengerLayout.css"
 import {ProfileLayout} from "../profileLayout/ProfileLayout.js";
-import {allChats, allUsers, chats, user as mySelf} from "../../services/model.js";
+import {allChats, allUsers, chats, user as mySelf} from "../../services/Model.js";
 import {UsersLayout} from "../usersLayout/UsersLayout.js";
 import {ChatsLayout} from "../chatsLayout/ChatsLayout.js";
 import {OpenedChatLayout} from "../openedChatLayout/OpenedChatLayout.js";

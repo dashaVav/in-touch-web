@@ -1,6 +1,6 @@
 import './MessageCell.css'
 import {UserPhoto} from "../userPhoto/UserPhoto.js";
-import {user as mySelf} from "../../services/model.js";
+import {user as mySelf} from "../../services/Model.js";
 
 export const MessageCell = ({ message, style, styleContainer }) => {
 
