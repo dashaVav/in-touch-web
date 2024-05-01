@@ -6,7 +6,7 @@ import phoneIcon from "../../assets/phone-icon.svg"
 import birthdayIcon from "../../assets/birthday-icon.svg"
 import companyIcon from "../../assets/company-icon.svg"
 import CustomButton from "../../components/button/CustomButton.js";
-import {user as mySelf} from "../../services/model.js";
+import {user as mySelf} from "../../services/Model.js";
 
 export class ProfileLayout extends Component {
 
