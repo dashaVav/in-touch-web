@@ -8,11 +8,12 @@ import profileIcon from "../../assets/profile-icon.svg"
 import logoutIcon from "../../assets/logout-icon.svg"
 import "./MessengerLayout.css"
 import {ProfileLayout} from "../profileLayout/ProfileLayout.js";
-import {allChats, allUsers, chats, user as mySelf} from "../../services/Model.js";
+import {allChats, allUsers, changeUserInfo, chats, user as mySelf} from "../../services/Model.js";
 import {UsersLayout} from "../usersLayout/UsersLayout.js";
 import {ChatsLayout} from "../chatsLayout/ChatsLayout.js";
 import {OpenedChatLayout} from "../openedChatLayout/OpenedChatLayout.js";
 import {ChatInfoLayout} from "../chatInfoLayout/ChatInfoLayout.js";
+import {EditProfileLayout} from "../editProfileLayout/EditProfileLayout.js";
 
 /**
  * Класс отвечающий за представления главного и самого первого экрана приложения
@@ -77,6 +78,22 @@ export class MessengerLayout extends Component {
         //TODO открытие чата с пользователем из списка пользователей
     }
 
+    handleEditProfileButton(user) {
+        console.log("Редактирование профиля", user)
+        this.setState({ currentLayout: 'edit profile' });
+    }
+
+    async handleChangeUserInfo(user) {
+        console.log("Запрос на изменение пользователя", user)
+        try {
+            await changeUserInfo(user)
+            console.log(await mySelf);
+        } catch (e) {
+            console.log("error")
+            console.log(e);
+        }
+    }
+
     handleChatInfoClicked(chat) {
         console.log("Просмотр информации о чате", chat)
         if (chat.isPrivate === true) {
@@ -114,9 +131,17 @@ export class MessengerLayout extends Component {
                     <SimpleButton buttonText="Logout" logoUrl={logoutIcon} onClick={this.handleLogoutButtonClicked}/>
                 </div>
                 <div className="content">
-                    {currentLayout === 'profile' &&
+                    {currentLayout === 'profile' && this.state.selectedUser.id !== mySelf.id &&
                         <ProfileLayout selectedUser={this.state.selectedUser}
                                        onClicked={user => this.handleGoToChatButton(user)}/>}
+
+                    {currentLayout === 'profile' && this.state.selectedUser.id === mySelf.id &&
+                        <ProfileLayout selectedUser={this.state.selectedUser}
+                                       onClicked={user => this.handleEditProfileButton(user)}/>}
+
+                    {currentLayout === 'edit profile' &&
+                        <EditProfileLayout selectedUser={this.state.selectedUser}
+                                           onClicked={user => this.handleChangeUserInfo(user)}/>}
 
                     {currentLayout === 'chats' && <ChatsLayout
                         onChatClicked={chat => {

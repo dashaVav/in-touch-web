@@ -4,14 +4,33 @@ import {user as mySelf} from "../../services/Model.js";
 
 export const MessageCell = ({ message, style, styleContainer }) => {
 
-    const author = message.getAuthor();
-    //TODO костыль, внизу в UserPhoto олучаем инициалы тут, а не через User, из-за ошибки в маппинге
+    function formatDate(dateString) {
+        const date = new Date(dateString);
+        const now = new Date();
+        const diff = now - date;
+        const diffInSeconds = Math.floor(diff / 1000);
+        const daysPassed = Math.floor(diffInSeconds / (60 * 60 * 24));
+
+        let formattedDate;
+        if (daysPassed < 1) {
+            const hours = date.getHours().toString().padStart(2, '0');
+            const minutes = date.getMinutes().toString().padStart(2, '0');
+            formattedDate = `${hours}:${minutes}`;
+        } else if (daysPassed < 7) {
+            formattedDate = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'][date.getDay()];
+        } else {
+            const day = date.getDate().toString().padStart(2, '0');
+            const month = (date.getMonth() + 1).toString().padStart(2, '0');
+            formattedDate = `${day}.${month}`;
+        }
+
+        return formattedDate;
+    }
+
     return (
         <div className="message-cell" style={style}>
-            {(author.id !== mySelf.id)  &&
-                <UserPhoto text={(author.realName == null || author.surname == null) ? "-" :
-                author.realName.toString().charAt(0).toUpperCase() +
-                author.surname.toString().charAt(0).toUpperCase()} size={30} textSize={10}/>
+            {(message.author.id !== mySelf.id)  &&
+                <UserPhoto text={message.author.getInitials()} size={30} textSize={10}/>
             }
 
             <div className="container-mes" style={styleContainer}>
@@ -19,7 +38,7 @@ export const MessageCell = ({ message, style, styleContainer }) => {
                     {message.text}
                 </div>
                 <div className="message-date-time">
-                    {message.dateTime}
+                    {formatDate(message.dateTime)}
                 </div>
             </div>
         </div>

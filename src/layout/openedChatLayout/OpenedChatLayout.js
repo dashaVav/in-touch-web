@@ -65,10 +65,8 @@ export class OpenedChatLayout extends Component {
 
         for (let i = 0; i < messageList.length; i++) {
             const mess = messageList[i];
-            const author = mess.getAuthor();
-            console.log(author);
             messageCells.push(
-                 (author.id.toString() === mySelf.id.toString()) ?
+                 (mess.author.id === mySelf.id) ?
                      <MessageCell key={mess.id} message={mess} style={rightStyle}  styleContainer={rightContainerStyle}/>
                      : <MessageCell key={mess.id} message={mess} style={leftStyle} styleContainer={leftContainerStyle}/>
             );

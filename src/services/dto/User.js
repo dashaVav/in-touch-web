@@ -19,6 +19,12 @@ export class User {
             this.realName.toString().charAt(0).toUpperCase() + this.surname.toString().charAt(0).toUpperCase();
     }
 
+    getRealName = () => {
+        return (this.surname != null ? this.surname : "-") + " " +
+            (this.realName != null ? this.realName : "-")  + " " +
+            (this.patronymic != null ? this.patronymic : "-") ;
+    }
+
     static fromJson(json) {
         return new User(
             json.id,

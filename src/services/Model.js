@@ -52,7 +52,6 @@ export async function openChat(chatId) {
 
 export async function changeUserInfo(newUser) {
     const response = await handler.putRequest("/users/" + user.id, newUser);
-    console.log(response)
     user = User.fromJson(await response.json());
     return user;
 }
