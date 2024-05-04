@@ -7,13 +7,9 @@ let allUsers = [];
 export async function getAllUsers() {
     if (allUsers.length === 0) {
         const jsonArray = await fetchAllUsersOfCompany(myCompany.id);
-        allUsers = jsonArray.map(data => User.fromJson(data)).filter(user => JSON.stringify(user) !== JSON.stringify(myself));
+        allUsers = jsonArray.map(data => User.fromJson(data)).filter(user => user.id !== myself.id);
     }
     return allUsers;
-}
-
-function map(classT, json) {
-
 }
 
 

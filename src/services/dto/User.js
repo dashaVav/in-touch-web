@@ -26,7 +26,6 @@ export class User {
     }
 
     static fromJson(json) {
-        console.log(json)
         return new User(
             json.id,
             json.username,
@@ -39,19 +38,5 @@ export class User {
             json.profilePhotoId,
             json.thumbnailPhotoId
         )
-    }
-
-    equals(otherUser) {
-        console.log()
-        if (this === otherUser) {
-            return true;
-        }
-        if (!(otherUser instanceof User)) {
-            return false;
-        }
-        return this.id === otherUser.id &&
-            this.username === otherUser.username &&
-            this.realName === otherUser.realName &&
-            this.surname === otherUser.surname;
     }
 }

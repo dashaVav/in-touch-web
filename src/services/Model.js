@@ -1,11 +1,10 @@
-import {getRequest, putRequest, setToken} from "./utils/Handler.js"
+import {getRequest, setToken} from "./utils/Handler.js"
 import {AuthRequest} from "./dto/AuthRequest.js";
 import {AuthResponse} from "./dto/AuthResponse.js";
-import {User} from "./dto/User.js";
 import {Message} from "./dto/Message.js";
 import {connect} from "./api/StopmSession.js";
 import {fetchChats} from "./repositoty/ChatRepository.js";
-import {setCompany, setMyself} from "./repositoty/SelfRepository.js";
+import {changeUserInform, changeUserPassword, setCompany, setMyself} from "./repositoty/SelfRepository.js";
 import {auth} from "./api/AuthApi.js";
 import {getAllUsers} from "./repositoty/UsersRepository.js";
 
@@ -22,29 +21,28 @@ export function setAllChats(chats) {
 
 export async function login(login, password) {
     const authRequest = new AuthRequest(login, password, 1);
-    const data = await auth(authRequest);
-    const user1 = User.fromJson(data.user)
-    const authResponse = new AuthResponse(data.token, user1, data.company, data.admin);
+    const data = await auth(authRequest)
+    const authResponse = AuthResponse.fromJson(data);
     company = authResponse.company;
-    user = await authResponse.user;
+    user = authResponse.user;
     setToken(authResponse.token);
 
     await connect();
-    setMyself(await user);
-    setCompany(await company);
+    setMyself(user);
+    setCompany(company);
+
 
     await chats();
+    await users();
 }
 
 export async function users() {
     allUsers = await getAllUsers();
 }
 
+
 export async function chats() {
     allChats = await fetchChats();
-    // const data = await handler.getRequest("/users/" + user.id + "/chats");
-    // const jsonArray = await data.json();
-    // allChats = jsonArray.map(data => Chat.fromJSON(data))
 }
 
 export async function openChat(chatId) {
@@ -55,10 +53,11 @@ export async function openChat(chatId) {
 }
 
 export async function changeUserInfo(newUser) {
-    user = User.fromJson(await putRequest("/users/" + user.id, newUser));
+    user = await changeUserInform(newUser);
     return user;
 }
 
+//тут статус смены пароля - строка
 export async function changePassword(changePasswordRequest) {
-    await putRequest("/auth/user/password", changePasswordRequest);
+    console.log(await changeUserPassword(changePasswordRequest));
 }

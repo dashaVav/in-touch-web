@@ -12,10 +12,10 @@ export class EditProfileLayout extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            nameText: user.realName,
-            surnameText: user.surname,
-            patronymicText: user.patronymic,
-            phoneText: user.phoneNumber
+            nameText: (user.realName) ? user.realName : "",
+            surnameText: (user.surname) ? (user.surname) : "",
+            patronymicText: (user.patronymic) ? (user.patronymic) : "",
+            phoneText: (user.phoneNumber) ? (user.phoneNumber) : ""
         };
     }
 
