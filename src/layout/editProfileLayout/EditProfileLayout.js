@@ -5,16 +5,17 @@ import {Component} from "react";
 import CustomTextInput from "../../components/textInput/CustomTextInput.js";
 import CustomButton from "../../components/button/CustomButton.js";
 import {User} from "../../services/dto/User.js";
+import {user} from "../../services/Model.js";
 
 export class EditProfileLayout extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            nameText: this.props.selectedUser.realName,
-            surnameText: this.props.selectedUser.surname,
-            patronymicText: this.props.selectedUser.patronymic,
-            phoneText: this.props.selectedUser.phoneNumber
+            nameText: user.realName,
+            surnameText: user.surname,
+            patronymicText: user.patronymic,
+            phoneText: user.phoneNumber
         };
     }
 

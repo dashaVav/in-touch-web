@@ -2,12 +2,13 @@ import React, {Component} from "react";
 import {ChatCell} from "../../components/chatCell/ChatCell.js";
 import './ChatsLayout.css'
 import icon from "../../assets/search-icon.svg"
+import {allChats} from "../../services/Model.js";
 
 export class ChatsLayout extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            chatList: [],
+            chatList: allChats,
             searchValue: ""
         };
         this.handleSearchChange = this.handleSearchChange.bind(this);
@@ -18,31 +19,31 @@ export class ChatsLayout extends Component {
         console.log(this.state.searchValue)
     }
 
-    async componentDidMount() {
-        console.log("mounting")
-        try {
-            const chats = await this.props.getChatList();
-            this.setState({ chatList: chats });
-        } catch (e) {
-            console.error("Ошибка при загрузке чатов:", e);
-        }
-    }
+    // async componentDidMount() {
+    //     console.log("mounting")
+    //     try {
+    //         const chats = await allChats;
+    //         this.setState({ chatList: chats });
+    //     } catch (e) {
+    //         console.error("Ошибка при загрузке чатов:", e);
+    //     }
+    // }
 
-    async updateChatList() {
-        try {
-            const chats = await this.props.getChatList();
-            this.setState({ chatList: chats });
-        } catch (e) {
-            console.error("Ошибка при обновлении списка чатов:", e);
-        }
-    }
+    // updateVariable = () => {
+    //     // Здесь вы можете изменить значение переменной
+    //     this.setState({ chatList: allChats });
+    //     this.forceUpdate();
+    //     console.log('Переменная изменена:', this.state.chatList);
+    // };
 
-    async componentDidUpdate(prevState, prevProps, snapshot) {
-        if (this.props.getChatList!== prevProps.getChatList) {
-            console.log("getChatList изменился, обновляем список чатов");
-            await this.updateChatList();
-        }
-    }
+    // Жизненный цикл, который вызывается после обновления компонента
+    // componentDidUpdate(prevProps, prevState, s) {
+    //     if (allChats !== this.state.chatList) {
+    //         console.log('Переменная изменена:', allChats);
+    //         this.setState({chatList: allChats});
+    //         this.forceUpdate();
+    //     }
+    // }
 
 
 
@@ -50,7 +51,7 @@ export class ChatsLayout extends Component {
         const {chatList} = this.state;
         const chatCells = [];
 
-        console.log("ChatsPage", chatList)
+        console.log("ChatsPage", chatList, allChats)
 
         for (let i = 0; i < chatList.length; i++) {
             const chat = chatList[i];

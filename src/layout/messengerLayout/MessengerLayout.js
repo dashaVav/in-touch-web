@@ -154,16 +154,16 @@ export class MessengerLayout extends Component {
         console.log("Editing group request", data)
     }
 
-    async getChatList () {
-        try {
-            await chats();
-            console.log(await allChats);
-            return await allChats;
-        } catch (e) {
-            console.log("error")
-            console.log(e);
-        }
-    }
+    // async getChatList () {
+    //     try {
+    //         await chats();
+    //         console.log(await allChats);
+    //         return await allChats;
+    //     } catch (e) {
+    //         console.log("error")
+    //         console.log(e);
+    //     }
+    // }
 
     render() {
         const { currentLayout } = this.state;
@@ -202,7 +202,6 @@ export class MessengerLayout extends Component {
                         onChatClicked={chat => {
                             this.handleSelectChat(chat)
                         }}
-                        getChatList={this.getChatList.bind(this)}
                     />}
 
                     {currentLayout === 'users' && <UsersLayout

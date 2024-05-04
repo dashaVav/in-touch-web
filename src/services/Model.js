@@ -36,6 +36,8 @@ export async function login(login, password) {
 
     await connect();
     setMyself(user);
+
+    await chats();
 }
 
 export async function users() {
