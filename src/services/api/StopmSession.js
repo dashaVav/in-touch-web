@@ -1,8 +1,7 @@
 import SockJS from 'sockjs-client';
 import Stomp from 'stompjs';
-import {openedChat, openedChatMessages, user} from "../Model.js";
-import {Message} from "../dto/Message.js";
-import {getChatById, moveUpChat, newChatCreated} from "../repositoty/ChatRepository.js";
+import {acceptNewMessage, user} from "../Model.js";
+import {newChatCreated} from "../repositoty/ChatRepository.js";
 import {Chat} from "../dto/Chat.js";
 
 
@@ -37,21 +36,7 @@ function sendMessage(event) {
 //         stompClient.send("/app/chat.sendMessage", {}, JSON.stringify(chatMessage));
 }
 
-async function acceptNewMessage(payload) {
-    const message = Message.fromJson(payloadToJson(payload));
-    if (message.chatId === openedChat) {
-        //todo в репозиторий
-        openedChatMessages.push(message);
-        moveUpChat(getChatById(message.chatId));
-    } else {
-        const chat = getChatById(message.chatId);
-        chat.unreadCount = isNaN(chat.unreadCount) ? 1 : chat.unreadCount + 1;
-        getChatById(message.chatId).lastMessage = message;
-        moveUpChat(chat);
-    }
-    notifyComponent("getNewMessage");
 
-}
 
 async function acceptNewChat(payload) {
     const chat = Chat.fromJSON(payloadToJson(payload));
@@ -65,9 +50,4 @@ function onMessageReceived(payload) {
 
 function payloadToJson(payload) {
     return JSON.parse(payload.body);
-}
-
-function notifyComponent(typeName) {
-    const event = new CustomEvent(typeName);
-    window.dispatchEvent(event);
 }

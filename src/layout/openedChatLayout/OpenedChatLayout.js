@@ -3,7 +3,7 @@ import React, {Component} from "react";
 import {UserPhoto} from "../../components/userPhoto/UserPhoto.js";
 import IconButton from "../../components/iconButton/IconButton.js";
 import infoIcon from "../../assets/info-icon.svg"
-import {openChat, openedChatMessages, user as mySelf} from "../../services/Model.js";
+import {openChat, openedChatMessages, sendMessage, user as mySelf} from "../../services/Model.js";
 import {MessageCell} from "../../components/messageCell/MessageCell.js";
 import sendIcon from "../../assets/icon-send-message.svg"
 export class OpenedChatLayout extends Component {
@@ -24,6 +24,8 @@ export class OpenedChatLayout extends Component {
     }
 
     handleMessageSend() {
+        //////////
+        sendMessage(this.state.messageValue.toString());
         console.log("Send message: ", this.state.messageValue)
     }
 
