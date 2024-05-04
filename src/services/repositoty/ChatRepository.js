@@ -19,7 +19,7 @@ export async function fetchChats() {
 export function moveUpChat(chat) {
     orderedChats = orderedChats.filter(c => c !== chat);
     orderedChats.unshift(chat);
-    setAllChats(chat);
+    setAllChats(orderedChats);
 }
 
 export function getChatById(chatId) {
