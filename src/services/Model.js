@@ -70,13 +70,3 @@ export async function changeUserInfo(newUser) {
 export async function changePassword(changePasswordRequest) {
     await handler.putRequest("/auth/user/password", changePasswordRequest);
 }
-
-(async () => {
-    await login("Egorka", "1111");
-    await chats();
-    // console.log(await user )
-    // console.log(await openChat(4));
-    // await changeUserInfo(new User(user.id, null, "Егоркb", null, null, "8-915-901-56-51", true, "va", null, null));
-    // await changePassword(new ChangePasswordRequest(new AuthRequest("Egorka", "0000"), "1111"));
-
-})();

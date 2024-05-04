@@ -48,10 +48,16 @@ async function getNewMessage(payload) {
     }
     console.log("end")
     console.log(getChatById(message.chatId));
-    // console.log(await allChats);
+    notifyComponent("getNewMessage");
 }
 
 function onMessageReceived(payload) {
     console.log(payload)
 
+}
+
+
+function notifyComponent(typeName) {
+    const event = new CustomEvent(typeName);
+    window.dispatchEvent(event);
 }

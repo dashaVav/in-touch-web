@@ -8,7 +8,7 @@ import profileIcon from "../../assets/profile-icon.svg"
 import logoutIcon from "../../assets/logout-icon.svg"
 import "./MessengerLayout.css"
 import {ProfileLayout} from "../profileLayout/ProfileLayout.js";
-import {allChats, allUsers, changePassword, changeUserInfo, chats, user as mySelf} from "../../services/Model.js";
+import {allUsers, changePassword, changeUserInfo, chats, user as mySelf} from "../../services/Model.js";
 import {UsersLayout} from "../usersLayout/UsersLayout.js";
 import {ChatsLayout} from "../chatsLayout/ChatsLayout.js";
 import {OpenedChatLayout} from "../openedChatLayout/OpenedChatLayout.js";
@@ -58,7 +58,6 @@ export class MessengerLayout extends Component {
      * Метод обрабатывает события перехода к профилю пользователя
      */
     handleProfileButtonClicked = (user) => {
-        console.log("Выбранный пользователь:", user);
         this.setState({ currentLayout: 'profile' });
         this.setState({selectedUser: user});
     }
@@ -72,10 +71,8 @@ export class MessengerLayout extends Component {
     }
 
     handleSelectChat(chat) {
-        console.log("Clicked on chat: ", chat)
         this.setState({ currentLayout: 'open chat' });
         this.setState({ selectedChat: chat})
-        //TODO открытие чата из списка чатов
     }
 
     handleGoToChatButton(user) {
@@ -84,12 +81,10 @@ export class MessengerLayout extends Component {
     }
 
     handleEditProfileButton(user) {
-        console.log("Редактирование профиля", user)
         this.setState({ currentLayout: 'edit profile' });
     }
 
     handleChangePassButton(user) {
-        console.log("Смена пароля", user)
         this.setState({ currentLayout: 'change password' });
     }
 
@@ -135,7 +130,6 @@ export class MessengerLayout extends Component {
     }
 
     handleChatInfoClicked(chat) {
-        console.log("Просмотр информации о чате", chat)
         if (chat.isPrivate === true) {
             this.setState({ currentLayout: 'profile' });
             console.log(chat.members.filter(u => u.id !== mySelf.id));
@@ -154,20 +148,8 @@ export class MessengerLayout extends Component {
         console.log("Editing group request", data)
     }
 
-    // async getChatList () {
-    //     try {
-    //         await chats();
-    //         console.log(await allChats);
-    //         return await allChats;
-    //     } catch (e) {
-    //         console.log("error")
-    //         console.log(e);
-    //     }
-    // }
-
     render() {
         const { currentLayout } = this.state;
-        console.log(currentLayout)
 
         return (
             <div>

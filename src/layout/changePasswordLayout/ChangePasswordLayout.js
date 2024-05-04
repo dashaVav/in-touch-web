@@ -35,7 +35,7 @@ export class ChangePasswordLayout extends Component {
                 <div className="change-password-container">
                     <CustomTextInput onChange={this.handleOldPasswordChange} text="Enter old password ..." type="password"/>
                     <CustomTextInput onChange={this.handleNewPasswordChange} text="Enter new password ..." type="password"/>
-                    <CustomButton buttonText="Edit profile" onClick={() => this.props.onClicked(this.prepareRequest())}/>
+                    <CustomButton buttonText="Change password" onClick={() => this.props.onClicked(this.prepareRequest())}/>
                 </div>
             </div>
         );
