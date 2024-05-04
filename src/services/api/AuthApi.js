@@ -5,6 +5,6 @@ export class AuthApi {
     }
 
     async auth() {
-        return await this._handler.postRequest('/auth/login', this._authRequest.toJSON());
+        return this._handler.postRequest('/auth/login', this._authRequest.toJSON());
     }
 }

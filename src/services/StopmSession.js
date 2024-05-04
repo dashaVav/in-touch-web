@@ -1,6 +1,8 @@
 import SockJS from 'sockjs-client';
 import Stomp from 'stompjs';
-import {user} from "./Model.js";
+import {openedChat, openedChatMessages, user} from "./Model.js";
+import {Message} from "./dto/Message.js";
+import {getChatById, moveUpChat} from "./repositoty/ChatRepository.js";
 
 
 var stompClient;
@@ -11,8 +13,8 @@ export function connect() {
     stompClient.connect({}, onConnected, onError);
 }
 
-function onConnected() {
-   console.log("Connection is ready, Stomp Session")
+async function onConnected() {
+    console.log("Connection is ready, Stomp Session")
     stompClient.subscribe('/topic/connection', onMessageReceived);
 
     stompClient.send("/app/connect",
@@ -20,7 +22,7 @@ function onConnected() {
         JSON.stringify({sender: user, type: 'JOIN'})
     );
 
-    stompClient.subscribe("/user/" + user.id + "/queue/messages", message);
+    stompClient.subscribe("/user/" + await user.id + "/queue/messages", getNewMessage);
 }
 
 
@@ -33,12 +35,23 @@ function sendMessage(event) {
 //         stompClient.send("/app/chat.sendMessage", {}, JSON.stringify(chatMessage));
 }
 
-function message(payload) {
-    console.log(payload);
+async function getNewMessage(payload) {
+    const message = Message.fromJson(JSON.parse(payload.body));
+    moveUpChat(getChatById(message.chatId));
+    console.log("get");
+    if (message.chatId === openedChat) {
+        //todo в
+        openedChatMessages.push(message);
+    } else {
+        console.log(getChatById(message.chatId));
+        getChatById(message.chatId).lastMessage = message;
+    }
+    console.log("end")
+    console.log(getChatById(message.chatId));
+    // console.log(await allChats);
 }
 
 function onMessageReceived(payload) {
     console.log(payload)
 
 }
-
