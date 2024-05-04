@@ -21,7 +21,6 @@ export function setAllChats(chats) {
 }
 
 export async function login(login, password) {
-    console.log("login")
     const authRequest = new AuthRequest(login, password, 1);
     const data = await auth(authRequest);
     const user1 = User.fromJson(data.user)

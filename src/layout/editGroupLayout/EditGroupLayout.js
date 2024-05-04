@@ -23,7 +23,6 @@ export class EditGroupLayout extends Component {
 
     render() {
         const selectedChat = this.props.selectedChat;
-        console.log("edit group", selectedChat);
 
         return (
             <div className="main-edit-profile-container">

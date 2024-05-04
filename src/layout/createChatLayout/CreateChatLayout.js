@@ -59,7 +59,6 @@ export class CreateChatLayout extends Component {
                 </div>
             );
         }
-        console.log(addedUsersCells.length)
 
         return (
             <div className="container-create-chat">

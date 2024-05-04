@@ -19,39 +19,21 @@ export class ChatsLayout extends Component {
         console.log(this.state.searchValue)
     }
 
-    // async componentDidMount() {
-    //     console.log("mounting")
-    //     try {
-    //         const chats = await allChats;
-    //         this.setState({ chatList: chats });
-    //     } catch (e) {
-    //         console.error("Ошибка при загрузке чатов:", e);
-    //     }
-    // }
+    componentDidMount() {
+        window.addEventListener('getNewMessage', this.handleExternalVariableChange);
+    }
 
-    // updateVariable = () => {
-    //     // Здесь вы можете изменить значение переменной
-    //     this.setState({ chatList: allChats });
-    //     this.forceUpdate();
-    //     console.log('Переменная изменена:', this.state.chatList);
-    // };
+    componentWillUnmount() {
+        window.removeEventListener('getNewMessage', this.handleExternalVariableChange);
+    }
 
-    // Жизненный цикл, который вызывается после обновления компонента
-    // componentDidUpdate(prevProps, prevState, s) {
-    //     if (allChats !== this.state.chatList) {
-    //         console.log('Переменная изменена:', allChats);
-    //         this.setState({chatList: allChats});
-    //         this.forceUpdate();
-    //     }
-    // }
-
-
+    handleExternalVariableChange = () => {
+        this.setState({chatList: allChats})
+    }
 
     render() {
         const {chatList} = this.state;
         const chatCells = [];
-
-        console.log("ChatsPage", chatList, allChats)
 
         for (let i = 0; i < chatList.length; i++) {
             const chat = chatList[i];

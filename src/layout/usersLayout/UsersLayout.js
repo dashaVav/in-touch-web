@@ -21,8 +21,6 @@ export class UsersLayout extends Component {
         const {userList} = this.props;
         const usersCells = [];
 
-        console.log("UsersPage")
-
         for (let i = 0; i < userList.length; i++) {
             const user = userList[i];
             usersCells.push(

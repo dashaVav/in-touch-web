@@ -2,7 +2,7 @@ import {Component} from "react";
 import CustomTextInput from "../../components/textInput/CustomTextInput.js";
 import CustomButton from "../../components/button/CustomButton.js";
 import "./LoginLayout.css"
-import {allUsers, login, users} from "../../services/Model.js";
+import {login, users} from "../../services/Model.js";
 
 /**
  * Класс визуального представления экрана для логина
@@ -39,7 +39,6 @@ export class LoginLayout extends Component {
         try {
             await login(this.state.loginText.toString(), this.state.passwordText.toString());
             await users();
-            console.log(allUsers)
             this.props.onLogin();
         } catch (error) {
             console.error('Ошибка при логине:', error);

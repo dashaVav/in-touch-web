@@ -11,6 +11,7 @@ export class OpenedChatLayout extends Component {
         super(props);
         this.state = {
             messageValue: '',
+            currentChat: this.props.currentChat,
             messageList: []
         };
         this.handleMessageChange = this.handleMessageChange.bind(this);
@@ -23,13 +24,13 @@ export class OpenedChatLayout extends Component {
     }
 
     handleMessageSend() {
-        // отправить this.state.messageValue
         console.log("Send message: ", this.state.messageValue)
     }
 
     async componentDidMount() {
+        window.addEventListener('getNewMessage', this.handleExternalVariableChange);
         try {
-            const messages = await openChat(this.props.currentChat.id);
+            const messages = await openChat(this.state.currentChat.id);
             this.setState({ messageList: messages });
             const node = this.myRef.current;
             if (node) {
@@ -40,6 +41,27 @@ export class OpenedChatLayout extends Component {
         }
     }
 
+    componentWillUnmount() {
+        window.removeEventListener('getNewMessage', this.handleExternalVariableChange);
+    }
+
+    handleExternalVariableChange = async () => {
+        try {
+            const messages = await openChat(this.state.currentChat.id);
+            this.setState({ messageList: messages });
+        } catch (e) {
+            console.error("Ошибка при загрузке списка сообщений:", e);
+        }
+    }
+
+    componentDidUpdate(prevProps, prevState) {
+        if (prevState.messageList!== this.state.messageList) {
+            const node = this.myRef.current;
+            if (node) {
+                node.scrollTop = node.scrollHeight;
+            }
+        }
+    }
 
     render() {
         const {currentChat} = this.props;
@@ -48,19 +70,19 @@ export class OpenedChatLayout extends Component {
         const messageCells = [];
 
         const rightStyle = {
-            'justify-content': 'flex-end',
+            'justifyContent': 'flex-end',
         }
 
         const leftStyle = {
-            'justify-content': 'flex-start',
+            'justifyContent': 'flex-start',
         }
 
         const rightContainerStyle = {
-            'align-items': 'flex-end',
+            'alignItems': 'flex-end',
         }
 
         const leftContainerStyle = {
-            'align-items': 'flex-start',
+            'alignItems': 'flex-start',
         }
 
         for (let i = 0; i < messageList.length; i++) {
@@ -71,8 +93,6 @@ export class OpenedChatLayout extends Component {
                      : <MessageCell key={mess.id} message={mess} style={leftStyle} styleContainer={leftContainerStyle}/>
             );
         }
-
-        console.log("Open chat with ", currentChat)
 
         return (
             <div className="open-chat-container">

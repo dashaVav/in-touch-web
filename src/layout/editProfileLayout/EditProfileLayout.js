@@ -36,7 +36,6 @@ export class EditProfileLayout extends Component {
     }
 
     prepareUserToChange() {
-        console.log("preparing");
         return new User(this.props.selectedUser.id, null, this.state.nameText.toString(),
             this.state.surnameText.toString(), null, this.state.phoneText.toString(), true,
             this.state.patronymicText.toString(), null, null);
@@ -44,7 +43,6 @@ export class EditProfileLayout extends Component {
 
     render() {
         const selectedUser = this.props.selectedUser;
-        console.log("edit", selectedUser);
 
         return (
             <div className="main-edit-profile-container">
