@@ -1,8 +1,6 @@
 import SockJS from 'sockjs-client';
 import Stomp from 'stompjs';
-import {acceptNewMessage, user} from "../Model.js";
-import {newChatCreated} from "../repositoty/ChatRepository.js";
-import {Chat} from "../dto/Chat.js";
+import {acceptNewChat, acceptNewMessage, user} from "../Model.js";
 
 
 var stompClient;
@@ -24,6 +22,7 @@ async function onConnected() {
 
     stompClient.subscribe("/user/" + await user.id + "/queue/messages", acceptNewMessage);
     stompClient.subscribe("/user/" + await user.id + "/queue/chats", acceptNewChat);
+
 }
 
 
@@ -31,23 +30,11 @@ function onError(error) {
     console.log(error);
 }
 
-
-function sendMessage(event) {
-//         stompClient.send("/app/chat.sendMessage", {}, JSON.stringify(chatMessage));
-}
-
-
-
-async function acceptNewChat(payload) {
-    const chat = Chat.fromJSON(payloadToJson(payload));
-    newChatCreated(chat);
+export function sendReadChatSignal(notification) {
+    stompClient.send("/app/read_chat",  {}, JSON.stringify(notification));
 }
 
 function onMessageReceived(payload) {
     console.log(payload)
 
-}
-
-function payloadToJson(payload) {
-    return JSON.parse(payload.body);
 }

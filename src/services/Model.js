@@ -2,12 +2,14 @@ import {setToken} from "./utils/Handler.js"
 import {AuthRequest} from "./dto/AuthRequest.js";
 import {AuthResponse} from "./dto/AuthResponse.js";
 import {Message} from "./dto/Message.js";
-import {connect} from "./api/StopmSession.js";
-import {fetchChats, getChatById, moveUpChat} from "./repositoty/ChatRepository.js";
+import {connect, sendReadChatSignal} from "./api/StopmSession.js";
+import {fetchChats, getChatById, moveUpChat, newChatCreated} from "./repositoty/ChatRepository.js";
 import {changeUserInform, changeUserPassword, setCompany, setMyself} from "./repositoty/SelfRepository.js";
 import {auth} from "./api/AuthApi.js";
 import {getAllUsers} from "./repositoty/UsersRepository.js";
 import {acceptNewMessageFromOtherUser, getMessagesOfChat, sendMessageToChat} from "./repositoty/MessageRepository.js";
+import {Chat} from "./dto/Chat.js";
+import {ReadNotification} from "./dto/ReadNotification.js";
 
 export var user;
 export var company;
@@ -18,9 +20,8 @@ export var openedChatMessages = [];
 
 export function setAllChats(chats) {
     allChats = chats;
+    notifyComponent("getNewMessage");
 }
-
-
 
 export async function login(login, password) {
     const authRequest = new AuthRequest(login, password, 1);
@@ -50,8 +51,14 @@ export async function chats() {
 
 export async function openChat(chatId) {
     openedChat = chatId;
+    sendReadChatSignal(new ReadNotification(user.id, openedChat));
+    getChatById(chatId).unreadCount = 0;
     openedChatMessages = await getMessagesOfChat(chatId);
     return openedChatMessages;
+}
+
+export async function createDialogFromAllUsers() {
+
 }
 
 export async function changeUserInfo(newUser) {
@@ -87,6 +94,13 @@ export async function acceptNewMessage(payload) {
     }
     notifyComponent("getNewMessage");
 }
+
+export async function acceptNewChat(payload) {
+    const chat = Chat.fromJSON(payloadToJson(payload));
+    newChatCreated(chat);
+}
+
+export
 
 function payloadToJson(payload) {
     return JSON.parse(payload.body);
