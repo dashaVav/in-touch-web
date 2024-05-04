@@ -28,6 +28,24 @@ export class ChatsLayout extends Component {
         }
     }
 
+    async updateChatList() {
+        try {
+            const chats = await this.props.getChatList();
+            this.setState({ chatList: chats });
+        } catch (e) {
+            console.error("Ошибка при обновлении списка чатов:", e);
+        }
+    }
+
+    async componentDidUpdate(prevState, prevProps, snapshot) {
+        if (this.props.getChatList!== prevProps.getChatList) {
+            console.log("getChatList изменился, обновляем список чатов");
+            await this.updateChatList();
+        }
+    }
+
+
+
     render() {
         const {chatList} = this.state;
         const chatCells = [];
