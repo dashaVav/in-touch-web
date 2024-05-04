@@ -45,24 +45,14 @@ export class OpenedChatLayout extends Component {
         window.removeEventListener('getNewMessage', this.handleExternalVariableChange);
     }
 
-    handleExternalVariableChange = async () => {
-        try {
-            //todo
-            await openChat(this.state.currentChat.id);
-            const messages = await openedChatMessages;
-            this.setState({ messageList: messages });
-        } catch (e) {
-            console.error("Ошибка при загрузке списка сообщений:", e);
-        }
-    }
-
-    componentDidUpdate(prevProps, prevState) {
-        if (prevState.messageList!== this.state.messageList) {
+    handleExternalVariableChange = () => {
+        this.setState({ messageList: openedChatMessages }, () => {
+            console.log("State updated");
             const node = this.myRef.current;
             if (node) {
                 node.scrollTop = node.scrollHeight;
             }
-        }
+        });
     }
 
     render() {
