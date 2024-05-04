@@ -43,13 +43,13 @@ async function acceptNewMessage(payload) {
         //todo в репозиторий
         openedChatMessages.push(message);
         moveUpChat(getChatById(message.chatId));
-        notifyComponent("getNewMessage");
     } else {
         const chat = getChatById(message.chatId);
         chat.unreadCount = isNaN(chat.unreadCount) ? 1 : chat.unreadCount + 1;
         getChatById(message.chatId).lastMessage = message;
         moveUpChat(chat);
     }
+    notifyComponent("getNewMessage");
 
 }
 

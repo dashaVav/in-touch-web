@@ -3,7 +3,7 @@ import React, {Component} from "react";
 import {UserPhoto} from "../../components/userPhoto/UserPhoto.js";
 import IconButton from "../../components/iconButton/IconButton.js";
 import infoIcon from "../../assets/info-icon.svg"
-import {openChat, user as mySelf} from "../../services/Model.js";
+import {openChat, openedChatMessages, user as mySelf} from "../../services/Model.js";
 import {MessageCell} from "../../components/messageCell/MessageCell.js";
 import sendIcon from "../../assets/icon-send-message.svg"
 export class OpenedChatLayout extends Component {
@@ -47,7 +47,9 @@ export class OpenedChatLayout extends Component {
 
     handleExternalVariableChange = async () => {
         try {
-            const messages = await openChat(this.state.currentChat.id);
+            //todo
+            await openChat(this.state.currentChat.id);
+            const messages = await openedChatMessages;
             this.setState({ messageList: messages });
         } catch (e) {
             console.error("Ошибка при загрузке списка сообщений:", e);
