@@ -40,4 +40,18 @@ export class User {
             json.thumbnailPhotoId
         )
     }
+
+    equals(otherUser) {
+        console.log()
+        if (this === otherUser) {
+            return true;
+        }
+        if (!(otherUser instanceof User)) {
+            return false;
+        }
+        return this.id === otherUser.id &&
+            this.username === otherUser.username &&
+            this.realName === otherUser.realName &&
+            this.surname === otherUser.surname;
+    }
 }

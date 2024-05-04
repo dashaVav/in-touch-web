@@ -1,6 +1,7 @@
 import {Chat} from "../dto/Chat.js";
-import {handler, setAllChats} from "../Model.js";
+import {setAllChats} from "../Model.js";
 import {myself} from "./SelfRepository.js";
+import {getRequest} from "../utils/Handler.js";
 
 
 var chatsById = {}
@@ -8,17 +9,21 @@ var orderedChats = []
 
 export async function fetchChats() {
     if (orderedChats.length === 0) {
-        const jsonAllChats = await (await handler.getRequest("/users/" + myself.id + "/chats")).json();
+        const jsonAllChats = await getRequest("/users/" + myself.id + "/chats");
         orderedChats = jsonAllChats.map(data => Chat.fromJSON(data));
-        return orderedChats;
-    } else {
-        return orderedChats;
+
     }
+    return orderedChats;
+
 }
 
 export function moveUpChat(chat) {
     orderedChats = orderedChats.filter(c => c !== chat);
     orderedChats.unshift(chat);
+    setAllChats(orderedChats);
+}
+
+export function newChatCreated(chat) {
     setAllChats(orderedChats);
 }
 

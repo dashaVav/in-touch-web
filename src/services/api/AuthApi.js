@@ -1,10 +1,5 @@
-export class AuthApi {
-    constructor(handler, authRequest) {
-        this._handler = handler;
-        this._authRequest = authRequest;
-    }
+import {postRequest} from "../utils/Handler.js";
 
-    async auth() {
-        return this._handler.postRequest('/auth/login', this._authRequest.toJSON());
-    }
+export async function auth(authRequest) {
+    return postRequest('/auth/login', authRequest.toJSON());
 }
