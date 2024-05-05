@@ -8,7 +8,14 @@ import profileIcon from "../../assets/profile-icon.svg"
 import logoutIcon from "../../assets/logout-icon.svg"
 import "./MessengerLayout.css"
 import {ProfileLayout} from "../profileLayout/ProfileLayout.js";
-import {allUsers, changePassword, changeUserInfo, chats, user as mySelf} from "../../services/Model.js";
+import {
+    allUsers,
+    changePassword,
+    changeUserInfo,
+    chats,
+    createDialogFromAllUsers,
+    user as mySelf
+} from "../../services/Model.js";
 import {UsersLayout} from "../usersLayout/UsersLayout.js";
 import {ChatsLayout} from "../chatsLayout/ChatsLayout.js";
 import {OpenedChatLayout} from "../openedChatLayout/OpenedChatLayout.js";
@@ -40,28 +47,28 @@ export class MessengerLayout extends Component {
      * Метод обрабатывает события перехода ко всем доступным чатам
      */
     handleChatButtonClicked = () => {
-        this.setState({ currentLayout: 'chats' });
+        this.setState({currentLayout: 'chats'});
     }
 
     /**
      * Метод обрабатывает события перехода ко всем доступным пользователям
      */
     handleUserButtonClicked = () => {
-        this.setState({ currentLayout: 'users' });
+        this.setState({currentLayout: 'users'});
     }
 
     /**
      * Метод обрабатывает события создания нового группового чата
      */
     handleNewChatButtonClicked = () => {
-        this.setState({ currentLayout: 'new chat' });
+        this.setState({currentLayout: 'new chat'});
     }
 
     /**
      * Метод обрабатывает события перехода к профилю пользователя
      */
     handleProfileButtonClicked = (user, from) => {
-        this.setState({ currentLayout: 'profile' });
+        this.setState({currentLayout: 'profile'});
         this.setState({selectedUser: user});
         this.setState({goToProfileFrom: from})
     }
@@ -75,25 +82,26 @@ export class MessengerLayout extends Component {
     }
 
     handleSelectChat(chat) {
-        this.setState({ currentLayout: 'open chat' });
-        this.setState({ selectedChat: chat})
+        this.setState({currentLayout: 'open chat'});
+        this.setState({selectedChat: chat})
     }
 
-    handleGoToChatButton(user) {
-        console.log("Переход на чат с изльзоваталем из списка пользователей", user)
-        //TODO открытие чата с пользователем из списка пользователей
+    async handleGoToChatButton(user) {
+        console.log("Переход на чат с изльзоваталем из списка пользователей", user);
+        const chat = await createDialogFromAllUsers(user.id);
+        //todo вызвать открытые чата с этим чатом
     }
 
     handleEditProfileButton(user) {
-        this.setState({ currentLayout: 'edit profile' });
+        this.setState({currentLayout: 'edit profile'});
     }
 
     handleChangePassButton(user) {
-        this.setState({ currentLayout: 'change password' });
+        this.setState({currentLayout: 'change password'});
     }
 
     async handleChangePasswordRequest(request) {
-        this.setState({ currentLayout: 'profile' });
+        this.setState({currentLayout: 'profile'});
         const res = await this.onChangePassword(request);
         this.setState({changePasswordResult: res})
     }
@@ -102,12 +110,12 @@ export class MessengerLayout extends Component {
         this.setState({isLoading: true})
         this.setState({userChanges: user})
         this.setState({photoToUpload: photo})
-        this.setState({ currentLayout: 'profile' });
+        this.setState({currentLayout: 'profile'});
     }
 
     handleOnEditChatClicked(chat) {
-        this.setState({ currentLayout: 'edit chat' });
-        this.setState({ selectedChat: chat})
+        this.setState({currentLayout: 'edit chat'});
+        this.setState({selectedChat: chat})
     }
 
     async updateUser(user, photo) {
@@ -130,7 +138,7 @@ export class MessengerLayout extends Component {
     }
 
     async onChangePassword(request) {
-        this.setState({ currentLayout: 'profile' });
+        this.setState({currentLayout: 'profile'});
         try {
             const res = await changePassword(request);
             if (res === "Ok!")
@@ -147,12 +155,11 @@ export class MessengerLayout extends Component {
 
     handleChatInfoClicked(chat) {
         if (chat.isPrivate === true) {
-            this.setState({ currentLayout: 'profile' });
+            this.setState({currentLayout: 'profile'});
             this.setState({goToProfileFrom: "opened chat"})
             this.setState({selectedUser: chat.members.filter(u => u.id !== mySelf.id)[0]});
-        }
-        else {
-            this.setState({ currentLayout: 'chat info' });
+        } else {
+            this.setState({currentLayout: 'chat info'});
         }
     }
 
@@ -166,20 +173,23 @@ export class MessengerLayout extends Component {
 
     getLayoutBeforeProfile() {
         return (this.state.goToProfileFrom === "users") ? () => this.handleUserButtonClicked :
-                (this.state.goToProfileFrom === "opened chat") ? () => this.handleSelectChat(this.state.selectedChat) :
+            (this.state.goToProfileFrom === "opened chat") ? () => this.handleSelectChat(this.state.selectedChat) :
                 (this.state.goToProfileFrom === "chat info") ? () => this.handleChatInfoClicked(this.state.selectedChat) : null
     }
 
     render() {
-        const { currentLayout } = this.state;
+        const {currentLayout} = this.state;
 
         return (
             <div>
                 <div className="buttons-container">
-                    <SimpleButton buttonText="My profile" logoUrl={profileIcon} onClick={() => this.handleProfileButtonClicked(mySelf, "menu")}/>
+                    <SimpleButton buttonText="My profile" logoUrl={profileIcon}
+                                  onClick={() => this.handleProfileButtonClicked(mySelf, "menu")}/>
                     <SimpleButton buttonText="View my chats" logoUrl={chatIcon} onClick={this.handleChatButtonClicked}/>
-                    <SimpleButton buttonText="Create new chat" logoUrl={newChatIcon} onClick={this.handleNewChatButtonClicked}/>
-                    <SimpleButton buttonText="View all users" logoUrl={userIcon} onClick={this.handleUserButtonClicked}/>
+                    <SimpleButton buttonText="Create new chat" logoUrl={newChatIcon}
+                                  onClick={this.handleNewChatButtonClicked}/>
+                    <SimpleButton buttonText="View all users" logoUrl={userIcon}
+                                  onClick={this.handleUserButtonClicked}/>
                     <SimpleButton buttonText="Logout" logoUrl={logoutIcon} onClick={this.handleLogoutButtonClicked}/>
                 </div>
                 <div className="content">
@@ -208,7 +218,8 @@ export class MessengerLayout extends Component {
                                            onClicked={(user, photo) => this.handleChangeUserInfo(user, photo)}/>}
 
                     {currentLayout === 'change password' &&
-                        <ChangePasswordLayout selectedUser={mySelf} onClicked={req => this.handleChangePasswordRequest(req)}/>}
+                        <ChangePasswordLayout selectedUser={mySelf}
+                                              onClicked={req => this.handleChangePasswordRequest(req)}/>}
 
                     {currentLayout === 'chats' && <ChatsLayout
                         onChatClicked={chat => {

@@ -2,7 +2,7 @@ import {Chat} from "../dto/Chat.js";
 import {setAllChats} from "../Model.js";
 import {myself} from "./SelfRepository.js";
 import {getRequest} from "../utils/Handler.js";
-import {getListOfUnreadCounters} from "../api/ChatApi.js";
+import {createNewPrivateChat, getListOfUnreadCounters} from "../api/ChatApi.js";
 
 let orderedChats = [];
 
@@ -38,4 +38,8 @@ export function newChatCreated(chat) {
 
 export function getChatById(chatId) {
     return orderedChats.filter(c => c.id === chatId)[0];
+}
+
+export async function createNewDialog(userId) {
+    return Chat.fromJSON(await createNewPrivateChat(myself.id, userId));
 }
