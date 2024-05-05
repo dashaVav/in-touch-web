@@ -170,7 +170,7 @@ export class MessengerLayout extends Component {
     }
 
     handleEditGroupInformation(data) {
-        console.log("Editing group request", data)
+        //todo вызвать editGroupChatName(chatId, changeGroupName), ничего не ждать я обновлю сразу список чатов
     }
 
     getLayoutBeforeProfile() {

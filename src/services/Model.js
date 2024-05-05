@@ -4,6 +4,7 @@ import {AuthResponse} from "./dto/AuthResponse.js";
 import {Message} from "./dto/Message.js";
 import {connect, sendReadChatSignal} from "./api/StopmSession.js";
 import {
+    changeGroupNameInfo,
     createGroupChat,
     createNewDialog,
     fetchChats,
@@ -71,7 +72,9 @@ export async function createDialogFromAllUsers(userId) {
 export async function createNewGroupChat(groupRequest) {
     return await createGroupChat(groupRequest);
 }
-
+export async function editGroupChatName(chatId, changeGroupName) {
+    await changeGroupNameInfo(chatId, changeGroupName)
+}
 export async function changeUserInfo(newUser) {
     user = await changeUserInform(newUser);
     return user;

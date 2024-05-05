@@ -1,7 +1,12 @@
 import {Chat} from "../dto/Chat.js";
 import {setAllChats} from "../Model.js";
 import {myself} from "./SelfRepository.js";
-import {createNewGroupChat, createNewPrivateChat, fetchAllChats, getListOfUnreadCounters} from "../api/ChatApi.js";
+import {
+    createNewGroupChat,
+    createNewPrivateChat,
+    fetchAllChats,
+    getListOfUnreadCounters
+} from "../api/ChatApi.js";
 
 let orderedChats = [];
 
@@ -45,4 +50,14 @@ export async function createNewDialog(userId) {
 
 export async function createGroupChat(groupRequest) {
     return Chat.fromJSON(await createNewGroupChat(groupRequest));
+}
+
+export async function changeGroupNameInfo(chatId, changeGroupName){
+    const chat = Chat.fromJSON(changeGroupName(chatId, changeGroupName));
+    for (let i = 0; i < orderedChats.length; i++) {
+        if (orderedChats[i] === chat) {
+            orderedChats[i] = chat;
+        }
+    }
+    setAllChats(orderedChats);
 }

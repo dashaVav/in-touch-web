@@ -1,4 +1,4 @@
-import {getRequest, postRequest} from "../utils/Handler.js";
+import {getRequest, postRequest, putRequest} from "../utils/Handler.js";
 
 export async function getListOfUnreadCounters(selfId) {
     return getRequest("/users/" + selfId + "/chats/unread");
@@ -14,4 +14,8 @@ export async function fetchAllChats(userId) {
 
 export async function createNewGroupChat(groupRequest) {
     return postRequest("/group_chat", groupRequest);
+}
+
+export async function changeGroupName(chatId, changeGroupName) {
+    return putRequest("chats/" + chatId + "/group_name", changeGroupName);
 }
