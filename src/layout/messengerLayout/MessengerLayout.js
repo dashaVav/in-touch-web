@@ -13,7 +13,7 @@ import {
     changePassword,
     changeUserInfo,
     chats,
-    createDialogFromAllUsers,
+    createDialogFromAllUsers, createNewGroupChat,
     user as mySelf
 } from "../../services/Model.js";
 import {UsersLayout} from "../usersLayout/UsersLayout.js";
@@ -163,7 +163,9 @@ export class MessengerLayout extends Component {
         }
     }
 
-    handleCreateNewChat(data) {
+    async handleCreateNewChat(data) {
+        const chat = await createNewGroupChat(data);
+        //todo открыть тут чат и data это GroupRequest
         console.log("Создание новгого чата!!!", data);
     }
 

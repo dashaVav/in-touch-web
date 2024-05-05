@@ -1,5 +1,5 @@
 import {Message} from "../dto/Message.js";
-import {fetchAllUsersOfCompany, sendMessage} from "../api/MessageApi.js";
+import {fetchMessages, sendMessage} from "../api/MessageApi.js";
 import {myself} from "./SelfRepository.js";
 
 const messagesByChatId = new Map();
@@ -14,7 +14,7 @@ export async function acceptNewMessageFromOtherUser(message) {
 
 export async function getMessagesOfChat(chatId) {
     if (!messagesByChatId.has(chatId)) {
-        const jsonArray = await fetchAllUsersOfCompany(chatId);
+        const jsonArray = await fetchMessages(chatId);
         messagesByChatId.set(chatId, await jsonArray.map(data => Message.fromJson(data)));
     }
     return messagesByChatId.get(chatId);

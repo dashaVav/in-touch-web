@@ -1,7 +1,7 @@
 import {getRequest, postRequest} from "../utils/Handler.js";
 import {Message} from "../dto/Message.js";
 
-export async function fetchAllUsersOfCompany(chatId) {
+export async function fetchMessages(chatId) {
     return getRequest("/chats/" + chatId + "/messages")
 }
 

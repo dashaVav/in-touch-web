@@ -1,8 +1,7 @@
 import {Chat} from "../dto/Chat.js";
 import {setAllChats} from "../Model.js";
 import {myself} from "./SelfRepository.js";
-import {getRequest} from "../utils/Handler.js";
-import {createNewPrivateChat, getListOfUnreadCounters} from "../api/ChatApi.js";
+import {createNewGroupChat, createNewPrivateChat, fetchAllChats, getListOfUnreadCounters} from "../api/ChatApi.js";
 
 let orderedChats = [];
 
@@ -13,7 +12,7 @@ export async function fetchChats() {
         unreadCountList.map(count => {
             unreadMap.set(count.chatId, count.count);
         });
-        const jsonAllChats = await getRequest("/users/" + myself.id + "/chats");
+        const jsonAllChats = await fetchAllChats(myself.id );
         orderedChats = jsonAllChats.map(data => Chat.fromJSON(data));
         for (let i = 0; i < orderedChats.length; i++) {
             if (unreadMap.has(orderedChats[i].id)){
@@ -42,4 +41,8 @@ export function getChatById(chatId) {
 
 export async function createNewDialog(userId) {
     return Chat.fromJSON(await createNewPrivateChat(myself.id, userId));
+}
+
+export async function createGroupChat(groupRequest) {
+    return Chat.fromJSON(await createNewGroupChat(groupRequest));
 }

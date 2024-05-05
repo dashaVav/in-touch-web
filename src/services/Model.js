@@ -3,7 +3,14 @@ import {AuthRequest} from "./dto/AuthRequest.js";
 import {AuthResponse} from "./dto/AuthResponse.js";
 import {Message} from "./dto/Message.js";
 import {connect, sendReadChatSignal} from "./api/StopmSession.js";
-import {createNewDialog, fetchChats, getChatById, moveUpChat, newChatCreated} from "./repositoty/ChatRepository.js";
+import {
+    createGroupChat,
+    createNewDialog,
+    fetchChats,
+    getChatById,
+    moveUpChat,
+    newChatCreated
+} from "./repositoty/ChatRepository.js";
 import {changeUserInform, changeUserPassword, setCompany, setMyself} from "./repositoty/SelfRepository.js";
 import {auth} from "./api/AuthApi.js";
 import {getAllUsers} from "./repositoty/UsersRepository.js";
@@ -59,6 +66,10 @@ export async function openChat(chatId) {
 
 export async function createDialogFromAllUsers(userId) {
     return await createNewDialog(userId);
+}
+
+export async function createNewGroupChat(groupRequest) {
+    return await createGroupChat(groupRequest);
 }
 
 export async function changeUserInfo(newUser) {
