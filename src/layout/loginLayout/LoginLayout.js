@@ -13,6 +13,7 @@ export class LoginLayout extends Component {
         this.state = {
             loginText: '',
             passwordText: '',
+            status: ''
         };
     }
 
@@ -38,9 +39,11 @@ export class LoginLayout extends Component {
     handleButtonClick= async () => {
         try {
             await login(this.state.loginText.toString(), this.state.passwordText.toString());
+            this.setState({status: "Login successfully"})
             this.props.onLogin();
         } catch (error) {
             console.error('Ошибка при логине:', error);
+            this.setState({status: "Error while login ..."})
         }
     }
 
@@ -57,6 +60,9 @@ export class LoginLayout extends Component {
                     buttonText="Click me"
                     onClick={this.handleButtonClick}
                 />
+                <text className={(this.state.status.toString().substring(0, 5) !== "Login") ? "red-style" : "green-style"}>
+                    {this.state.status}
+                </text>
             </div>
         );
     }

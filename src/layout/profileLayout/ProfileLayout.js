@@ -61,6 +61,13 @@ export class ProfileLayout extends Component {
                                 <CustomTag icon={birthdayIcon} text={selectedUser.dateOfBirth != null ? this.formatDate(selectedUser.dateOfBirth) : "no data"}/>
                                 <CustomTag icon={companyIcon} text={"In Touch"}/>
                             </div>
+                            <div className="change-result">
+                                <text className={
+                                    (this.props.changePasswordResult.toString().substring(0, 8) !== "Password" &&
+                                        this.props.changePasswordResult.toString().substring(0, 8) !== "Personal") ? "red-style" : "green-style"}>
+                                    {this.props.changePasswordResult}
+                                </text>
+                            </div>
                         </div>
                     </div>
                     <div className="profile-button">

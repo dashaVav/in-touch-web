@@ -1,3 +1,9 @@
+@font-face {
+    font-family: "Regular";
+    src: local("AirbnbCerealLight"),
+    url("../../../src/assets/fonts/ClearSans-Regular.ttf") format("truetype");
+}
+
 .login-pane {
     position: absolute;
     top: 0;
@@ -13,4 +19,16 @@
 
 .login-pane > * {
     margin-bottom: 10px;
+}
+
+.green-style {
+    font-family: "Regular", serif;
+    font-size: 16px;
+    color: green;
+}
+
+.red-style {
+    font-family: "Regular", serif;
+    font-size: 16px;
+    color: darkred;
 }

@@ -24,10 +24,15 @@ export class OpenedChatLayout extends Component {
     }
 
     handleMessageSend() {
-        //////////
         sendMessage(this.state.messageValue.toString());
-        console.log("Send message: ", this.state.messageValue)
+        this.setState({messageValue: ""})
     }
+
+    handleKeyDown = (event) => {
+        if (event.key === 'Enter') {
+            this.handleMessageSend();
+        }
+    };
 
     async componentDidMount() {
         window.addEventListener('getNewMessage', this.handleExternalVariableChange);
@@ -47,9 +52,15 @@ export class OpenedChatLayout extends Component {
         window.removeEventListener('getNewMessage', this.handleExternalVariableChange);
     }
 
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        const node = this.myRef.current;
+        if (node) {
+            node.scrollTop = node.scrollHeight;
+        }
+    }
+
     handleExternalVariableChange = () => {
         this.setState({ messageList: openedChatMessages }, () => {
-            console.log("State updated");
             const node = this.myRef.current;
             if (node) {
                 node.scrollTop = node.scrollHeight;
@@ -107,7 +118,7 @@ export class OpenedChatLayout extends Component {
                     {messageCells}
                 </div>
                 <div typeof="rectangle" className="divider"/>
-                <div className="message-input-container">
+                <div className="message-input-container" onKeyDown={this.handleKeyDown}>
                     <input
                         className="message-input"
                         type="text"

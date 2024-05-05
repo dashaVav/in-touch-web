@@ -95,5 +95,16 @@
 .user-info-class {
     display: flex;
     flex-direction: row;
+}
 
+.green-style {
+    font-family: "Regular", serif;
+    font-size: 16px;
+    color: green;
+}
+
+.red-style {
+    font-family: "Regular", serif;
+    font-size: 16px;
+    color: darkred;
 }

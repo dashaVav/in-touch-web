@@ -4,6 +4,10 @@ import {UserPhoto} from "../userPhoto/UserPhoto.js";
 export const ChatCell = ({ chat, onClicked  }) => {
 
     function formatDate(dateString) {
+        if (dateString === "no date") {
+            return dateString;
+        }
+
         const date = new Date(dateString);
         const now = new Date();
         const diff = now - date;

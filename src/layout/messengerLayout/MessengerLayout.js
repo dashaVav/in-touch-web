@@ -29,7 +29,8 @@ export class MessengerLayout extends Component {
             selectedUser: mySelf,
             selectedChat: null,
             isLoading: false,
-            userChanges: null
+            userChanges: null,
+            changePasswordResult: ""
         };
     }
 
@@ -90,7 +91,8 @@ export class MessengerLayout extends Component {
 
     async handleChangePasswordRequest(request) {
         this.setState({ currentLayout: 'profile' });
-        await this.onChangePassword(request);
+        const res = await this.onChangePassword(request);
+        this.setState({changePasswordResult: res})
     }
 
     handleChangeUserInfo(user) {
@@ -110,10 +112,12 @@ export class MessengerLayout extends Component {
                 await changeUserInfo(user)
                 this.setState({isLoading: false})
                 this.setState({userChanges: null})
+                this.setState({changePasswordResult: "Personal data was updated successfully!"})
                 return await mySelf;
             } catch (e) {
                 console.log("error")
                 console.log(e);
+                this.setState({changePasswordResult: "Error while updating personal data ..."})
             }
         }
     }
@@ -121,11 +125,16 @@ export class MessengerLayout extends Component {
     async onChangePassword(request) {
         this.setState({ currentLayout: 'profile' });
         try {
-            await changePassword(request)
-            console.log("Password have been changed!")
+            const res = await changePassword(request);
+            if (res === "Ok!")
+                return "Password have been changed!";
+            else {
+                return "Error while changing password";
+            }
         } catch (e) {
             console.log("error")
             console.log(e);
+            return "Error while changing password";
         }
     }
 
@@ -164,14 +173,15 @@ export class MessengerLayout extends Component {
                     {currentLayout === 'profile' && this.state.selectedUser.id !== mySelf.id &&
                         <ProfileLayout selectedUser={this.state.selectedUser}
                                        onClicked={user => this.handleGoToChatButton(user)}
-                                       onUpdateUserInfo={null}/>}
+                                       onUpdateUserInfo={null} changePasswordResult={""}/>}
 
                     {currentLayout === 'profile' && this.state.selectedUser.id === mySelf.id &&
                         <ProfileLayout selectedUser={this.state.selectedUser}
                                        onClicked={user => this.handleEditProfileButton(user)}
                                        isLoading={this.state.isLoading} userChanges={this.state.userChanges}
                                        onUpdateUserInfo={this.updateUser.bind(this)}
-                                       onChangePassClicked={user => this.handleChangePassButton(user)}/>}
+                                       onChangePassClicked={user => this.handleChangePassButton(user)}
+                                       changePasswordResult={this.state.changePasswordResult}/>}
 
                     {currentLayout === 'edit profile' &&
                         <EditProfileLayout selectedUser={this.state.selectedUser}
