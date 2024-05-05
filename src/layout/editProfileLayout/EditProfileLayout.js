@@ -1,11 +1,13 @@
 import {UserPhoto} from "../../components/userPhoto/UserPhoto.js";
 
 import './EditProfileLayout.css'
-import {Component} from "react";
+import React, {Component} from "react";
 import CustomTextInput from "../../components/textInput/CustomTextInput.js";
 import CustomButton from "../../components/button/CustomButton.js";
 import {User} from "../../services/dto/User.js";
 import {user} from "../../services/Model.js";
+import photoIcon from "../../assets/upload-photo-icon.svg";
+import IconButton from "../../components/iconButton/IconButton.js";
 
 export class EditProfileLayout extends Component {
 
@@ -15,7 +17,8 @@ export class EditProfileLayout extends Component {
             nameText: (user.realName) ? user.realName : "",
             surnameText: (user.surname) ? (user.surname) : "",
             patronymicText: (user.patronymic) ? (user.patronymic) : "",
-            phoneText: (user.phoneNumber) ? (user.phoneNumber) : ""
+            phoneText: (user.phoneNumber) ? (user.phoneNumber) : "",
+            imageUrl: ''
         };
     }
 
@@ -41,6 +44,18 @@ export class EditProfileLayout extends Component {
             this.state.patronymicText.toString(), null, null);
     }
 
+    handleFileChange = (event) => {
+        const file = event.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                const base64Data = e.target.result;
+                this.setState({imageUrl: base64Data});
+            };
+            reader.readAsDataURL(file);
+        }
+    };
+
     render() {
         const selectedUser = this.props.selectedUser;
 
@@ -49,7 +64,7 @@ export class EditProfileLayout extends Component {
                 <div className="head"/>
                 <div className="edit-profile-container">
                     <div className="edit-area">
-                        <UserPhoto className="photo" text={selectedUser.getInitials()} size={120}/>
+                        <UserPhoto className="photo" text={selectedUser.getInitials()} size={120} photo={this.state.imageUrl}/>
                         <div className="edit-container">
                             <text className="headline">{"Editing personal data"}</text>
                             <div className="field-area">
@@ -69,11 +84,27 @@ export class EditProfileLayout extends Component {
                                 <CustomTextInput onChange={this.handlePhoneTextChange} text="Phone" type="text" value={this.state.phoneText}/>
                             </div>
                             <div className="edit-button-container">
-                                <CustomButton buttonText="Edit profile" onClick={() => this.props.onClicked(this.prepareUserToChange())}/>
+                                <CustomButton buttonText="Edit profile" onClick={() => this.props.onClicked(this.prepareUserToChange(), this.state.imageUrl)}/>
                             </div >
                         </div>
                     </div>
                 </div>
+
+                <div className="image-upload-container">
+                    <input
+                        type="file"
+                        id="imageFile"
+                        accept="image/*"
+                        onChange={this.handleFileChange}
+                        className="hidden-input"
+                    />
+                    <label htmlFor="imageFile" className="icon-button">
+                        <span className="icon">
+                            <IconButton logoUrl={photoIcon} blue={true}/>
+                        </span>
+                    </label>
+                </div>
+
             </div>
         );
     }

@@ -31,7 +31,8 @@ export class MessengerLayout extends Component {
             isLoading: false,
             userChanges: null,
             changePasswordResult: "",
-            goToProfileFrom: ""
+            goToProfileFrom: "",
+            photoToUpload: null
         };
     }
 
@@ -97,9 +98,10 @@ export class MessengerLayout extends Component {
         this.setState({changePasswordResult: res})
     }
 
-    handleChangeUserInfo(user) {
+    handleChangeUserInfo(user, photo) {
         this.setState({isLoading: true})
         this.setState({userChanges: user})
+        this.setState({photoToUpload: photo})
         this.setState({ currentLayout: 'profile' });
     }
 
@@ -108,12 +110,15 @@ export class MessengerLayout extends Component {
         this.setState({ selectedChat: chat})
     }
 
-    async updateUser(user) {
+    async updateUser(user, photo) {
         if (this.state.isLoading === true) {
             try {
                 await changeUserInfo(user)
+                //TODO await updatePhoto(photo)
+                console.log("Got photo to upload:", photo);
                 this.setState({isLoading: false})
                 this.setState({userChanges: null})
+                this.setState({photoToUpload: null})
                 this.setState({changePasswordResult: "Personal data was updated successfully!"})
                 return await mySelf;
             } catch (e) {
@@ -190,6 +195,7 @@ export class MessengerLayout extends Component {
                         <ProfileLayout selectedUser={this.state.selectedUser}
                                        onClicked={user => this.handleEditProfileButton(user)}
                                        isLoading={this.state.isLoading} userChanges={this.state.userChanges}
+                                       photoToUpload={this.state.photoToUpload}
                                        onUpdateUserInfo={this.updateUser.bind(this)}
                                        onChangePassClicked={user => this.handleChangePassButton(user)}
                                        changePasswordResult={this.state.changePasswordResult}
@@ -199,7 +205,7 @@ export class MessengerLayout extends Component {
 
                     {currentLayout === 'edit profile' &&
                         <EditProfileLayout selectedUser={this.state.selectedUser}
-                                           onClicked={user => this.handleChangeUserInfo(user)}/>}
+                                           onClicked={(user, photo) => this.handleChangeUserInfo(user, photo)}/>}
 
                     {currentLayout === 'change password' &&
                         <ChangePasswordLayout selectedUser={mySelf} onClicked={req => this.handleChangePasswordRequest(req)}/>}

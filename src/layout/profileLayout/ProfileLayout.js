@@ -30,7 +30,7 @@ export class ProfileLayout extends Component {
     async componentDidMount() {
         if (this.props.isLoading === true) {
             try {
-                const newUser = await this.props.onUpdateUserInfo(this.props.userChanges);
+                const newUser = await this.props.onUpdateUserInfo(this.props.userChanges, this.props.photoToUpload);
                 this.setState({selectedUser: newUser});
             } catch (e) {
                 console.error("Ошибка при загрузке профиля:", e);

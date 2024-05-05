@@ -74,3 +74,32 @@
 .change-pass-button {
     margin-top: -140px;
 }
+
+
+.image-upload-container {
+    position: absolute;
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    z-index: 1;
+    margin-top: 150px;
+    margin-left: 90px;
+}
+
+.hidden-input {
+    display: none;
+}
+
+.icon-button {
+
+    border: none;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    cursor: pointer;
+}
+
+.icon {
+    margin-right: 5px;
+}
