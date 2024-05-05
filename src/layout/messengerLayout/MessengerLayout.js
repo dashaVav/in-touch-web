@@ -30,7 +30,8 @@ export class MessengerLayout extends Component {
             selectedChat: null,
             isLoading: false,
             userChanges: null,
-            changePasswordResult: ""
+            changePasswordResult: "",
+            goToProfileFrom: ""
         };
     }
 
@@ -58,9 +59,10 @@ export class MessengerLayout extends Component {
     /**
      * Метод обрабатывает события перехода к профилю пользователя
      */
-    handleProfileButtonClicked = (user) => {
+    handleProfileButtonClicked = (user, from) => {
         this.setState({ currentLayout: 'profile' });
         this.setState({selectedUser: user});
+        this.setState({goToProfileFrom: from})
     }
 
     /**
@@ -141,7 +143,7 @@ export class MessengerLayout extends Component {
     handleChatInfoClicked(chat) {
         if (chat.isPrivate === true) {
             this.setState({ currentLayout: 'profile' });
-            console.log(chat.members.filter(u => u.id !== mySelf.id));
+            this.setState({goToProfileFrom: "opened chat"})
             this.setState({selectedUser: chat.members.filter(u => u.id !== mySelf.id)[0]});
         }
         else {
@@ -157,13 +159,19 @@ export class MessengerLayout extends Component {
         console.log("Editing group request", data)
     }
 
+    getLayoutBeforeProfile() {
+        return (this.state.goToProfileFrom === "users") ? () => this.handleUserButtonClicked :
+                (this.state.goToProfileFrom === "opened chat") ? () => this.handleSelectChat(this.state.selectedChat) :
+                (this.state.goToProfileFrom === "chat info") ? () => this.handleChatInfoClicked(this.state.selectedChat) : null
+    }
+
     render() {
         const { currentLayout } = this.state;
 
         return (
             <div>
                 <div className="buttons-container">
-                    <SimpleButton buttonText="My profile" logoUrl={profileIcon} onClick={() => this.handleProfileButtonClicked(mySelf)}/>
+                    <SimpleButton buttonText="My profile" logoUrl={profileIcon} onClick={() => this.handleProfileButtonClicked(mySelf, "menu")}/>
                     <SimpleButton buttonText="View my chats" logoUrl={chatIcon} onClick={this.handleChatButtonClicked}/>
                     <SimpleButton buttonText="Create new chat" logoUrl={newChatIcon} onClick={this.handleNewChatButtonClicked}/>
                     <SimpleButton buttonText="View all users" logoUrl={userIcon} onClick={this.handleUserButtonClicked}/>
@@ -173,7 +181,10 @@ export class MessengerLayout extends Component {
                     {currentLayout === 'profile' && this.state.selectedUser.id !== mySelf.id &&
                         <ProfileLayout selectedUser={this.state.selectedUser}
                                        onClicked={user => this.handleGoToChatButton(user)}
-                                       onUpdateUserInfo={null} changePasswordResult={""}/>}
+                                       onUpdateUserInfo={null} changePasswordResult={""}
+                                       onBackClicked={(this.state.goToProfileFrom === "users") ? this.handleUserButtonClicked :
+                                           (this.state.goToProfileFrom === "opened chat") ? () => this.handleSelectChat(this.state.selectedChat) :
+                                               (this.state.goToProfileFrom === "chat info") ? () => this.handleChatInfoClicked(this.state.selectedChat) : null}/>}
 
                     {currentLayout === 'profile' && this.state.selectedUser.id === mySelf.id &&
                         <ProfileLayout selectedUser={this.state.selectedUser}
@@ -181,7 +192,10 @@ export class MessengerLayout extends Component {
                                        isLoading={this.state.isLoading} userChanges={this.state.userChanges}
                                        onUpdateUserInfo={this.updateUser.bind(this)}
                                        onChangePassClicked={user => this.handleChangePassButton(user)}
-                                       changePasswordResult={this.state.changePasswordResult}/>}
+                                       changePasswordResult={this.state.changePasswordResult}
+                                       onBackClicked={(this.state.goToProfileFrom === "users") ? this.handleUserButtonClicked :
+                                           (this.state.goToProfileFrom === "opened chat") ? () => this.handleSelectChat(this.state.selectedChat) :
+                                               (this.state.goToProfileFrom === "chat info") ? () => this.handleChatInfoClicked(this.state.selectedChat) : null}/>}
 
                     {currentLayout === 'edit profile' &&
                         <EditProfileLayout selectedUser={this.state.selectedUser}
@@ -197,18 +211,20 @@ export class MessengerLayout extends Component {
                     />}
 
                     {currentLayout === 'users' && <UsersLayout
-                        userList={allUsers} onUserClicked={user => this.handleProfileButtonClicked(user)}
+                        userList={allUsers} onUserClicked={user => this.handleProfileButtonClicked(user, "users")}
                         onGoTOChatClicked={user => this.handleGoToChatButton(user)}/>}
 
                     {currentLayout === 'open chat' &&
                         <OpenedChatLayout currentChat={this.state.selectedChat}
                                           onChatInfoClicked={chat => this.handleChatInfoClicked(chat)}
+                                          onBackClicked={this.handleChatButtonClicked}
                         />}
 
                     {currentLayout === 'chat info' && <ChatInfoLayout
                         selectedChat={this.state.selectedChat}
-                        onUserClicked={user => this.handleProfileButtonClicked(user)}
-                        onClicked={chat => this.handleOnEditChatClicked(chat)}/>}
+                        onUserClicked={user => this.handleProfileButtonClicked(user, "chat info")}
+                        onClicked={chat => this.handleOnEditChatClicked(chat)}
+                        onBackClicked={chat => this.handleSelectChat(chat)}/>}
 
                     {currentLayout === 'new chat' &&
                         <CreateChatLayout onClicked={data => this.handleCreateNewChat(data)}/>}

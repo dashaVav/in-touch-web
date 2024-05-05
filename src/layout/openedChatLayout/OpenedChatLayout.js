@@ -3,6 +3,7 @@ import React, {Component} from "react";
 import {UserPhoto} from "../../components/userPhoto/UserPhoto.js";
 import IconButton from "../../components/iconButton/IconButton.js";
 import infoIcon from "../../assets/info-icon.svg"
+import backIcon from "../../assets/back-icon.svg"
 import {openChat, openedChatMessages, sendMessage, user as mySelf} from "../../services/Model.js";
 import {MessageCell} from "../../components/messageCell/MessageCell.js";
 import sendIcon from "../../assets/icon-send-message.svg"
@@ -102,7 +103,10 @@ export class OpenedChatLayout extends Component {
         return (
             <div className="open-chat-container">
                 <div className="chat-info-container">
-                    <UserPhoto text={currentChat.getInitials()} size={50} textSize={16}/>
+                    <div className="back-button-container">
+                        <IconButton logoUrl={backIcon} onClick={this.props.onBackClicked}/>
+                        <UserPhoto text={currentChat.getInitials()} size={50} textSize={16}/>
+                    </div>
                     <div className="text-info-container">
                         <text className="chat-name">
                             {currentChat.getChatName()}

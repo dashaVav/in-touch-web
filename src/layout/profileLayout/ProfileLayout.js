@@ -7,6 +7,8 @@ import birthdayIcon from "../../assets/birthday-icon.svg"
 import companyIcon from "../../assets/company-icon.svg"
 import CustomButton from "../../components/button/CustomButton.js";
 import {user as mySelf} from "../../services/Model.js";
+import backIcon from "../../assets/back-icon.svg";
+import IconButton from "../../components/iconButton/IconButton.js";
 
 export class ProfileLayout extends Component {
     constructor(props) {
@@ -41,14 +43,23 @@ export class ProfileLayout extends Component {
 
         const button = (selectedUser.id === mySelf.id) ? <CustomButton
             buttonText={(selectedUser.id === mySelf.id) ? "Change pass" : ""}
-            onClick={() => this.props.onChangePassClicked(selectedUser)}/> : ""
+            onClick={() => this.props.onChangePassClicked(selectedUser)}/> : "";
+
+        const backButton = (this.props.onBackClicked != null) ?
+            <div className="back-button">
+                <IconButton logoUrl={backIcon} onClick={this.props.onBackClicked}/>
+            </div> : null;
+
 
         return (
             <div className="main-profile-container">
                 <div className="head"/>
                 <div className="profile-container">
                     <div className="user-info-class">
-                        <UserPhoto className="photo" text={selectedUser.getInitials()} size={120}/>
+                        {backButton}
+                        <div className="photo">
+                            <UserPhoto className="photo" text={selectedUser.getInitials()} size={120}/>
+                        </div>
                         <div className="username-data">
                             <div className="name-text-container">
                                 <text className="real-name">{selectedUser.getRealName()}</text>

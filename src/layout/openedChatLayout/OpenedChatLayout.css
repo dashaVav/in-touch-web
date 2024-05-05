@@ -101,3 +101,14 @@
     font-size: 14px;
     font-family: "Regular", serif;
 }
+
+.back-button-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-left: -20px;
+}
+
+.back-button-container > * {
+    margin-right: 10px;
+}

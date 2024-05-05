@@ -22,33 +22,40 @@
     justify-content: flex-start;
     margin-bottom: 20px;
     margin-top: -70px;
+    /*margin-left: -30px;*/
 }
 
 .chat-information-container > * {
-    margin: 10px 20px 10px 15px;
+    /*margin: 10px 20px 10px 15px;*/
+    margin-right: 20px;
 }
 
 .chat-photo {
-    margin: 20px;
+    width: 240px;
+    margin: 40px 20px 20px;
 }
 
 .data-container {
     display: flex;
     flex-direction: column;
     margin-top: 90px;
-    margin-left: -5px;
+    margin-left: 10px;
+    /*width: 120px;*/
 }
 
 .chat-name-info {
     font-family: "Medium", serif;
     font-size: 24px;
     color: white;
+    width: 300px;
 }
 
 .chat-status {
     font-family: "Regular", serif;
     font-size: 16px;
     color: lightgray;
+
+    width: 100px;
 }
 
 .chat-head {
@@ -71,6 +78,12 @@
 }
 
 .edit-chat-button {
-    margin-left: 340px;
+    display: flex;
+    flex-direction: column;
+    margin-left: 50px;
     margin-top: 70px;
+}
+
+.back {
+    margin-top: 50px;
 }

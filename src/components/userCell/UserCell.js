@@ -1,7 +1,7 @@
 import './UserCell.css'
 import {UserPhoto} from "../userPhoto/UserPhoto.js";
 
-export const UserCell = ({ user, onClicked, onGoToClicked  }) => {
+export const UserCell = ({ user, onClicked  }) => {
 
     return (
         <div className="user-cell">
