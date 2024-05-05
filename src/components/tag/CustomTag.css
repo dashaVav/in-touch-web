@@ -1,0 +1,29 @@
+@font-face {
+    font-family: "Regular";
+    src: local("AirbnbCerealLight"),
+    url("../../../src/assets/fonts/ClearSans-Regular.ttf") format("truetype");
+}
+
+.tag {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-top: 10px;
+    justify-content: center;
+}
+
+.tag > * {
+    margin-right: 10px;
+}
+
+.tag-image {
+    width: 18px;
+    height: 18px;
+    color: lightgray;
+}
+
+.tag-text {
+    font-family: "Regular", serif;
+    font-size: 14px;
+    color: lightgray;
+}

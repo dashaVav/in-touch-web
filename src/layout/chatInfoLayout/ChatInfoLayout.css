@@ -1,0 +1,76 @@
+@font-face {
+    font-family: "Medium";
+    src: local("AirbnbCerealLight"),
+    url("../../../src/assets/fonts/ClearSans-Medium.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: "Regular";
+    src: local("AirbnbCerealLight"),
+    url("../../../src/assets/fonts/ClearSans-Regular.ttf") format("truetype");
+}
+
+.container-all-chat-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.chat-information-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    margin-bottom: 20px;
+    margin-top: -70px;
+}
+
+.chat-information-container > * {
+    margin: 10px 20px 10px 15px;
+}
+
+.chat-photo {
+    margin: 20px;
+}
+
+.data-container {
+    display: flex;
+    flex-direction: column;
+    margin-top: 90px;
+    margin-left: -5px;
+}
+
+.chat-name-info {
+    font-family: "Medium", serif;
+    font-size: 24px;
+    color: white;
+}
+
+.chat-status {
+    font-family: "Regular", serif;
+    font-size: 16px;
+    color: lightgray;
+}
+
+.chat-head {
+    background: rgb(63,94,251);
+    background: linear-gradient(43deg, rgba(63,94,251,1) 0%, rgba(252,70,107,1) 100%);
+    height: 150px;
+    border-radius: 10px;
+    margin-top: -20px;
+    margin-left: -20px;
+    margin-right: -20px;
+}
+
+.chat-info-text {
+    font-family: "Medium", serif;
+    font-size: 24px;
+    color: white;
+
+    margin-left: 15px;
+    margin-bottom: 10px;
+}
+
+.edit-chat-button {
+    margin-left: 340px;
+    margin-top: 70px;
+}

@@ -1,24 +1,29 @@
-import logo from './logo.svg';
-import './App.css';
+import MainLayout from "./layout/mainLayout/MainLayout.js";
+import './assets/App.css';
+import {LoginLayout} from "./layout/loginLayout/LoginLayout.js";
+import {useState} from "react";
+import {MessengerLayout} from "./layout/messengerLayout/MessengerLayout.js";
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    // State для хранения состояния вошел ли пользователь в систему или нет
+    const [loggedIn, setLoggedIn] = useState(false);
+
+    // Обработчик события входа в систему
+    const handleLogin = () => {
+        setLoggedIn(true);
+    };
+
+    // Обработчик события выхода в систему
+    const handleLogout = () => {
+        setLoggedIn(false);
+    }
+
+    return (
+        <div className="app-main-pane">
+            <MainLayout>
+                {loggedIn ? <MessengerLayout onLogout={handleLogout} /> : <LoginLayout onLogin={handleLogin} />}
+            </MainLayout>
+        </div>
   );
 }
 

@@ -1,0 +1,35 @@
+.main-users-container {
+    display: flex;
+    flex-direction: column;
+}
+.main-users-container > * {
+    margin-bottom: 10px;
+}
+
+.users-container {
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    /*align-items: center;*/
+}
+
+.users-container > * {
+    margin-bottom: 10px;
+}
+
+.users-container::-webkit-scrollbar {
+    width: 5px;
+}
+
+.users-container::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.users-container::-webkit-scrollbar-thumb {
+    background: lightgray;
+    border-radius: 5px;
+}
+
+.users-container::-webkit-scrollbar-thumb:hover {
+    background: darkgray;
+}

@@ -1,0 +1,89 @@
+@font-face {
+    font-family: "Medium";
+    src: local("AirbnbCerealLight"),
+    url("../../../src/assets/fonts/ClearSans-Medium.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: "Regular";
+    src: local("AirbnbCerealLight"),
+    url("../../../src/assets/fonts/ClearSans-Regular.ttf") format("truetype");
+}
+
+.main-chats-container {
+    display: flex;
+    flex-direction: column;
+}
+.main-chats-container > * {
+    margin-bottom: 10px;
+}
+
+.chats-container {
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+}
+
+.chats-container > * {
+    margin-bottom: 10px;
+}
+
+.search-container {
+    display: flex;
+    flex-direction: row;
+
+    align-items: center;
+}
+
+.layoutName {
+    font-family: "Medium", serif;
+    font-size: 24px;
+    color: white;
+
+    margin-left: 15px;
+    margin-bottom: 10px;
+}
+
+.search-input {
+    border-radius: 10px;
+    height: 30px;
+    padding: 5px 5px 5px 5px;
+    background-color: transparent;
+    outline: none;
+    color: white;
+
+    border: none;
+    font-size: 16px;
+    font-family: "Regular", serif;
+    margin-right: 15px;
+    width: 100%;
+}
+
+.search-image {
+    width: 25px;
+    height: 25px;
+    color: lightgray;
+    margin-right: 10px;
+    margin-left: 15px;
+}
+
+.search-input::placeholder {
+    color: lightgray;
+}
+
+/*.chats-container::-webkit-scrollbar {*/
+/*    width: 5px;*/
+/*}*/
+
+/*.chats-container::-webkit-scrollbar-track {*/
+/*    background: transparent;*/
+/*}*/
+
+/*.chats-container::-webkit-scrollbar-thumb {*/
+/*    background: lightgray;*/
+/*    border-radius: 5px;*/
+/*}*/
+
+/*.chats-container::-webkit-scrollbar-thumb:hover {*/
+/*    background: darkgray;*/
+/*}*/

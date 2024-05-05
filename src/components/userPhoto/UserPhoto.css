@@ -1,0 +1,18 @@
+@font-face {
+    font-family: "Medium";
+    src: local("AirbnbCerealLight"),
+    url("../../../src/assets/fonts/ClearSans-Medium.ttf") format("truetype");
+}
+
+.user-photo {
+    border-radius: 50%;
+    background-color: #AAAAAA;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.user-photo-text {
+    font-family: "Medium", serif;
+    color: white;
+}

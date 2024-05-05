@@ -1,0 +1,37 @@
+@font-face {
+    font-family: "Medium";
+    src: local("AirbnbCerealLight"),
+    url("../../../src/assets/fonts/ClearSans-Medium.ttf") format("truetype");
+}
+
+.nav-bar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 85vw;
+    background-color: #2F303B;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 15vw;
+}
+
+.nav-bar-container {
+    display: flex;
+    alignment: left;
+    align-items: center;
+}
+
+.nav-bar-container > * {
+    margin-right: 10px;
+}
+
+.nav-bar-image{
+    width: 30px;
+    height: 30px;
+}
+
+.nav-bar-text{
+    font-family: "Medium", serif;
+    font-size: 20px;
+    color: white;
+}
