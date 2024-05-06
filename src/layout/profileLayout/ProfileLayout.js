@@ -50,6 +50,9 @@ export class ProfileLayout extends Component {
                 <IconButton logoUrl={backIcon} onClick={this.props.onBackClicked}/>
             </div> : null;
 
+        const mainButton = (this.props.goToProfileFrom !== "opened chat") ? <CustomButton
+            buttonText={(selectedUser.id === mySelf.id) ? "Edit profile" : "Message"}
+            onClick={() => this.props.onClicked(selectedUser)}/> : null;
 
         return (
             <div className="main-profile-container">
@@ -82,9 +85,7 @@ export class ProfileLayout extends Component {
                         </div>
                     </div>
                     <div className="profile-button">
-                        <CustomButton
-                            buttonText={(selectedUser.id === mySelf.id) ? "Edit profile" : "Message"}
-                            onClick={() => this.props.onClicked(selectedUser)}/>
+                        {mainButton}
                         {button}
                     </div>
                 </div>

@@ -2,6 +2,7 @@ import {Chat} from "../dto/Chat.js";
 import {setAllChats} from "../Model.js";
 import {myself} from "./SelfRepository.js";
 import {
+    changeGroupName,
     createNewGroupChat,
     createNewPrivateChat,
     fetchAllChats,
@@ -52,8 +53,8 @@ export async function createGroupChat(groupRequest) {
     return Chat.fromJSON(await createNewGroupChat(groupRequest));
 }
 
-export async function changeGroupNameInfo(chatId, changeGroupName){
-    const chat = Chat.fromJSON(changeGroupName(chatId, changeGroupName));
+export async function changeGroupNameInfo(chatId, changeGroupName1){
+    const chat = Chat.fromJSON(changeGroupName(chatId, changeGroupName1));
     for (let i = 0; i < orderedChats.length; i++) {
         if (orderedChats[i] === chat) {
             orderedChats[i] = chat;

@@ -13,7 +13,7 @@ import {
     changePassword,
     changeUserInfo,
     chats,
-    createDialogFromAllUsers, createNewGroupChat,
+    createDialogFromAllUsers, createNewGroupChat, editGroupChatName,
     user as mySelf
 } from "../../services/Model.js";
 import {UsersLayout} from "../usersLayout/UsersLayout.js";
@@ -89,7 +89,7 @@ export class MessengerLayout extends Component {
     async handleGoToChatButton(user) {
         console.log("Переход на чат с изльзоваталем из списка пользователей", user);
         const chat = await createDialogFromAllUsers(user.id);
-        //todo вызвать открытые чата с этим чатом
+        this.handleSelectChat(chat);
     }
 
     handleEditProfileButton(user) {
@@ -164,13 +164,19 @@ export class MessengerLayout extends Component {
     }
 
     async handleCreateNewChat(data) {
-        const chat = await createNewGroupChat(data);
-        //todo открыть тут чат и data это GroupRequest
-        console.log("Создание новгого чата!!!", data);
+        if (data) {
+            const chat = await createNewGroupChat(data);
+            this.handleSelectChat(chat);
+            console.log("Создание новгого чата!!!", data);
+        }
     }
 
-    handleEditGroupInformation(data) {
-        //todo вызвать editGroupChatName(chatId, changeGroupName), ничего не ждать я обновлю сразу список чатов
+    async handleEditGroupInformation(data) {
+        if (data) {
+            console.log(data[0], data[1]);
+            await editGroupChatName(data[0], data[1]);
+            this.handleSelectChat(this.state.selectedChat)
+        }
     }
 
     getLayoutBeforeProfile() {
@@ -199,6 +205,7 @@ export class MessengerLayout extends Component {
                         <ProfileLayout selectedUser={this.state.selectedUser}
                                        onClicked={user => this.handleGoToChatButton(user)}
                                        onUpdateUserInfo={null} changePasswordResult={""}
+                                       goToProfileFrom={this.state.goToProfileFrom}
                                        onBackClicked={(this.state.goToProfileFrom === "users") ? this.handleUserButtonClicked :
                                            (this.state.goToProfileFrom === "opened chat") ? () => this.handleSelectChat(this.state.selectedChat) :
                                                (this.state.goToProfileFrom === "chat info") ? () => this.handleChatInfoClicked(this.state.selectedChat) : null}/>}

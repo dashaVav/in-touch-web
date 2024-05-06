@@ -3,6 +3,7 @@ import {Component} from "react";
 import {UserPhoto} from "../../components/userPhoto/UserPhoto.js";
 import CustomTextInput from "../../components/textInput/CustomTextInput.js";
 import CustomButton from "../../components/button/CustomButton.js";
+import {ChangeGroupName} from "../../services/dto/ChangeGroupName.js";
 
 export class EditGroupLayout extends Component {
 
@@ -18,7 +19,11 @@ export class EditGroupLayout extends Component {
     }
 
     prepareGroupToChange() {
-        return "data";
+        if (this.state.nameText.toString() !== "") {
+            const changeGroupName = new ChangeGroupName(this.state.nameText);
+            const chatId = this.props.selectedChat.id;
+            return [chatId, changeGroupName];
+        }
     }
 
     render() {
