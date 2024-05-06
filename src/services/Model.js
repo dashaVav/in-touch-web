@@ -12,7 +12,13 @@ import {
     moveUpChat,
     newChatCreated
 } from "./repositoty/ChatRepository.js";
-import {changeUserInform, changeUserPassword, setCompany, setMyself} from "./repositoty/SelfRepository.js";
+import {
+    changeUserInform,
+    changeUserPassword,
+    changeUserProfileProto,
+    setCompany,
+    setMyself
+} from "./repositoty/SelfRepository.js";
 import {auth} from "./api/AuthApi.js";
 import {getAllUsers} from "./repositoty/UsersRepository.js";
 import {acceptNewMessageFromOtherUser, getMessagesOfChat, sendMessageToChat} from "./repositoty/MessageRepository.js";
@@ -72,9 +78,11 @@ export async function createDialogFromAllUsers(userId) {
 export async function createNewGroupChat(groupRequest) {
     return await createGroupChat(groupRequest);
 }
+
 export async function editGroupChatName(chatId, changeGroupName) {
     await changeGroupNameInfo(chatId, changeGroupName)
 }
+
 export async function changeUserInfo(newUser) {
     user = await changeUserInform(newUser);
     return user;
@@ -114,8 +122,12 @@ export async function acceptNewChat(payload) {
     newChatCreated(chat);
 }
 
-export
-
-function payloadToJson(payload) {
+export function payloadToJson(payload) {
     return JSON.parse(payload.body);
+}
+
+export async function editUserPhoto(file) {
+    const formData = new FormData();
+    formData.append('file', file, "image.jpeg");
+    await changeUserProfileProto(formData);
 }

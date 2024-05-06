@@ -122,8 +122,6 @@ export class MessengerLayout extends Component {
         if (this.state.isLoading === true) {
             try {
                 await changeUserInfo(user)
-                //TODO await updatePhoto(photo)
-                console.log("Got photo to upload:", photo);
                 this.setState({isLoading: false})
                 this.setState({userChanges: null})
                 this.setState({photoToUpload: null})

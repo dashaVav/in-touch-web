@@ -3,6 +3,8 @@ let headers = {
     'Content-Type': 'application/json'
 };
 
+let fileHeaders;
+
 const baseurl = 'https://195.133.196.67:8081/chat_api/v1';
 
 export function setToken(token) {
@@ -11,6 +13,11 @@ export function setToken(token) {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer ' + token
     };
+
+    fileHeaders = {
+        'Accept': '*/*',
+        'Authorization': 'Bearer ' + token
+    }
 }
 
 
@@ -40,6 +47,17 @@ export async function putRequest(url, body) {
         method: 'PUT',
         headers: headers,
         body: JSON.stringify(body),
+        rejectUnauthorized: false,
+        requestCert: true,
+        agent: false
+    }));
+}
+
+export async function postResourceRequest(url, body) {
+    return mapJson(await fetch(baseurl + url, {
+        method: 'POST',
+        headers: fileHeaders,
+        body: body,
         rejectUnauthorized: false,
         requestCert: true,
         agent: false

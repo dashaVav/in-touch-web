@@ -5,7 +5,7 @@ import React, {Component} from "react";
 import CustomTextInput from "../../components/textInput/CustomTextInput.js";
 import CustomButton from "../../components/button/CustomButton.js";
 import {User} from "../../services/dto/User.js";
-import {user} from "../../services/Model.js";
+import {editUserPhoto, user} from "../../services/Model.js";
 import photoIcon from "../../assets/upload-photo-icon.svg";
 import IconButton from "../../components/iconButton/IconButton.js";
 
@@ -44,8 +44,9 @@ export class EditProfileLayout extends Component {
             this.state.patronymicText.toString(), null, null);
     }
 
-    handleFileChange = (event) => {
+    handleFileChange = async (event) => {
         const file = event.target.files[0];
+
         if (file) {
             const reader = new FileReader();
             reader.onload = (e) => {
@@ -53,7 +54,10 @@ export class EditProfileLayout extends Component {
                 this.setState({imageUrl: base64Data});
             };
             reader.readAsDataURL(file);
+            await editUserPhoto(file);
         }
+
+
     };
 
     render() {

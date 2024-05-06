@@ -1,0 +1,2 @@
+const allFiles = new Map();
+

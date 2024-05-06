@@ -1,6 +1,7 @@
 import {User} from "../dto/User.js";
 import {changePassword, changeUserInfo} from "../api/SelfApi.js";
 import {AuthResponse} from "../dto/AuthResponse.js";
+import {uploadUserProfilePhoto} from "../api/FileApi.js";
 
 
 export var myself;
@@ -27,4 +28,8 @@ export async function changeUserPassword(changePasswordRequest) {
     } catch (e) {
         return "Error!"
     }
+}
+
+export async function changeUserProfileProto(formData) {
+    await uploadUserProfilePhoto(formData);
 }
