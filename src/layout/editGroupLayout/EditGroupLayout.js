@@ -34,7 +34,7 @@ export class EditGroupLayout extends Component {
                 <div className="chat-head"/>
                 <div className="edit-profile-container">
                     <div className="edit-area">
-                        <UserPhoto className="photo" text={selectedChat.getInitials()} size={120}/>
+                        <UserPhoto className="photo" text={selectedChat.getInitials()} size={120} thumbnailPhotoId={selectedChat.getUserThumbnailPhotoId()}/>
                         <div className="edit-container">
                             <text className="headline">{"Editing group information"}</text>
                             <div className="field-area">

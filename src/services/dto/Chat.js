@@ -33,7 +33,7 @@ export class Chat {
 
     getUserThumbnailPhotoId() {
         return (this.isPrivate) ? this.members.filter(u => u.id !== mySelf.id)
-            .map(u => u.thumbnailPhotoId).join("") : null;
+            .map(u => u.thumbnailPhotoId).join("") : this.group.groupPhotoId;
     }
 
     static fromJSON(json) {

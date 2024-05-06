@@ -100,6 +100,8 @@ export class OpenedChatLayout extends Component {
             );
         }
 
+        console.log(currentChat, new Date())
+
         return (
             <div className="open-chat-container">
                 <div className="chat-info-container">
