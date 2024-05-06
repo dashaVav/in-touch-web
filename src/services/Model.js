@@ -127,7 +127,5 @@ export function payloadToJson(payload) {
 }
 
 export async function editUserPhoto(file) {
-    const formData = new FormData();
-    formData.append('file', file, "image.jpeg");
-    await changeUserProfileProto(formData);
+    await changeUserProfileProto(file);
 }

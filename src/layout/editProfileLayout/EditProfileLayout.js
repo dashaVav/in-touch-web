@@ -59,9 +59,7 @@ export class EditProfileLayout extends Component {
         const file = event.target.files[0];
         if (file) {
             const newFormData = new FormData();
-            newFormData.append('file', file);
-
-            // Обновляем состояние с новым formData
+            newFormData.append('file', file, "image.jpeg");
             this.setState({ formData: newFormData });
 
             const reader = new FileReader();

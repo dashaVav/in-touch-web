@@ -13,7 +13,7 @@ import {
     changePassword,
     changeUserInfo,
     chats,
-    createDialogFromAllUsers, createNewGroupChat, editGroupChatName,
+    createDialogFromAllUsers, createNewGroupChat, editGroupChatName, editUserPhoto,
     user as mySelf
 } from "../../services/Model.js";
 import {UsersLayout} from "../usersLayout/UsersLayout.js";
@@ -122,9 +122,9 @@ export class MessengerLayout extends Component {
         if (this.state.isLoading === true) {
             try {
                 await changeUserInfo(user)
-                //TODO надо проверять, что форм дата не пустая
-                //TODO await updatePhoto(photo)
-                console.log("Got photo to upload:", photo);
+                if (photo.has("file")) {
+                    await editUserPhoto(photo);
+                }
                 this.setState({isLoading: false})
                 this.setState({userChanges: null})
                 this.setState({photoToUpload: null})
