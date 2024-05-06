@@ -18,7 +18,8 @@ export class EditProfileLayout extends Component {
             surnameText: (user.surname) ? (user.surname) : "",
             patronymicText: (user.patronymic) ? (user.patronymic) : "",
             phoneText: (user.phoneNumber) ? (user.phoneNumber) : "",
-            imageUrl: ''
+            imageUrl: '',
+            formData: new FormData()
         };
     }
 
@@ -44,9 +45,25 @@ export class EditProfileLayout extends Component {
             this.state.patronymicText.toString(), null, null);
     }
 
+    componentDidUpdate(prevProps, prevState, s) {
+        if (prevState.formData!== this.state.formData) {
+            for (let [key, value] of this.state.formData.entries()) {
+                console.log(key, value);
+                console.log('smth');
+            }
+        }
+    }
+
+
     handleFileChange = (event) => {
         const file = event.target.files[0];
         if (file) {
+            const newFormData = new FormData();
+            newFormData.append('file', file);
+
+            // Обновляем состояние с новым formData
+            this.setState({ formData: newFormData });
+
             const reader = new FileReader();
             reader.onload = (e) => {
                 const base64Data = e.target.result;
@@ -84,25 +101,25 @@ export class EditProfileLayout extends Component {
                                 <CustomTextInput onChange={this.handlePhoneTextChange} text="Phone" type="text" value={this.state.phoneText}/>
                             </div>
                             <div className="edit-button-container">
-                                <CustomButton buttonText="Edit profile" onClick={() => this.props.onClicked(this.prepareUserToChange(), this.state.imageUrl)}/>
+                                <CustomButton buttonText="Edit profile" onClick={() => this.props.onClicked(this.prepareUserToChange(), this.state.formData)}/>
                             </div >
                         </div>
                     </div>
                 </div>
 
                 <div className="image-upload-container">
-                    <input
-                        type="file"
-                        id="imageFile"
-                        accept="image/*"
-                        onChange={this.handleFileChange}
-                        className="hidden-input"
-                    />
-                    <label htmlFor="imageFile" className="icon-button">
-                        <span className="icon">
-                            <IconButton logoUrl={photoIcon} blue={true}/>
-                        </span>
-                    </label>
+                        <input
+                            type="file"
+                            id="imageFile"
+                            accept="image/*"
+                            onChange={this.handleFileChange}
+                            className="hidden-input"
+                        />
+                        <label htmlFor="imageFile" className="icon-button">
+                            <span className="icon">
+                                <IconButton logoUrl={photoIcon} blue={true}/>
+                            </span>
+                        </label>
                 </div>
 
             </div>

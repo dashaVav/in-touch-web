@@ -106,10 +106,10 @@ export class MessengerLayout extends Component {
         this.setState({changePasswordResult: res})
     }
 
-    handleChangeUserInfo(user, photo) {
+    handleChangeUserInfo(user, formData) {
         this.setState({isLoading: true})
         this.setState({userChanges: user})
-        this.setState({photoToUpload: photo})
+        this.setState({photoToUpload: formData})
         this.setState({currentLayout: 'profile'});
     }
 
@@ -122,6 +122,7 @@ export class MessengerLayout extends Component {
         if (this.state.isLoading === true) {
             try {
                 await changeUserInfo(user)
+                //TODO надо проверять, что форм дата не пустая
                 //TODO await updatePhoto(photo)
                 console.log("Got photo to upload:", photo);
                 this.setState({isLoading: false})
