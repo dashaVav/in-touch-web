@@ -85,5 +85,7 @@
 }
 
 .back {
-    margin-top: 50px;
+    position: absolute;
+    margin-top: -258px;
+    margin-left: -5px;
 }

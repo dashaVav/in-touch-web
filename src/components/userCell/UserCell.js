@@ -6,7 +6,7 @@ export const UserCell = ({ user, onClicked  }) => {
     return (
         <div className="user-cell">
             <div className="simple-container" onClick={onClicked}>
-                <UserPhoto className="user-cell-photo" text={user.getInitials()} size={60} textSize={16}/>
+                <UserPhoto className="user-cell-photo" text={user.getInitials()} size={60} textSize={16} thumbnailPhotoId={user.thumbnailPhotoId}/>
                 <div className="text-container">
                     <text className="real-user-name">
                         {(user.realName == null ? "- " : user.realName + " ") + (user.surname == null ? "-" : user.surname)}

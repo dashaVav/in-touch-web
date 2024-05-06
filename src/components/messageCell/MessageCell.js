@@ -27,20 +27,31 @@ export const MessageCell = ({ message, style, styleContainer }) => {
         return formattedDate;
     }
 
+    const photo = (message.attachmentId) ?
+        <img src={"http://195.133.196.67:8881/chat_api/v1/download/" + message.attachmentId} alt="картинка" /> : null
+
     return (
         <div className="message-cell" style={style}>
             {(message.author.id !== mySelf.id)  &&
-                <UserPhoto text={message.author.getInitials()} size={30} textSize={10}/>
+                <UserPhoto text={message.author.getInitials()} size={30} textSize={10} thumbnailPhotoId={message.author.thumbnailPhotoId}/>
             }
 
             <div className="container-mes" style={styleContainer}>
+                {photo &&
+                    <div className="image-container">
+                        {photo}
+                    </div>
+                }
+
                 <div className="message-text">
                     {message.text}
                 </div>
-                <div className="message-date-time">
-                    {formatDate(message.dateTime)}
-                </div>
+
+            </div>
+            <div className="message-date-time">
+                {formatDate(message.dateTime)}
             </div>
         </div>
+
     );
 };

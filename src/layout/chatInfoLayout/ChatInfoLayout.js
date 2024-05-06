@@ -28,7 +28,7 @@ export class ChatInfoLayout extends Component {
                         <IconButton logoUrl={backIcon} onClick={() => this.props.onBackClicked(selectedChat)}/>
                     </div>
                     <div className="chat-photo">
-                        <UserPhoto text={selectedChat.getInitials()} size={120} textSize={30}/>
+                        <UserPhoto text={selectedChat.getInitials()} size={120} textSize={30} thumbnailPhotoId={selectedChat.getUserThumbnailPhotoId()}/>
                     </div>
                     <div className="data-container">
                         <text className="chat-name-info">{selectedChat.getChatName()}</text>

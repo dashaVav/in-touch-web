@@ -17,5 +17,5 @@ export async function createNewGroupChat(groupRequest) {
 }
 
 export async function changeGroupName(chatId, changeGroupName) {
-    return putRequest("chats/" + chatId + "/group_name", changeGroupName);
+    return putRequest("/chats/" + chatId + "/group_name", changeGroupName);
 }

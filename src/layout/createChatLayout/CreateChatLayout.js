@@ -5,6 +5,9 @@ import {UserPhoto} from "../../components/userPhoto/UserPhoto.js";
 import CustomTextInput from "../../components/textInput/CustomTextInput.js";
 import {allUsers} from "../../services/Model.js";
 import CustomButton from "../../components/button/CustomButton.js";
+import {GroupChatInfo} from "../../services/dto/GroupChatInfo.js";
+import {user as mySelf} from "../../services/Model.js"
+import {GroupRequest} from "../../services/dto/GroupRequest.js";
 
 export class CreateChatLayout extends Component {
     constructor(props) {
@@ -34,7 +37,13 @@ export class CreateChatLayout extends Component {
     }
 
     prepareDataForRequest() {
-        return "data";
+        if (this.state.addedUsers.length !== 0 && this.state.chatName.toString() !== "") {
+            console.log(this.state.addedUsers, this.state.chatName)
+            const userIds = this.state.addedUsers.map(user => user.id);
+            userIds.push(mySelf.id);
+            const chatInfo = new GroupChatInfo(this.state.chatName, new Date(), mySelf)
+            return new GroupRequest(userIds, chatInfo);
+        }
     }
 
     render() {
@@ -53,7 +62,7 @@ export class CreateChatLayout extends Component {
         for (let i = 0; i < addedUserList.length; i++) {
             const user = addedUserList[i];
             addedUsersCells.push(
-                <div className="added-user-container" onClick={() => this.onAddedUserClicked(user)}>
+                <div className="added-user-container" onClick={() => this.onAddedUserClicked(user)} key={user.id}>
                     <UserPhoto text={user.getInitials()} size={30} textSize={10}/>
                     <text className="header3">{user.realName}</text>
                 </div>

@@ -100,12 +100,14 @@ export class OpenedChatLayout extends Component {
             );
         }
 
+        console.log(currentChat, new Date())
+
         return (
             <div className="open-chat-container">
                 <div className="chat-info-container">
                     <div className="back-button-container">
                         <IconButton logoUrl={backIcon} onClick={this.props.onBackClicked}/>
-                        <UserPhoto text={currentChat.getInitials()} size={50} textSize={16}/>
+                        <UserPhoto text={currentChat.getInitials()} size={50} textSize={16} thumbnailPhotoId={currentChat.getUserThumbnailPhotoId()}/>
                     </div>
                     <div className="text-info-container">
                         <text className="chat-name">

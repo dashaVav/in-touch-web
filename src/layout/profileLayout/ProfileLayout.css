@@ -110,6 +110,7 @@
 }
 
 .back-button {
-    margin-top: 80px;
-    margin-right: 20px;
+    position: absolute;
+    margin-top: -65px;
+    margin-left: -13px;
 }
