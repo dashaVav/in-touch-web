@@ -58,7 +58,7 @@ export class ProfileLayout extends Component {
                     <div className="user-info-class">
                         {backButton}
                         <div className="photo">
-                            <UserPhoto className="photo" text={selectedUser.getInitials()} size={120}/>
+                            <UserPhoto className="photo" text={selectedUser.getInitials()} size={120} thumbnailPhotoId={selectedUser.thumbnailPhotoId}/>
                         </div>
                         <div className="username-data">
                             <div className="name-text-container">

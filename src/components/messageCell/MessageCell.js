@@ -30,7 +30,7 @@ export const MessageCell = ({ message, style, styleContainer }) => {
     return (
         <div className="message-cell" style={style}>
             {(message.author.id !== mySelf.id)  &&
-                <UserPhoto text={message.author.getInitials()} size={30} textSize={10}/>
+                <UserPhoto text={message.author.getInitials()} size={30} textSize={10} thumbnailPhotoId={message.author.thumbnailPhotoId}/>
             }
 
             <div className="container-mes" style={styleContainer}>

@@ -64,7 +64,7 @@ export class EditProfileLayout extends Component {
                 <div className="head"/>
                 <div className="edit-profile-container">
                     <div className="edit-area">
-                        <UserPhoto className="photo" text={selectedUser.getInitials()} size={120} photo={this.state.imageUrl}/>
+                        <UserPhoto className="photo" text={selectedUser.getInitials()} size={120} photo={this.state.imageUrl} thumbnailPhotoId={selectedUser.thumbnailPhotoId}/>
                         <div className="edit-container">
                             <text className="headline">{"Editing personal data"}</text>
                             <div className="field-area">

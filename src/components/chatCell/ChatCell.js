@@ -42,7 +42,8 @@ export const ChatCell = ({ chat, onClicked  }) => {
         <div className="chat-cell" onClick={onClicked}>
             <div className="chat-cell-container">
                 <div className="simple-container">
-                    <UserPhoto text={curChat.getInitials()} size={60} textSize={16}/>
+                    {!curChat.isPrivate && <UserPhoto text={curChat.getInitials()} size={60} textSize={16}/>}
+                    {curChat.isPrivate && <UserPhoto text={curChat.getInitials()} size={60} textSize={16} thumbnailPhotoId={curChat.getUserThumbnailPhotoId()}/>}
                     <div className="text-container">
                         <text className="chat-name">
                             {curChat.getChatName()}

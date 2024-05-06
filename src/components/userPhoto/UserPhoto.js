@@ -1,6 +1,6 @@
 import './UserPhoto.css'
 
-export const UserPhoto = ({ text, size, textSize, photo }) => {
+export const UserPhoto = ({ text, size, textSize, photo, thumbnailPhotoId}) => {
     const circleSize = size || 100;
     const sizeOfText = textSize || 30;
     const circleStyles = {
@@ -13,10 +13,14 @@ export const UserPhoto = ({ text, size, textSize, photo }) => {
 
     const photoImage = (photo) ? photo : null
 
+    const imageUrl = (thumbnailPhotoId) ? "http://195.133.196.67:8881/chat_api/v1/download/" + thumbnailPhotoId.toString() : null;
+
     return (
         <div className="user-photo" style={circleStyles}>
-            {!photoImage && <text className="user-photo-text" style={textStyles}>{text}</text>}
-            {photoImage && <img className="user-photo-img" src={photoImage} alt="Выбранное изображение" />}
+            {!photoImage && !imageUrl && <text className="user-photo-text" style={textStyles}>{text}</text>}
+            {imageUrl && !photoImage && <img className="user-photo-img" src={imageUrl} alt="Выбранное изображение" />}
+            {photoImage && imageUrl && <img className="user-photo-img" src={photoImage} alt="Выбранное изображение" />}
+            {photoImage && !imageUrl && <img className="user-photo-img" src={photoImage} alt="Выбранное изображение" />}
         </div>
     );
 };
