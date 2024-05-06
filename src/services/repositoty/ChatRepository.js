@@ -54,9 +54,9 @@ export async function createGroupChat(groupRequest) {
 }
 
 export async function changeGroupNameInfo(chatId, changeGroupName1){
-    const chat = Chat.fromJSON(changeGroupName(chatId, changeGroupName1));
+    const chat = Chat.fromJSON(await changeGroupName(chatId, changeGroupName1));
     for (let i = 0; i < orderedChats.length; i++) {
-        if (orderedChats[i] === chat) {
+        if (orderedChats[i].id === chat.id) {
             orderedChats[i] = chat;
         }
     }
