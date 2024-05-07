@@ -33,3 +33,8 @@ export async function changeUserPassword(changePasswordRequest) {
 export async function changeUserProfileProto(formData) {
     await uploadUserProfilePhoto(formData);
 }
+
+export function selfRepositoryClear() {
+    myself = null;
+    myCompany = null;
+}

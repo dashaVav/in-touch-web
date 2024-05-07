@@ -23,3 +23,7 @@ export async function getMessagesOfChat(chatId) {
 export function sendMessageToChat(text, chatId, fileId) {
     sendMessage(text, chatId, myself.id, fileId);
 }
+
+export function messageRepositoryClear() {
+    messagesByChatId.clear();
+}

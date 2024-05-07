@@ -84,3 +84,7 @@ export async function editPhoto(chatId, formData) {
     const chat = Chat.fromJSON(await (await uploadGroupChatPhoto(chatId, formData)).json());
     updateChat(chat);
 }
+
+export function chatRepositoryClear() {
+    orderedChats.length = 0;
+}

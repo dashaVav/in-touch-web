@@ -12,5 +12,9 @@ export async function getAllUsers() {
     return allUsers;
 }
 
+export function userRepositoryClear() {
+    allUsers.length = 0;
+}
+
 
 

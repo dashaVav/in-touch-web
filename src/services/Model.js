@@ -5,7 +5,7 @@ import {Message} from "./dto/Message.js";
 import {connect, sendReadChatSignal} from "./api/StopmSession.js";
 import {
     addUserToChat,
-    changeGroupNameInfo,
+    changeGroupNameInfo, chatRepositoryClear,
     createGroupChat,
     createNewDialog, editPhoto,
     fetchChats,
@@ -16,13 +16,18 @@ import {
 import {
     changeUserInform,
     changeUserPassword,
-    changeUserProfileProto,
+    changeUserProfileProto, selfRepositoryClear,
     setCompany,
     setMyself
 } from "./repositoty/SelfRepository.js";
 import {auth} from "./api/AuthApi.js";
-import {getAllUsers} from "./repositoty/UsersRepository.js";
-import {acceptNewMessageFromOtherUser, getMessagesOfChat, sendMessageToChat} from "./repositoty/MessageRepository.js";
+import {getAllUsers, userRepositoryClear} from "./repositoty/UsersRepository.js";
+import {
+    acceptNewMessageFromOtherUser,
+    getMessagesOfChat,
+    messageRepositoryClear,
+    sendMessageToChat
+} from "./repositoty/MessageRepository.js";
 import {Chat} from "./dto/Chat.js";
 import {ReadNotification} from "./dto/ReadNotification.js";
 import {uploadFile} from "./api/FileApi.js";
@@ -145,4 +150,11 @@ export async function removeUserFromGroupChat(userId) {
 
 export async function editGroupChatPhoto(formData) {
     await editPhoto(openedChat, formData);
+}
+
+export function logout() {
+    chatRepositoryClear();
+    messageRepositoryClear();
+    selfRepositoryClear();
+    userRepositoryClear()
 }

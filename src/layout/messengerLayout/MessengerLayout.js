@@ -13,7 +13,7 @@ import {
     changePassword,
     changeUserInfo,
     chats,
-    createDialogFromAllUsers, createNewGroupChat, editGroupChatName, editUserPhoto,
+    createDialogFromAllUsers, createNewGroupChat, editGroupChatName, editUserPhoto, logout,
     user as mySelf
 } from "../../services/Model.js";
 import {UsersLayout} from "../usersLayout/UsersLayout.js";
@@ -77,7 +77,7 @@ export class MessengerLayout extends Component {
      * Метод обрабатывает события выхода из аккаунта
      */
     handleLogoutButtonClicked = () => {
-        //TODO если нужно что-то обрабатывать после выхода из аккаунта
+        logout();
         this.props.onLogout();
     }
 
