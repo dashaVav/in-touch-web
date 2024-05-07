@@ -20,6 +20,6 @@ export async function getMessagesOfChat(chatId) {
     return messagesByChatId.get(chatId);
 }
 
-export function sendMessageToChat(text, chatId) {
-    sendMessage(text, chatId, myself.id);
+export function sendMessageToChat(text, chatId, fileId) {
+    sendMessage(text, chatId, myself.id, fileId);
 }

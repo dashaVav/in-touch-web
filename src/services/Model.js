@@ -24,6 +24,7 @@ import {getAllUsers} from "./repositoty/UsersRepository.js";
 import {acceptNewMessageFromOtherUser, getMessagesOfChat, sendMessageToChat} from "./repositoty/MessageRepository.js";
 import {Chat} from "./dto/Chat.js";
 import {ReadNotification} from "./dto/ReadNotification.js";
+import {uploadFile} from "./api/FileApi.js";
 
 export var user;
 export var company;
@@ -88,13 +89,16 @@ export async function changeUserInfo(newUser) {
     return user;
 }
 
-//тут статус смены пароля - строка
 export async function changePassword(changePasswordRequest) {
     return await changeUserPassword(changePasswordRequest);
 }
 
-export function sendMessage(text) {
-    sendMessageToChat(text, openedChat);
+export async function sendMessage(text, file) {
+    let fileId;
+    if (file !== undefined) {
+        fileId = await (await uploadFile(file)).text();
+    }
+    sendMessageToChat(text, openedChat, await fileId);
 }
 
 function notifyComponent(typeName) {

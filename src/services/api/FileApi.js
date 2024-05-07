@@ -4,3 +4,7 @@ import {myself} from "../repositoty/SelfRepository.js";
 export async function uploadUserProfilePhoto(formData) {
     await postResourceRequest("/users/" + myself.id + "/profile_photo", formData);
 }
+
+export async function uploadFile(formData) {
+    return postResourceRequest("/upload", formData);
+}

@@ -2,12 +2,13 @@ import {User} from "./User.js";
 import {Parse} from "../utils/Parse.js";
 
 export class Message {
-    constructor(id, text, dateTime, author, chatId, attachmentId) {
+    constructor(id, text, dateTime, author, chatId,isAuxiliary, attachmentId) {
         this.id = id;
         this.text = text;
         this.dateTime = dateTime;
         this.author = author;
         this.chatId = chatId;
+        this.isAuxiliary = isAuxiliary;
         this.attachmentId = attachmentId;
     }
 
@@ -18,6 +19,7 @@ export class Message {
             Parse.date(json.dateTime),
             User.fromJson(json.author),
             json.chatId,
+            json.isAuxiliary,
             json.attachmentId
         )
     }

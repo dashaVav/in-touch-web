@@ -1,6 +1,7 @@
 import './MessageCell.css'
 import {UserPhoto} from "../userPhoto/UserPhoto.js";
 import {user as mySelf} from "../../services/Model.js";
+import {baseUrlForFiles} from "../../services/utils/Handler.js";
 
 export const MessageCell = ({ message, style, styleContainer }) => {
 
@@ -28,7 +29,7 @@ export const MessageCell = ({ message, style, styleContainer }) => {
     }
 
     const photo = (message.attachmentId) ?
-        <img src={"http://195.133.196.67:8881/chat_api/v1/download/" + message.attachmentId} alt="картинка" /> : null
+        <img src={baseUrlForFiles + message.attachmentId} alt="картинка" /> : null
 
     return (
         <div className="message-cell" style={style}>

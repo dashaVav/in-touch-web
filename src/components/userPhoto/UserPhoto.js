@@ -1,4 +1,5 @@
 import './UserPhoto.css'
+import {baseUrlForFiles} from "../../services/utils/Handler.js";
 
 export const UserPhoto = ({ text, size, textSize, photo, thumbnailPhotoId}) => {
     const circleSize = size || 100;
@@ -13,7 +14,7 @@ export const UserPhoto = ({ text, size, textSize, photo, thumbnailPhotoId}) => {
 
     const photoImage = (photo) ? photo : null
 
-    const imageUrl = (thumbnailPhotoId) ? "http://195.133.196.67:8881/chat_api/v1/download/" + thumbnailPhotoId.toString() : null;
+    const imageUrl = (thumbnailPhotoId) ? baseUrlForFiles + thumbnailPhotoId.toString() : null;
 
     return (
         <div className="user-photo" style={circleStyles}>
