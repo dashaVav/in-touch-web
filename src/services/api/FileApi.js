@@ -8,3 +8,7 @@ export async function uploadUserProfilePhoto(formData) {
 export async function uploadFile(formData) {
     return postResourceRequest("/upload", formData);
 }
+
+export async function uploadGroupChatPhoto(chatId, formData) {
+    return postResourceRequest("/chats/" + chatId + "/group_photo", formData);
+}

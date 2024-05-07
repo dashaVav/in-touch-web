@@ -17,7 +17,7 @@ export class Message {
             json.id,
             json.text,
             Parse.date(json.dateTime),
-            User.fromJson(json.author),
+            json.author !== null ? User.fromJson(json.author) : null,
             json.chatId,
             json.isAuxiliary,
             json.attachmentId

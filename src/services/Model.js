@@ -4,13 +4,14 @@ import {AuthResponse} from "./dto/AuthResponse.js";
 import {Message} from "./dto/Message.js";
 import {connect, sendReadChatSignal} from "./api/StopmSession.js";
 import {
+    addUserToChat,
     changeGroupNameInfo,
     createGroupChat,
-    createNewDialog,
+    createNewDialog, editPhoto,
     fetchChats,
     getChatById,
     moveUpChat,
-    newChatCreated
+    newChatCreated, removeUserFromChat
 } from "./repositoty/ChatRepository.js";
 import {
     changeUserInform,
@@ -132,4 +133,16 @@ export function payloadToJson(payload) {
 
 export async function editUserPhoto(file) {
     await changeUserProfileProto(file);
+}
+
+export async function addUserToGroupChat(userId) {
+    await addUserToChat(openedChat, userId);
+}
+
+export async function removeUserFromGroupChat(userId) {
+    await removeUserFromChat(openedChat, userId);
+}
+
+export async function editGroupChatPhoto(formData) {
+    await editPhoto(openedChat, formData);
 }

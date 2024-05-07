@@ -19,3 +19,11 @@ export async function createNewGroupChat(groupRequest) {
 export async function changeGroupName(chatId, changeGroupName) {
     return putRequest("/chats/" + chatId + "/group_name", changeGroupName);
 }
+
+export async function addUser(chatId, userId) {
+    return putRequest("/chats/" + chatId + "/new_member/" + userId);
+}
+
+export async function removeUser(chatId, userId){
+    return putRequest("/chats/" + chatId + "/delete_member/" + userId)
+}
