@@ -20,14 +20,16 @@ export class ChatsLayout extends Component {
     }
 
     componentDidMount() {
-        window.addEventListener('getNewMessage', this.handleExternalVariableChange);
+        window.addEventListener('getNewMessage', this.handleUserChatChanged);
+        window.addEventListener('updateChatList', this.handleUserChatChanged);
     }
 
     componentWillUnmount() {
-        window.removeEventListener('getNewMessage', this.handleExternalVariableChange);
+        window.removeEventListener('getNewMessage', this.handleUserChatChanged);
+        window.removeEventListener('updateChatList', this.handleUserChatChanged);
     }
 
-    handleExternalVariableChange = () => {
+    handleUserChatChanged = () => {
         this.setState({chatList: allChats})
     }
 

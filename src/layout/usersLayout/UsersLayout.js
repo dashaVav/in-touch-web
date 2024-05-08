@@ -2,6 +2,7 @@ import React, {Component} from "react";
 import './UsersLayout.css'
 import {UserCell} from "../../components/userCell/UserCell.js";
 import icon from "../../assets/search-icon.svg";
+import {allUsers} from "../../services/Model.js";
 
 export class UsersLayout extends Component {
     constructor(props) {
@@ -15,6 +16,18 @@ export class UsersLayout extends Component {
     handleSearchChange(event) {
         this.setState({ searchValue: event.target.value });
         console.log(this.state.searchValue)
+    }
+
+    componentDidMount() {
+        window.addEventListener('updateUserList', this.handleUserListChanged);
+    }
+
+    componentWillUnmount() {
+        window.removeEventListener('updateUserList', this.handleUserListChanged);
+    }
+
+    handleUserListChanged = () => {
+        this.setState({chatList: allUsers})
     }
 
     render() {

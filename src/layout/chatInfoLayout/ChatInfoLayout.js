@@ -8,6 +8,18 @@ import IconButton from "../../components/iconButton/IconButton.js";
 
 export class ChatInfoLayout extends Component {
 
+    componentDidMount() {
+        window.addEventListener('updateChatInfo', this.force);
+    }
+
+    componentWillUnmount() {
+        window.removeEventListener('updateChatInfo', this.force);
+    }
+
+    force() {
+        this.forceUpdate()
+    }
+
     render() {
         const selectedChat = this.props.selectedChat;
 
