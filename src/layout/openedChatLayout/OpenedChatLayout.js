@@ -7,13 +7,15 @@ import backIcon from "../../assets/back-icon.svg"
 import {openChat, openedChatMessages, sendMessage, user as mySelf} from "../../services/Model.js";
 import {MessageCell} from "../../components/messageCell/MessageCell.js";
 import sendIcon from "../../assets/icon-send-message.svg"
+import photoIcon from "../../assets/send-photo-icon.svg";
 export class OpenedChatLayout extends Component {
     constructor(props) {
         super(props);
         this.state = {
             messageValue: '',
             currentChat: this.props.currentChat,
-            messageList: []
+            messageList: [],
+            formData: new FormData()
         };
         this.handleMessageChange = this.handleMessageChange.bind(this);
         this.handleMessageSend = this.handleMessageSend.bind(this);
@@ -25,7 +27,13 @@ export class OpenedChatLayout extends Component {
     }
 
     handleMessageSend() {
-        sendMessage(this.state.messageValue.toString());
+        if (this.state.formData.has("file")) {
+            sendMessage(this.state.messageValue.toString(), this.state.formData);
+            this.setState({formData: new FormData()});
+        }
+        else {
+            sendMessage(this.state.messageValue.toString(), undefined);
+        }
         this.setState({messageValue: ""})
     }
 
@@ -61,6 +69,7 @@ export class OpenedChatLayout extends Component {
     }
 
     handleExternalVariableChange = () => {
+        console.log("update____________________________")
         this.setState({ messageList: openedChatMessages }, () => {
             const node = this.myRef.current;
             if (node) {
@@ -68,6 +77,22 @@ export class OpenedChatLayout extends Component {
             }
         });
     }
+
+    handleFileChange = (event) => {
+        const file = event.target.files[0];
+        if (file) {
+            const newFormData = new FormData();
+            newFormData.append('file', file, "image.jpeg");
+            this.setState({ formData: newFormData });
+
+            // const reader = new FileReader();
+            // reader.onload = (e) => {
+            //     const base64Data = e.target.result;
+            //     this.setState({imageUrl: base64Data});
+            // };
+            // reader.readAsDataURL(file);
+        }
+    };
 
     render() {
         const {currentChat} = this.props;
@@ -113,7 +138,11 @@ export class OpenedChatLayout extends Component {
             }
         }
 
-        console.log(currentChat, new Date())
+        const addedPhoto = (this.state.formData.has("file")) ?
+            <div className="added-file">
+                <text className="status">Added one attachment</text>
+            </div>
+            : null;
 
         return (
             <div className="open-chat-container">
@@ -135,9 +164,25 @@ export class OpenedChatLayout extends Component {
                 <div typeof="rectangle" className="divider"/>
                 <div className="message-list-container" ref={this.myRef}>
                     {messageCells}
+                    {addedPhoto}
                 </div>
                 <div typeof="rectangle" className="divider"/>
+                {/*{addedPhoto}*/}
                 <div className="message-input-container" onKeyDown={this.handleKeyDown}>
+                    <div className="image-upload-con">
+                        <input
+                            type="file"
+                            id="imageFile"
+                            accept="image/*"
+                            onChange={this.handleFileChange}
+                            className="hidden-input"
+                        />
+                        <label htmlFor="imageFile" className="icon-button">
+                                <span className="icon">
+                                    <IconButton logoUrl={photoIcon}/>
+                                </span>
+                        </label>
+                    </div>
                     <input
                         className="message-input"
                         type="text"

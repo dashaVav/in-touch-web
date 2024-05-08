@@ -13,7 +13,7 @@ import {
     changePassword,
     changeUserInfo,
     chats,
-    createDialogFromAllUsers, createNewGroupChat, editGroupChatName, editUserPhoto, logout,
+    createDialogFromAllUsers, createNewGroupChat, editGroupChatName, editGroupChatPhoto, editUserPhoto, logout,
     user as mySelf
 } from "../../services/Model.js";
 import {UsersLayout} from "../usersLayout/UsersLayout.js";
@@ -176,6 +176,9 @@ export class MessengerLayout extends Component {
         if (data) {
             console.log(data[0], data[1]);
             await editGroupChatName(data[0], data[1]);
+            if (data[2].has("file")) {
+                await editGroupChatPhoto(data[2]);
+            }
             this.handleSelectChat(this.state.selectedChat)
         }
     }

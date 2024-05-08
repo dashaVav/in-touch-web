@@ -150,6 +150,7 @@ export async function removeUserFromGroupChat(userId) {
 
 export async function editGroupChatPhoto(formData) {
     await editPhoto(openedChat, formData);
+    notifyComponent("getNewMessage");
 }
 
 export function logout() {
