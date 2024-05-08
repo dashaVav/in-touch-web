@@ -4,7 +4,9 @@ import React, {Component} from "react";
 import {UserCell} from "../../components/userCell/UserCell.js";
 import CustomButton from "../../components/button/CustomButton.js";
 import backIcon from "../../assets/back-icon.svg";
+import deleteIcon from "../../assets/delete-icon.svg";
 import IconButton from "../../components/iconButton/IconButton.js";
+import {user as mySelf} from "../../services/Model.js"
 
 export class ChatInfoLayout extends Component {
 
@@ -27,9 +29,23 @@ export class ChatInfoLayout extends Component {
 
         for (let i = 0; i < selectedChat.members.length; i++) {
             const user = selectedChat.members[i];
-            usersCells.push(
-                <UserCell key={user.id} user={user} onClicked={() => this.props.onUserClicked(user)}/>
-            );
+            if (mySelf.id !== selectedChat.group.creator.id) {
+                usersCells.push(
+                    <UserCell key={user.id} user={user} onClicked={() => this.props.onUserClicked(user)}/>
+                );
+            }
+            else {
+                usersCells.push(
+                    <div className="user-modified-cell">
+                        <div className="user-cell-modified">
+                            <UserCell key={user.id} user={user} onClicked={() => this.props.onUserClicked(user)}/>
+                        </div>
+                        <div className="del-button">
+                            <IconButton logoUrl={deleteIcon} onClick={() => this.props.onRemoveUser(user)}/>
+                        </div>
+                    </div>
+                );
+            }
         }
 
         return (
@@ -48,6 +64,8 @@ export class ChatInfoLayout extends Component {
                     </div>
                     <div className="edit-chat-button">
                         <CustomButton buttonText="Edit group" onClick={() => this.props.onClicked(selectedChat)}/>
+                        <CustomButton buttonText="Add user" onClick={() => this.props.onAddUserClicked(selectedChat)}/>
+                        <CustomButton buttonText="Leave group" onClick={() => this.props.onRemoveUser(mySelf)}/>
                     </div>
                 </div>
                 <text className="chat-info-text">Members</text>

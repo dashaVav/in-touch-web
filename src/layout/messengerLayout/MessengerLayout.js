@@ -13,7 +13,13 @@ import {
     changePassword,
     changeUserInfo,
     chats,
-    createDialogFromAllUsers, createNewGroupChat, editGroupChatName, editGroupChatPhoto, editUserPhoto, logout,
+    createDialogFromAllUsers,
+    createNewGroupChat,
+    editGroupChatName,
+    editGroupChatPhoto,
+    editUserPhoto,
+    logout,
+    removeUserFromGroupChat,
     user as mySelf
 } from "../../services/Model.js";
 import {UsersLayout} from "../usersLayout/UsersLayout.js";
@@ -24,6 +30,8 @@ import {EditProfileLayout} from "../editProfileLayout/EditProfileLayout.js";
 import {ChangePasswordLayout} from "../changePasswordLayout/ChangePasswordLayout.js";
 import {CreateChatLayout} from "../createChatLayout/CreateChatLayout.js";
 import {EditGroupLayout} from "../editGroupLayout/EditGroupLayout.js";
+import {AddUserToChat} from "../addUserToChat/AddUserToChat.js";
+import {addUserToChat} from "../../services/repositoty/ChatRepository.js";
 
 /**
  * Класс отвечающий за представления главного и самого первого экрана приложения
@@ -118,6 +126,15 @@ export class MessengerLayout extends Component {
         this.setState({selectedChat: chat})
     }
 
+    handleOnAddUserToChatOpened() {
+        this.setState({currentLayout: 'add user'});
+    }
+
+    async handleAddUserToChat(user) {
+        await addUserToChat(this.state.selectedChat.id, user.id);
+        this.setState({currentLayout: 'open chat'});
+    }
+
     async updateUser(user, photo) {
         if (this.state.isLoading === true) {
             try {
@@ -183,10 +200,14 @@ export class MessengerLayout extends Component {
         }
     }
 
-    getLayoutBeforeProfile() {
-        return (this.state.goToProfileFrom === "users") ? () => this.handleUserButtonClicked :
-            (this.state.goToProfileFrom === "opened chat") ? () => this.handleSelectChat(this.state.selectedChat) :
-                (this.state.goToProfileFrom === "chat info") ? () => this.handleChatInfoClicked(this.state.selectedChat) : null
+    async handleRemoveUserClicked(user) {
+        await removeUserFromGroupChat(user.id)
+        if (user.id !== mySelf.id) {
+            this.handleSelectChat(this.state.selectedChat)
+        }
+        else {
+            this.handleChatButtonClicked();
+        }
     }
 
     render() {
@@ -255,7 +276,9 @@ export class MessengerLayout extends Component {
                         selectedChat={this.state.selectedChat}
                         onUserClicked={user => this.handleProfileButtonClicked(user, "chat info")}
                         onClicked={chat => this.handleOnEditChatClicked(chat)}
-                        onBackClicked={chat => this.handleSelectChat(chat)}/>}
+                        onBackClicked={chat => this.handleSelectChat(chat)}
+                        onAddUserClicked={chat => this.handleOnAddUserToChatOpened(chat)}
+                        onRemoveUser={user => this.handleRemoveUserClicked(user)}/>}
 
                     {currentLayout === 'new chat' &&
                         <CreateChatLayout onClicked={data => this.handleCreateNewChat(data)}/>}
@@ -264,6 +287,11 @@ export class MessengerLayout extends Component {
                         <EditGroupLayout selectedChat={this.state.selectedChat}
                                          onClicked={data => this.handleEditGroupInformation(data)}
                                          onBackClicked={(chat) => this.handleChatInfoClicked(chat)}/>}
+
+                    {currentLayout === 'add user' &&
+                        <AddUserToChat selectedChat={this.state.selectedChat}
+                                       onUserClicked={user => this.handleAddUserToChat(user)}
+                                       onBackClicked={chat => this.handleChatInfoClicked(chat)}/>}
 
                 </div>
             </div>
