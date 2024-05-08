@@ -93,11 +93,24 @@ export class OpenedChatLayout extends Component {
 
         for (let i = 0; i < messageList.length; i++) {
             const mess = messageList[i];
-            messageCells.push(
-                 (mess.author.id === mySelf.id) ?
-                     <MessageCell key={mess.id} message={mess} style={rightStyle}  styleContainer={rightContainerStyle}/>
-                     : <MessageCell key={mess.id} message={mess} style={leftStyle} styleContainer={leftContainerStyle}/>
-            );
+            if (mess.author === null) {
+                messageCells.push(
+                    <div className="system-message">
+                        <text className="system-text">
+                            {mess.text}
+                        </text>
+                    </div>
+                );
+            }
+            else {
+                messageCells.push(
+                    (mess.author.id === mySelf.id) ?
+                        <MessageCell key={mess.id} message={mess} style={rightStyle}
+                                     styleContainer={rightContainerStyle}/>
+                        : <MessageCell key={mess.id} message={mess} style={leftStyle}
+                                       styleContainer={leftContainerStyle}/>
+                );
+            }
         }
 
         console.log(currentChat, new Date())

@@ -32,7 +32,9 @@ export const ChatCell = ({ chat, onClicked  }) => {
 
     const curChat = chat;
 
-    const lastMessage = (chat.lastMessage) ? chat.lastMessage.text.toString() : "no messages";
+    const lastMessage = (chat.lastMessage) ?
+        (chat.lastMessage.text.toString().length > 40 ? chat.lastMessage.text.toString().substring(0, 40) + " ..."
+            : chat.lastMessage.text.toString()) : "no messages";
 
     const lastMesDate = (chat.lastMessage) ? chat.lastMessage.dateTime.toString() : "no date";
 

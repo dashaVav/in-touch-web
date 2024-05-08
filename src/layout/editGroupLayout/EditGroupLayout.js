@@ -4,6 +4,8 @@ import {UserPhoto} from "../../components/userPhoto/UserPhoto.js";
 import CustomTextInput from "../../components/textInput/CustomTextInput.js";
 import CustomButton from "../../components/button/CustomButton.js";
 import {ChangeGroupName} from "../../services/dto/ChangeGroupName.js";
+import IconButton from "../../components/iconButton/IconButton.js";
+import backIcon from "../../assets/back-icon.svg";
 
 export class EditGroupLayout extends Component {
 
@@ -34,6 +36,9 @@ export class EditGroupLayout extends Component {
                 <div className="chat-head"/>
                 <div className="edit-profile-container">
                     <div className="edit-area">
+                        <div className="back-button">
+                            <IconButton logoUrl={backIcon} onClick={() => this.props.onBackClicked(selectedChat)}/>
+                        </div>
                         <UserPhoto className="photo" text={selectedChat.getInitials()} size={120} thumbnailPhotoId={selectedChat.getUserThumbnailPhotoId()}/>
                         <div className="edit-container">
                             <text className="headline">{"Editing group information"}</text>

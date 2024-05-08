@@ -225,7 +225,8 @@ export class MessengerLayout extends Component {
 
                     {currentLayout === 'edit profile' &&
                         <EditProfileLayout selectedUser={this.state.selectedUser}
-                                           onClicked={(user, photo) => this.handleChangeUserInfo(user, photo)}/>}
+                                           onClicked={(user, photo) => this.handleChangeUserInfo(user, photo)}
+                                           onBackClicked={() => this.handleProfileButtonClicked(this.state.selectedUser, "edit profile")}/>}
 
                     {currentLayout === 'change password' &&
                         <ChangePasswordLayout selectedUser={mySelf}
@@ -258,7 +259,8 @@ export class MessengerLayout extends Component {
 
                     {currentLayout === 'edit chat' &&
                         <EditGroupLayout selectedChat={this.state.selectedChat}
-                                         onClicked={data => this.handleEditGroupInformation(data)}/>}
+                                         onClicked={data => this.handleEditGroupInformation(data)}
+                                         onBackClicked={(chat) => this.handleChatInfoClicked(chat)}/>}
 
                 </div>
             </div>

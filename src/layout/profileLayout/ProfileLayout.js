@@ -45,7 +45,7 @@ export class ProfileLayout extends Component {
             buttonText={(selectedUser.id === mySelf.id) ? "Change pass" : ""}
             onClick={() => this.props.onChangePassClicked(selectedUser)}/> : "";
 
-        const backButton = (this.props.onBackClicked != null) ?
+        const backButton = (this.props.onBackClicked != null && this.props.goToProfileFrom !== "edit profile") ?
             <div className="back-button">
                 <IconButton logoUrl={backIcon} onClick={this.props.onBackClicked}/>
             </div> : null;

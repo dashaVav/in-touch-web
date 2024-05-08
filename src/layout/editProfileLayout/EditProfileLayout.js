@@ -8,6 +8,7 @@ import {User} from "../../services/dto/User.js";
 import {user} from "../../services/Model.js";
 import photoIcon from "../../assets/upload-photo-icon.svg";
 import IconButton from "../../components/iconButton/IconButton.js";
+import backIcon from "../../assets/back-icon.svg";
 
 export class EditProfileLayout extends Component {
 
@@ -79,6 +80,9 @@ export class EditProfileLayout extends Component {
                 <div className="head"/>
                 <div className="edit-profile-container">
                     <div className="edit-area">
+                        <div className="back-button">
+                            <IconButton logoUrl={backIcon} onClick={this.props.onBackClicked}/>
+                        </div>
                         <UserPhoto className="photo" text={selectedUser.getInitials()} size={120} photo={this.state.imageUrl} thumbnailPhotoId={selectedUser.thumbnailPhotoId}/>
                         <div className="edit-container">
                             <text className="headline">{"Editing personal data"}</text>
