@@ -254,7 +254,8 @@ export class MessengerLayout extends Component {
 
                     {currentLayout === 'change password' &&
                         <ChangePasswordLayout selectedUser={mySelf}
-                                              onClicked={req => this.handleChangePasswordRequest(req)}/>}
+                                              onClicked={req => this.handleChangePasswordRequest(req)}
+                                              onBackClicked={() => this.handleProfileButtonClicked(mySelf, "")}/>}
 
                     {currentLayout === 'chats' && <ChatsLayout
                         onChatClicked={chat => {

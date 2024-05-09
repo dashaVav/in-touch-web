@@ -9,8 +9,10 @@ import {Component} from "react";
 export default class CustomButton extends Component {
     render() {
         const { buttonText, onClick } = this.props;
-        return <Button className="button" onClick={onClick}>
-            <text>{buttonText}</text>
-        </Button>;
+        return <div className="hug">
+            <Button className="button" onClick={onClick}>
+                <text>{buttonText}</text>
+            </Button>
+        </div>;
     }
 }

@@ -80,7 +80,7 @@ export class EditProfileLayout extends Component {
                 <div className="head"/>
                 <div className="edit-profile-container">
                     <div className="edit-area">
-                        <div className="back-button">
+                        <div className="back-button-edit">
                             <IconButton logoUrl={backIcon} onClick={this.props.onBackClicked}/>
                         </div>
                         <UserPhoto className="photo" text={selectedUser.getInitials()} size={120} photo={this.state.imageUrl} thumbnailPhotoId={selectedUser.thumbnailPhotoId}/>

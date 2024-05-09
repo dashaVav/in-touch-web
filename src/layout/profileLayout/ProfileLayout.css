@@ -30,10 +30,12 @@
 .profile-container {
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
     /*align-items: center;*/
     justify-content: space-between;
-    margin-top: -70px;
+    margin-top: 20px;
     z-index:1;
+
 }
 
 .profile-container > * {
@@ -41,14 +43,17 @@
 }
 
 .photo {
-    margin-top: 20px;
+    margin-top: -80px;
+    margin-bottom: 20px;
 }
 
 .username-data {
     display: flex;
     flex-direction: column;
+    flex-wrap: wrap;
     margin-left: 20px;
-    margin-top: 80px;
+    max-width: 400px;
+    /*background-color: green;*/
 }
 
 .username-data > * {
@@ -57,7 +62,9 @@
 
 .name-text-container {
     display: flex;
+    flex-wrap: wrap;
     flex-direction: column;
+    max-width: 350px;
 }
 
 .real-name {
@@ -75,7 +82,9 @@
 .tags-container {
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
     align-items: center;
+    max-width: 400px;
 }
 
 .tags-container > * {
@@ -85,7 +94,8 @@
 .profile-button {
     display: flex;
     flex-direction: column;
-    margin-top: 90px;
+    flex-wrap: wrap;
+    /*margin-top: 90px;*/
 }
 
 .profile-button > * {
@@ -95,6 +105,8 @@
 .user-info-class {
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
+    /*background-color: red;*/
 }
 
 .green-style {
@@ -111,6 +123,6 @@
 
 .back-button {
     position: absolute;
-    margin-top: -65px;
+    margin-top: -165px;
     margin-left: -13px;
 }
