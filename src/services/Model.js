@@ -2,7 +2,7 @@ import {setToken} from "./utils/Handler.js"
 import {AuthRequest} from "./dto/AuthRequest.js";
 import {AuthResponse} from "./dto/AuthResponse.js";
 import {Message} from "./dto/Message.js";
-import {connect, disconnectSocketSession, sendDisconnectSignal, sendReadChatSignal} from "./api/StopmSession.js";
+import {connect, disconnectSocketSession, sendReadChatSignal} from "./api/StopmSession.js";
 import {
     addUserToChat,
     changeGroupNameInfo,
@@ -14,7 +14,7 @@ import {
     getChatById,
     moveUpChat,
     newChatCreated,
-    removeUserFromChat
+    removeUserFromChat, updateConnectStatusForUsersInChats
 } from "./repositoty/ChatRepository.js";
 import {
     changeUserInform,
@@ -25,7 +25,7 @@ import {
     setMyself
 } from "./repositoty/SelfRepository.js";
 import {auth} from "./api/AuthApi.js";
-import {getAllUsers, userRepositoryClear} from "./repositoty/UsersRepository.js";
+import {getAllUsers, updateConnectStatusForUsers, userRepositoryClear} from "./repositoty/UsersRepository.js";
 import {
     acceptNewMessageFromOtherUser,
     getMessagesOfChat,
@@ -35,6 +35,7 @@ import {
 import {Chat} from "./dto/Chat.js";
 import {ReadNotification} from "./dto/ReadNotification.js";
 import {uploadFile} from "./api/FileApi.js";
+import {ConnectEvent} from "./dto/ConnectEvent.js";
 
 export var user;
 export var company;
@@ -168,4 +169,12 @@ export function logout() {
 
 export function closeChat() {
     openedChat = undefined;
+}
+
+export function acceptNewConnectionEvent(payload) {
+    const newConnect = ConnectEvent.fromJson(payloadToJson(payload));
+    updateConnectStatusForUsersInChats(newConnect.userId, newConnect.connect);
+    notifyComponent("updateChatList");
+    updateConnectStatusForUsers(newConnect.userId, newConnect.connect);
+    notifyComponent("updateUserList");
 }

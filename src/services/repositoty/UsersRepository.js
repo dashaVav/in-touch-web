@@ -16,5 +16,12 @@ export function userRepositoryClear() {
     allUsers.length = 0;
 }
 
+export function updateConnectStatusForUsers(userId, status) {
+    allUsers.forEach(user => {
+        if (user.id === userId) {
+            user.isOnline = status;
+        }
+    });
+}
 
 

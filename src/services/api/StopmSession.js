@@ -1,6 +1,6 @@
 import SockJS from 'sockjs-client';
 import Stomp from 'stompjs';
-import {acceptNewChat, acceptNewMessage, user} from "../Model.js";
+import {acceptNewChat, acceptNewConnectionEvent, acceptNewMessage, user} from "../Model.js";
 
 
 var stompClient;
@@ -13,7 +13,7 @@ export function connect() {
 
 async function onConnected() {
     console.log("Connection is ready, Stomp Session")
-    stompClient.subscribe('/topic/connection', onMessageReceived);
+    stompClient.subscribe('/topic/connection', acceptNewConnectionEvent);
 
     sendConnectSignal();
 
@@ -36,11 +36,7 @@ export function sendReadChatSignal(notification) {
     stompClient.send("/app/read_chat",  {}, JSON.stringify(notification));
 }
 
-function onMessageReceived(payload) {
-    console.log(payload)
-}
-
-function sendDisconnectSignal() {
+export function sendDisconnectSignal() {
     stompClient.send("/app/disconnect",
         {},
         JSON.stringify({sender: user, type: 'JOIN'})

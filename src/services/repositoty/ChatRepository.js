@@ -88,3 +88,13 @@ export async function editPhoto(chatId, formData) {
 export function chatRepositoryClear() {
     orderedChats.length = 0;
 }
+
+export function updateConnectStatusForUsersInChats(userId, status) {
+    orderedChats.forEach(chat => {
+        chat.members.forEach(member => {
+            if (member.id === userId) {
+                member.isOnline = status;
+            }
+        });
+    });
+}

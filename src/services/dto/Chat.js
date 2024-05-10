@@ -37,7 +37,6 @@ export class Chat {
     }
 
     static fromJSON(json) {
-        console.log(json)
         return new Chat(
             json.id,
             json.isPrivate,
