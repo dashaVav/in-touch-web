@@ -9,10 +9,12 @@ import logoutIcon from "../../assets/logout-icon.svg"
 import "./MessengerLayout.css"
 import {ProfileLayout} from "../profileLayout/ProfileLayout.js";
 import {
+    addUserToGroupChat,
     allUsers,
     changePassword,
     changeUserInfo,
     chats,
+    closeChat,
     createDialogFromAllUsers,
     createNewGroupChat,
     editGroupChatName,
@@ -31,7 +33,6 @@ import {ChangePasswordLayout} from "../changePasswordLayout/ChangePasswordLayout
 import {CreateChatLayout} from "../createChatLayout/CreateChatLayout.js";
 import {EditGroupLayout} from "../editGroupLayout/EditGroupLayout.js";
 import {AddUserToChat} from "../addUserToChat/AddUserToChat.js";
-import {addUserToChat} from "../../services/repositoty/ChatRepository.js";
 
 /**
  * Класс отвечающий за представления главного и самого первого экрана приложения
@@ -131,7 +132,7 @@ export class MessengerLayout extends Component {
     }
 
     async handleAddUserToChat(user) {
-        await addUserToChat(this.state.selectedChat.id, user.id);
+        await addUserToGroupChat(user.id);
         this.setState({currentLayout: 'open chat'});
     }
 
@@ -204,13 +205,13 @@ export class MessengerLayout extends Component {
         await removeUserFromGroupChat(user.id)
         if (user.id !== mySelf.id) {
             this.handleSelectChat(this.state.selectedChat)
-        }
-        else {
+        } else {
             this.handleChatButtonClicked();
         }
     }
 
     handleCloseChat() {
+        closeChat();
         // Чат, который надо закрыть: this.state.selectedChat (этот стэйт наверное лучше не очищать, не уверен)
     }
 

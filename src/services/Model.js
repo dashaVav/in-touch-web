@@ -2,21 +2,25 @@ import {setToken} from "./utils/Handler.js"
 import {AuthRequest} from "./dto/AuthRequest.js";
 import {AuthResponse} from "./dto/AuthResponse.js";
 import {Message} from "./dto/Message.js";
-import {connect, sendReadChatSignal} from "./api/StopmSession.js";
+import {connect, disconnectSocketSession, sendDisconnectSignal, sendReadChatSignal} from "./api/StopmSession.js";
 import {
     addUserToChat,
-    changeGroupNameInfo, chatRepositoryClear,
+    changeGroupNameInfo,
+    chatRepositoryClear,
     createGroupChat,
-    createNewDialog, editPhoto,
+    createNewDialog,
+    editPhoto,
     fetchChats,
     getChatById,
     moveUpChat,
-    newChatCreated, removeUserFromChat
+    newChatCreated,
+    removeUserFromChat
 } from "./repositoty/ChatRepository.js";
 import {
     changeUserInform,
     changeUserPassword,
-    changeUserProfileProto, selfRepositoryClear,
+    changeUserProfileProto,
+    selfRepositoryClear,
     setCompany,
     setMyself
 } from "./repositoty/SelfRepository.js";
@@ -119,6 +123,7 @@ export async function acceptNewMessage(payload) {
         await acceptNewMessageFromOtherUser(message);
         openedChatMessages.push(message);
         moveUpChat(getChatById(message.chatId));
+        sendReadChatSignal(new ReadNotification(user.id, openedChat));
     } else {
         const chat = getChatById(message.chatId);
         chat.unreadCount = isNaN(chat.unreadCount) ? 1 : chat.unreadCount + 1;
@@ -137,7 +142,7 @@ export function payloadToJson(payload) {
 }
 
 export async function editUserPhoto(file) {
-    await changeUserProfileProto(file);
+    user = await changeUserProfileProto(file);
 }
 
 export async function addUserToGroupChat(userId) {
@@ -158,4 +163,9 @@ export function logout() {
     messageRepositoryClear();
     selfRepositoryClear();
     userRepositoryClear()
+    disconnectSocketSession()
+}
+
+export function closeChat() {
+    openedChat = undefined;
 }

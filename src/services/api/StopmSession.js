@@ -15,16 +15,18 @@ async function onConnected() {
     console.log("Connection is ready, Stomp Session")
     stompClient.subscribe('/topic/connection', onMessageReceived);
 
+    sendConnectSignal();
+
+    stompClient.subscribe("/user/" + await user.id + "/queue/messages", acceptNewMessage);
+    stompClient.subscribe("/user/" + await user.id + "/queue/chats", acceptNewChat);
+}
+
+function sendConnectSignal() {
     stompClient.send("/app/connect",
         {},
         JSON.stringify({sender: user, type: 'JOIN'})
     );
-
-    stompClient.subscribe("/user/" + await user.id + "/queue/messages", acceptNewMessage);
-    stompClient.subscribe("/user/" + await user.id + "/queue/chats", acceptNewChat);
-
 }
-
 
 function onError(error) {
     console.log(error);
@@ -36,5 +38,20 @@ export function sendReadChatSignal(notification) {
 
 function onMessageReceived(payload) {
     console.log(payload)
+}
 
+function sendDisconnectSignal() {
+    stompClient.send("/app/disconnect",
+        {},
+        JSON.stringify({sender: user, type: 'JOIN'})
+    );
+}
+
+export function disconnectSocketSession() {
+    if (stompClient !== null) {
+        sendDisconnectSignal();
+        stompClient.disconnect(() => {
+            console.log('Disconnected from WebSocket');
+        });
+    }
 }
