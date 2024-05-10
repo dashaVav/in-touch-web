@@ -28,11 +28,11 @@ export class OpenedChatLayout extends Component {
 
     handleMessageSend() {
         if (this.state.formData.has("file")) {
-            sendMessage(this.state.messageValue.toString(), this.state.formData);
+            sendMessage(this.state.currentChat.id, this.state.messageValue.toString(), this.state.formData);
             this.setState({formData: new FormData()});
         }
         else {
-            sendMessage(this.state.messageValue.toString(), undefined);
+            sendMessage(this.state.currentChat.id, this.state.messageValue.toString(), undefined);
         }
         this.setState({messageValue: ""})
     }

@@ -25,7 +25,12 @@ import {
     setMyself
 } from "./repositoty/SelfRepository.js";
 import {auth} from "./api/AuthApi.js";
-import {getAllUsers, updateConnectStatusForUsers, userRepositoryClear} from "./repositoty/UsersRepository.js";
+import {
+    getAllUsers,
+    searchUsers,
+    updateConnectStatusForUsers,
+    userRepositoryClear
+} from "./repositoty/UsersRepository.js";
 import {
     acceptNewMessageFromOtherUser,
     getMessagesOfChat,
@@ -36,6 +41,7 @@ import {Chat} from "./dto/Chat.js";
 import {ReadNotification} from "./dto/ReadNotification.js";
 import {uploadFile} from "./api/FileApi.js";
 import {ConnectEvent} from "./dto/ConnectEvent.js";
+import {processingSearchString} from "./utils/Search.js";
 
 export var user;
 export var company;
@@ -104,7 +110,7 @@ export async function changePassword(changePasswordRequest) {
     return await changeUserPassword(changePasswordRequest);
 }
 
-export async function sendMessage(text, file) {
+export async function sendMessage(openedChat, text, file) {
     let fileId;
     if (file !== undefined) {
         fileId = await (await uploadFile(file)).text();
@@ -120,17 +126,18 @@ function notifyComponent(typeName) {
 export async function acceptNewMessage(payload) {
     const message = Message.fromJson(payloadToJson(payload));
     getChatById(message.chatId).lastMessage = message;
+    await acceptNewMessageFromOtherUser(message);
+    const chat = getChatById(message.chatId);
     if (message.chatId === openedChat) {
-        await acceptNewMessageFromOtherUser(message);
-        openedChatMessages.push(message);
-        moveUpChat(getChatById(message.chatId));
         sendReadChatSignal(new ReadNotification(user.id, openedChat));
+        notifyComponent("getNewMessage");
     } else {
-        const chat = getChatById(message.chatId);
-        chat.unreadCount = isNaN(chat.unreadCount) ? 1 : chat.unreadCount + 1;
-        moveUpChat(chat);
+        if (message.author.id !== user.id) {
+            chat.unreadCount = isNaN(chat.unreadCount) ? 1 : chat.unreadCount + 1;
+        }
     }
-    notifyComponent("getNewMessage");
+    moveUpChat(chat);
+    notifyComponent("updateChatList");
 }
 
 export async function acceptNewChat(payload) {
@@ -176,5 +183,16 @@ export function acceptNewConnectionEvent(payload) {
     updateConnectStatusForUsersInChats(newConnect.userId, newConnect.connect);
     notifyComponent("updateChatList");
     updateConnectStatusForUsers(newConnect.userId, newConnect.connect);
+    notifyComponent("updateUserList");
+}
+
+export function searchUsersAtViewAllChats(request) {
+    console.log(request)
+    if (processingSearchString(request) === "" || processingSearchString(request) === null) {
+        users();
+    } else {
+        allUsers = searchUsers(request);
+    }
+    console.log(allUsers);
     notifyComponent("updateUserList");
 }

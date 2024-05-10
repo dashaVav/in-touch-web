@@ -1,6 +1,7 @@
 import {User} from "../dto/User.js";
 import {myCompany, myself} from "./SelfRepository.js";
 import {fetchAllUsersOfCompany} from "../api/UsersApi.js";
+import {byUserName, processingSearchString} from "../utils/Search.js";
 
 let allUsers = [];
 
@@ -24,4 +25,6 @@ export function updateConnectStatusForUsers(userId, status) {
     });
 }
 
-
+export function searchUsers(request) {
+    return allUsers.filter(user => byUserName(user, processingSearchString(request)));
+}
