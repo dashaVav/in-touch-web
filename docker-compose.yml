@@ -1,0 +1,9 @@
+version: '3'
+
+services:
+
+  web-app:
+    image: "zzzzeonnnnn/in-touch-web:${TAG}"
+    build: .
+    ports:
+      - "3000:3000"
