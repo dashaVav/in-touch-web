@@ -25,8 +25,8 @@ export class AddUserToChat extends Component {
         return (
             <div className="container-all-chat-info">
                 <div className="chat-head"/>
-                <div className="chat-information-container">
-                    <div className="back">
+                <div className="chat-information-container-add">
+                    <div className="back-add">
                         <IconButton logoUrl={backIcon} onClick={() => this.props.onBackClicked(selectedChat)}/>
                     </div>
                     <div className="chat-photo">

@@ -68,3 +68,14 @@
     margin-top: 10px;
     margin-bottom: -8px;
 }
+
+.online-circle {
+    z-index: 1;
+    margin-top: 35px;
+    margin-left: -10px;
+
+    width: 10px;
+    height: 10px;
+    background-color: #3E46FF;
+    border-radius: 50%;
+}

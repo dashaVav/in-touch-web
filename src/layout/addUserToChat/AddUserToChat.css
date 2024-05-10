@@ -1,0 +1,28 @@
+.container-all-chat-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.chat-information-container-add {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    /*align-items: center;*/
+    justify-content: start;
+    margin-bottom: 20px;
+    margin-top: 20px;
+    max-width: 100%;
+}
+
+.chat-information-container-add > * {
+    /*margin: 10px 20px 10px 15px;*/
+    /*margin-right: 20px;*/
+    margin-right: 20px;
+    margin-bottom: 20px;
+}
+
+.back-add {
+    position: absolute;
+    margin-top: -153px;
+    margin-left: -5px;
+}

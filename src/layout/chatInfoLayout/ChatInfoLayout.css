@@ -17,30 +17,34 @@
 
 .chat-information-container {
     display: flex;
+    flex-wrap: wrap;
     flex-direction: row;
-    align-items: center;
-    justify-content: flex-start;
+    /*align-items: center;*/
+    justify-content: space-between;
     margin-bottom: 20px;
-    margin-top: -70px;
-    /*margin-left: -30px;*/
+    margin-top: 20px;
+    max-width: 100%;
 }
 
 .chat-information-container > * {
     /*margin: 10px 20px 10px 15px;*/
-    margin-right: 20px;
+    /*margin-right: 20px;*/
+
+    margin-bottom: 20px;
 }
 
 .chat-photo {
-    width: 240px;
-    margin: 40px 20px 20px;
+    /*width: 240px;*/
+    margin: -50px 10px 10px 20px;
 }
 
 .data-container {
     display: flex;
+    flex-wrap: wrap;
     flex-direction: column;
-    margin-top: 90px;
+    margin-top: 10px;
     margin-left: 10px;
-    /*width: 120px;*/
+    min-width: 55%;
 }
 
 .chat-name-info {
@@ -80,8 +84,8 @@
 .edit-chat-button {
     display: flex;
     flex-direction: column;
-    margin-left: 50px;
-    margin-top: 90px;
+    /*margin-right: 20px;*/
+    /*margin-top: 90px;*/
 }
 
 .edit-chat-button > * {
@@ -111,4 +115,10 @@
 
 .user-cell-modified {
     width: 100%;
+}
+
+.back-button-chat-info {
+    position: absolute;
+    margin-top: -160px;
+    margin-left: -13px;
 }

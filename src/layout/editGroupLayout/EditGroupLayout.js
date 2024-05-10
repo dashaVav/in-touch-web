@@ -55,15 +55,15 @@ export class EditGroupLayout extends Component {
                 <div className="chat-head"/>
                 <div className="edit-profile-container">
                     <div className="edit-area">
-                        <div className="back-button">
+                        <div className="back-button-edit">
                             <IconButton logoUrl={backIcon} onClick={() => this.props.onBackClicked(selectedChat)}/>
                         </div>
                         <UserPhoto className="photo" text={selectedChat.getInitials()} size={120} photo={this.state.imageUrl} thumbnailPhotoId={selectedChat.getUserThumbnailPhotoId()}/>
                         <div className="edit-container">
-                            <text className="headline">{"Editing group information"}</text>
+                            <text className="headline-group">{"Editing group information"}</text>
                             <div className="field-area">
                                 <text className="regular-text">{"Group name:"}</text>
-                                <CustomTextInput onChange={this.handleNameTextChange} text="Enter group name ..." type="text" value={this.state.nameText}/>
+                                <CustomTextInput onChange={this.handleNameTextChange} text="Enter group name ..." type="text" value={this.state.nameText} maxLength={40}/>
                             </div>
                             <div className="edit-button-container">
                                 <CustomButton buttonText="Edit group" onClick={() => this.props.onClicked(this.prepareGroupToChange())}/>

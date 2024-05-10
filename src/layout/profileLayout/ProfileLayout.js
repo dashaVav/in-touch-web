@@ -56,7 +56,7 @@ export class ProfileLayout extends Component {
 
         return (
             <div className="main-profile-container">
-                <div className="head"/>
+                <div className="head-profile"/>
                 <div className="profile-container">
                     <div className="user-info-class">
                         {backButton}

@@ -186,6 +186,7 @@ export class OpenedChatLayout extends Component {
                     <input
                         className="message-input"
                         type="text"
+                        maxLength="250"
                         value={this.state.messageValue}
                         onChange={this.handleMessageChange}
                         placeholder="Write a message..."

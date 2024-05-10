@@ -77,7 +77,7 @@ export class EditProfileLayout extends Component {
 
         return (
             <div className="main-edit-profile-container">
-                <div className="head"/>
+                <div className="head-profile"/>
                 <div className="edit-profile-container">
                     <div className="edit-area">
                         <div className="back-button-edit">
@@ -85,22 +85,22 @@ export class EditProfileLayout extends Component {
                         </div>
                         <UserPhoto className="photo" text={selectedUser.getInitials()} size={120} photo={this.state.imageUrl} thumbnailPhotoId={selectedUser.thumbnailPhotoId}/>
                         <div className="edit-container">
-                            <text className="headline">{"Editing personal data"}</text>
+                            <text className="headline-profile">{"Editing personal data"}</text>
                             <div className="field-area">
                                 <text className="regular-text">{"Name:"}</text>
-                                <CustomTextInput onChange={this.handleNameTextChange} text="Name" type="text" value={this.state.nameText}/>
+                                <CustomTextInput onChange={this.handleNameTextChange} text="Name" type="text" value={this.state.nameText} maxLength={40}/>
                             </div>
                             <div className="field-area">
                                 <text className="regular-text">{"Surname:"}</text>
-                                <CustomTextInput onChange={this.handleSurnameTextChange} text="Surname" type="text" value={this.state.surnameText}/>
+                                <CustomTextInput onChange={this.handleSurnameTextChange} text="Surname" type="text" value={this.state.surnameText} maxLength={40}/>
                             </div>
                             <div className="field-area">
                                 <text className="regular-text">{"Patronymic:"}</text>
-                                <CustomTextInput onChange={this.handlePatronymicTextChange} text="Patronymic" type="text" value={this.state.patronymicText}/>
+                                <CustomTextInput onChange={this.handlePatronymicTextChange} text="Patronymic" type="text" value={this.state.patronymicText} maxLength={40}/>
                             </div>
                             <div className="field-area">
                                 <text className="regular-text">{"Phone:"}</text>
-                                <CustomTextInput onChange={this.handlePhoneTextChange} text="Phone" type="text" value={this.state.phoneText}/>
+                                <CustomTextInput onChange={this.handlePhoneTextChange} text="Phone" type="text" value={this.state.phoneText} maxLength={40}/>
                             </div>
                             <div className="edit-button-container">
                                 <CustomButton buttonText="Edit profile" onClick={() => this.props.onClicked(this.prepareUserToChange(), this.state.formData)}/>

@@ -5,7 +5,7 @@ let headers = {
 
 let fileHeaders;
 
-const baseurl = 'https://195.133.196.67:8081/chat_api/v1';
+const baseurl = 'http://195.133.196.67:8881/chat_api/v1';
 
 export const baseUrlForFiles = 'http://195.133.196.67:8881/chat_api/v1/download/';
 

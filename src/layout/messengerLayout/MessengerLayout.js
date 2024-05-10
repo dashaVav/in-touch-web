@@ -210,8 +210,17 @@ export class MessengerLayout extends Component {
         }
     }
 
+    handleCloseChat() {
+        // Чат, который надо закрыть: this.state.selectedChat (этот стэйт наверное лучше не очищать, не уверен)
+    }
+
     render() {
         const {currentLayout} = this.state;
+
+        if (currentLayout !== "add user" && currentLayout !== "edit chat" && currentLayout !== "chat info"
+            && currentLayout !== "open chat") {
+            this.handleCloseChat()
+        }
 
         return (
             <div>

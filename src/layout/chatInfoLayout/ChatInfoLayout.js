@@ -52,7 +52,7 @@ export class ChatInfoLayout extends Component {
             <div className="container-all-chat-info">
                 <div className="chat-head"/>
                 <div className="chat-information-container">
-                    <div className="back">
+                    <div className="back-button-chat-info">
                         <IconButton logoUrl={backIcon} onClick={() => this.props.onBackClicked(selectedChat)}/>
                     </div>
                     <div className="chat-photo">

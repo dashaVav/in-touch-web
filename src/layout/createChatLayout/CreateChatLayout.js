@@ -77,7 +77,7 @@ export class CreateChatLayout extends Component {
                     <div className="chat-name-area">
                         <div className="help-container">
                             <text className="header2">Group name</text>
-                            <CustomTextInput onChange={this.handleChatNameChange} text="Enter chat name" type="text"/>
+                            <CustomTextInput onChange={this.handleChatNameChange} text="Enter chat name" type="text" maxLength={40}/>
                         </div>
                         <CustomButton buttonText="Create group" onClick={() => this.props.onClicked(this.prepareDataForRequest())}/>
                     </div>
