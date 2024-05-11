@@ -14,6 +14,7 @@ import {
     getChatById,
     moveUpChat,
     newChatCreated,
+    removeChat,
     removeUserFromChat,
     searchChats,
     updateConnectStatusForUsersInChats
@@ -46,14 +47,14 @@ import {ConnectEvent} from "./dto/ConnectEvent.js";
 
 export var user;
 export var company;
-export var allUsers;
-export var allChats;
+export var allUsers = [];
+export var allChats = [];
 export var openedChat;
 export var openedChatMessages = [];
 
 export function setAllChats(chats) {
     allChats = chats;
-    notifyComponent("getNewMessage");
+    notifyComponent("updateChatList");
 }
 
 export async function login(login, password) {
@@ -156,10 +157,16 @@ export async function editUserPhoto(file) {
 
 export async function addUserToGroupChat(userId) {
     await addUserToChat(openedChat, userId);
+    notifyComponent("updateChatInfo");
 }
 
 export async function removeUserFromGroupChat(userId) {
     await removeUserFromChat(openedChat, userId);
+    if (userId === user.id) {
+        removeChat(openedChat);
+    } else {
+        notifyComponent("updateChatInfo");
+    }
 }
 
 export async function editGroupChatPhoto(formData) {

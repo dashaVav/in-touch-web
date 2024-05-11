@@ -186,7 +186,7 @@ export class MessengerLayout extends Component {
         if (data) {
             const chat = await createNewGroupChat(data);
             this.handleSelectChat(chat);
-            console.log("Создание новгого чата!!!", data);
+            console.log("Создание нового чата!!!", data);
         }
     }
 

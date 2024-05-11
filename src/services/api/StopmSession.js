@@ -1,6 +1,7 @@
 import SockJS from 'sockjs-client';
 import Stomp from 'stompjs';
-import {acceptNewChat, acceptNewConnectionEvent, acceptNewMessage, user} from "../Model.js";
+import {acceptNewChat, acceptNewConnectionEvent, acceptNewMessage} from "../Model.js";
+import {myself} from "../repositoty/SelfRepository.js";
 
 
 var stompClient;
@@ -17,12 +18,12 @@ async function onConnected() {
 
     sendConnectSignal();
 
-    stompClient.subscribe("/user/" + await user.id + "/queue/messages", acceptNewMessage);
-    stompClient.subscribe("/user/" + await user.id + "/queue/chats", acceptNewChat);
+    stompClient.subscribe("/user/" + await myself.id + "/queue/messages", acceptNewMessage);
+    stompClient.subscribe("/user/" + await myself.id + "/queue/chats", acceptNewChat);
 }
 
 function sendConnectSignal() {
-    stompClient.send("/app/connect", {}, JSON.stringify(user));
+    stompClient.send("/app/connect", {}, JSON.stringify(myself));
 }
 
 function onError(error) {
@@ -34,7 +35,7 @@ export function sendReadChatSignal(notification) {
 }
 
 export function sendDisconnectSignal() {
-    stompClient.send("/app/disconnect", {}, JSON.stringify(user));
+    stompClient.send("/app/disconnect", {}, JSON.stringify(myself));
 }
 
 export function disconnectSocketSession() {
