@@ -14,7 +14,8 @@ import {
     getChatById,
     moveUpChat,
     newChatCreated,
-    removeUserFromChat, updateConnectStatusForUsersInChats
+    removeUserFromChat,
+    updateConnectStatusForUsersInChats
 } from "./repositoty/ChatRepository.js";
 import {
     changeUserInform,
@@ -67,9 +68,8 @@ export async function login(login, password) {
     setMyself(user);
     setCompany(company);
 
-
-    await chats();
-    await users();
+    chats();
+    users();
 }
 
 export async function users() {
@@ -98,7 +98,8 @@ export async function createNewGroupChat(groupRequest) {
 }
 
 export async function editGroupChatName(chatId, changeGroupName) {
-    await changeGroupNameInfo(chatId, changeGroupName)
+    await changeGroupNameInfo(chatId, changeGroupName);
+    notifyComponent("updateChatInfo");
 }
 
 export async function changeUserInfo(newUser) {
@@ -163,7 +164,7 @@ export async function removeUserFromGroupChat(userId) {
 
 export async function editGroupChatPhoto(formData) {
     await editPhoto(openedChat, formData);
-    notifyComponent("getNewMessage");
+    notifyComponent("updateChatInfo");
 }
 
 export function logout() {
