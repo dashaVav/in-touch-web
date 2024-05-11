@@ -22,10 +22,7 @@ async function onConnected() {
 }
 
 function sendConnectSignal() {
-    stompClient.send("/app/connect",
-        {},
-        JSON.stringify({sender: user, type: 'JOIN'})
-    );
+    stompClient.send("/app/connect", {}, JSON.stringify(user));
 }
 
 function onError(error) {
@@ -37,10 +34,7 @@ export function sendReadChatSignal(notification) {
 }
 
 export function sendDisconnectSignal() {
-    stompClient.send("/app/disconnect",
-        {},
-        JSON.stringify({sender: user, type: 'JOIN'})
-    );
+    stompClient.send("/app/disconnect", {}, JSON.stringify(user));
 }
 
 export function disconnectSocketSession() {
