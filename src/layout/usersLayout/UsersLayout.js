@@ -2,7 +2,7 @@ import React, {Component} from "react";
 import './UsersLayout.css'
 import {UserCell} from "../../components/userCell/UserCell.js";
 import icon from "../../assets/search-icon.svg";
-import {allUsers, searchUsersAtViewAllChats} from "../../services/Model.js";
+import {allUsers, searchUsersAtViewAllUsers} from "../../services/Model.js";
 
 export class UsersLayout extends Component {
     constructor(props) {
@@ -13,9 +13,9 @@ export class UsersLayout extends Component {
         this.handleSearchChange = this.handleSearchChange.bind(this);
     }
 
-    handleSearchChange(event) {
-        this.setState({ searchValue: event.target.value });
-        searchUsersAtViewAllChats(this.state.searchValue.toString());
+    async handleSearchChange(event) {
+        this.setState({searchValue: event.target.value});
+        await searchUsersAtViewAllUsers(this.state.searchValue.toString());
     }
 
     componentDidMount() {
@@ -37,7 +37,8 @@ export class UsersLayout extends Component {
         for (let i = 0; i < userList.length; i++) {
             const user = userList[i];
             usersCells.push(
-                <UserCell key={user.id} user={user} onClicked={() => this.props.onUserClicked(user)} onGoToClicked={() => this.props.onGoTOChatClicked(user)}/>
+                <UserCell key={user.id} user={user} onClicked={() => this.props.onUserClicked(user)}
+                          onGoToClicked={() => this.props.onGoTOChatClicked(user)}/>
             );
         }
 

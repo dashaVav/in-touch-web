@@ -192,7 +192,6 @@ export class MessengerLayout extends Component {
 
     async handleEditGroupInformation(data) {
         if (data) {
-            console.log(data[0], data[1]);
             await editGroupChatName(data[0], data[1]);
             if (data[2].has("file")) {
                 await editGroupChatPhoto(data[2]);

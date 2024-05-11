@@ -11,6 +11,7 @@ import {
     removeUser
 } from "../api/ChatApi.js";
 import {uploadGroupChatPhoto} from "../api/FileApi.js";
+import {byUserName, processingSearchString} from "../utils/Search.js";
 
 let orderedChats = [];
 
@@ -28,7 +29,6 @@ export async function fetchChats() {
                 orderedChats[i].unreadCount = unreadMap.get(orderedChats[i].id);
             }
         }
-        console.log(orderedChats);
     }
     return orderedChats;
 }
@@ -96,5 +96,17 @@ export function updateConnectStatusForUsersInChats(userId, status) {
                 member.isOnline = status;
             }
         });
+    });
+}
+
+export function searchChats(request) {
+    const processedString = processingSearchString(request);
+    return orderedChats.filter(chat => {
+        if (chat.isPrivate) {
+            const user = chat.members.filter(u => u.id !== myself.id)[0];
+            return byUserName(user, processedString);
+        } else {
+            return chat.group.name.toLowerCase().startsWith(processedString);
+        }
     });
 }

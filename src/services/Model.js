@@ -15,6 +15,7 @@ import {
     moveUpChat,
     newChatCreated,
     removeUserFromChat,
+    searchChats,
     updateConnectStatusForUsersInChats
 } from "./repositoty/ChatRepository.js";
 import {
@@ -42,7 +43,6 @@ import {Chat} from "./dto/Chat.js";
 import {ReadNotification} from "./dto/ReadNotification.js";
 import {uploadFile} from "./api/FileApi.js";
 import {ConnectEvent} from "./dto/ConnectEvent.js";
-import {processingSearchString} from "./utils/Search.js";
 
 export var user;
 export var company;
@@ -187,13 +187,20 @@ export function acceptNewConnectionEvent(payload) {
     notifyComponent("updateUserList");
 }
 
-export function searchUsersAtViewAllChats(request) {
-    console.log(request)
-    if (processingSearchString(request) === "" || processingSearchString(request) === null) {
-        users();
+export async function searchUsersAtViewAllUsers(request) {
+    if (request === "" || request === null) {
+        await users();
     } else {
         allUsers = searchUsers(request);
     }
-    console.log(allUsers);
     notifyComponent("updateUserList");
+}
+
+export async function searchChatsAtViewAllChats(request) {
+    if (request === "" || request === null) {
+        await chats();
+    } else {
+        allChats = searchChats(request);
+    }
+    notifyComponent("updateChatList");
 }
