@@ -44,11 +44,6 @@ export function newChatCreated(chat) {
     setAllChats(orderedChats);
 }
 
-export function removeChat(chat) {
-    orderedChats = orderedChats.filter(c => c.id !== chat.id);
-    setAllChats(orderedChats);
-}
-
 export function getChatById(chatId) {
     return orderedChats.filter(c => c.id === chatId)[0];
 }
