@@ -21,6 +21,7 @@ export class UsersLayout extends Component {
 
     componentDidMount() {
         window.addEventListener('updateUserList', this.handleUserListChanged);
+        searchUsersAtViewAllUsers("");
     }
 
     componentWillUnmount() {
@@ -28,7 +29,6 @@ export class UsersLayout extends Component {
     }
 
     handleUserListChanged = () => {
-        console.log("UPDATE USER LIST")
         this.setState({chatList: allUsers})
         this.forceUpdate()
     }

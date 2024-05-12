@@ -14,7 +14,8 @@ export class CreateChatLayout extends Component {
         super(props);
         this.state = {
             chatName: '',
-            addedUsers: []
+            addedUsers: [],
+            userList: allUsers
         };
     }
 
@@ -46,10 +47,23 @@ export class CreateChatLayout extends Component {
         }
     }
 
+    componentDidMount() {
+        window.addEventListener('updateUserList', this.handleUserListChanged);
+    }
+
+    componentWillUnmount() {
+        window.removeEventListener('updateUserList', this.handleUserListChanged);
+    }
+
+    handleUserListChanged = () => {
+        this.setState({userList: allUsers})
+        this.forceUpdate()
+    }
+
     render() {
         const allUsersCells = [];
         const addedUsersCells = [];
-        const userList = allUsers;
+        const userList = this.state.userList;
         const addedUserList = this.state.addedUsers;
 
         for (let i = 0; i < userList.length; i++) {

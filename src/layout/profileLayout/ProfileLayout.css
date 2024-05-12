@@ -126,3 +126,15 @@
     margin-top: -165px;
     margin-left: -13px;
 }
+
+.profile-circle {
+    position: absolute;
+    z-index: 1;
+    margin-top: -25px;
+    margin-left: 97px;
+
+    width: 15px;
+    height: 15px;
+    background-color: #3E46FF;
+    border-radius: 50%;
+}

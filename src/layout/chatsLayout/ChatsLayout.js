@@ -2,7 +2,7 @@ import React, {Component} from "react";
 import {ChatCell} from "../../components/chatCell/ChatCell.js";
 import './ChatsLayout.css'
 import icon from "../../assets/search-icon.svg"
-import {allChats, searchChatsAtViewAllChats, searchUsersAtViewAllUsers} from "../../services/Model.js";
+import {allChats, searchChatsAtViewAllChats} from "../../services/Model.js";
 
 export class ChatsLayout extends Component {
     constructor(props) {
@@ -23,6 +23,8 @@ export class ChatsLayout extends Component {
     componentDidMount() {
         window.addEventListener('getNewMessage', this.handleUserChatChanged);
         window.addEventListener('updateChatList', this.handleUserChatChanged);
+
+        searchChatsAtViewAllChats("");
     }
 
     componentWillUnmount() {

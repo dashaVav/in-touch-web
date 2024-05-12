@@ -237,10 +237,10 @@ export class MessengerLayout extends Component {
                 <div className="buttons-container">
                     <SimpleButton buttonText="My profile" logoUrl={profileIcon}
                                   onClick={() => this.handleProfileButtonClicked(mySelf, "menu")}/>
-                    <SimpleButton buttonText="View my chats" logoUrl={chatIcon} onClick={this.handleChatButtonClicked}/>
-                    <SimpleButton buttonText="Create new chat" logoUrl={newChatIcon}
+                    <SimpleButton buttonText="Messages" logoUrl={chatIcon} onClick={this.handleChatButtonClicked}/>
+                    <SimpleButton buttonText="New group" logoUrl={newChatIcon}
                                   onClick={this.handleNewChatButtonClicked}/>
-                    <SimpleButton buttonText="View all users" logoUrl={userIcon}
+                    <SimpleButton buttonText="Colleagues" logoUrl={userIcon}
                                   onClick={this.handleUserButtonClicked}/>
                     <SimpleButton buttonText="Logout" logoUrl={logoutIcon} onClick={this.handleLogoutButtonClicked}/>
                 </div>

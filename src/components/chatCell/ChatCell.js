@@ -45,6 +45,7 @@ export const ChatCell = ({ chat, onClicked  }) => {
             <div className="chat-cell-container">
                 <div className="simple-container">
                     <UserPhoto text={curChat.getInitials()} size={60} textSize={16} thumbnailPhotoId={curChat.getUserThumbnailPhotoId()}/>
+                    <div className="online-circle" style={(curChat.isUserOnline()) ? {backgroundColor: "#3E46FF"} : {backgroundColor: "transparent"}}></div>
                     <div className="text-container">
                         <text className="chat-name">
                             {curChat.getChatName()}

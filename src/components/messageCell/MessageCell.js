@@ -18,7 +18,7 @@ export const MessageCell = ({ message, style, styleContainer }) => {
             const minutes = date.getMinutes().toString().padStart(2, '0');
             formattedDate = `${hours}:${minutes}`;
         } else if (daysPassed < 7) {
-            formattedDate = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'][date.getDay()];
+            formattedDate = ['sun ', 'mon ', 'tue ', 'wed ', 'thu ', 'fri ', 'sat '][date.getDay()];
         } else {
             const day = date.getDate().toString().padStart(2, '0');
             const month = (date.getMonth() + 1).toString().padStart(2, '0');

@@ -57,7 +57,7 @@ export class LoginLayout extends Component {
                 <CustomTextInput onChange={this.handleLoginTextFieldChange} text="Login" type="text"/>
                 <CustomTextInput onChange={this.handlePasswordTextFieldChange} text="Password" type="password"/>
                 <CustomButton
-                    buttonText="Click me"
+                    buttonText="Log in"
                     onClick={this.handleButtonClick}
                 />
                 <text className={(this.state.status.toString().substring(0, 5) !== "Login") ? "red-style" : "green-style"}>

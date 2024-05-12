@@ -36,6 +36,10 @@ export class Chat {
             .map(u => u.thumbnailPhotoId).join("") : this.group.groupPhotoId;
     }
 
+    isUserOnline() {
+        return (this.isPrivate) ? (this.members.filter(u => u.id !== mySelf.id).map(u => u.isOnline).join("") === "true") : false;
+    }
+
     static fromJSON(json) {
         return new Chat(
             json.id,
