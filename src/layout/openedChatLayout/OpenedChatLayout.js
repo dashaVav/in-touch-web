@@ -45,6 +45,7 @@ export class OpenedChatLayout extends Component {
 
     async componentDidMount() {
         window.addEventListener('getNewMessage', this.handleExternalVariableChange);
+        window.addEventListener('updateChatInfo', this.handleExternalVariableChange);
         try {
             const messages = await openChat(this.state.currentChat.id);
             this.setState({ messageList: messages });
@@ -59,6 +60,7 @@ export class OpenedChatLayout extends Component {
 
     componentWillUnmount() {
         window.removeEventListener('getNewMessage', this.handleExternalVariableChange);
+        window.removeEventListener('updateChatInfo', this.handleExternalVariableChange);
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
@@ -84,18 +86,11 @@ export class OpenedChatLayout extends Component {
             const newFormData = new FormData();
             newFormData.append('file', file, "image.jpeg");
             this.setState({ formData: newFormData });
-
-            // const reader = new FileReader();
-            // reader.onload = (e) => {
-            //     const base64Data = e.target.result;
-            //     this.setState({imageUrl: base64Data});
-            // };
-            // reader.readAsDataURL(file);
         }
     };
 
     render() {
-        const {currentChat} = this.props;
+        const currentChat = this.props.currentChat;
 
         const messageList = this.state.messageList;
         const messageCells = [];

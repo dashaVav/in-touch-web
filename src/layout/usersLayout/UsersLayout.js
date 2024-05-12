@@ -14,8 +14,9 @@ export class UsersLayout extends Component {
     }
 
     async handleSearchChange(event) {
-        this.setState({searchValue: event.target.value});
-        await searchUsersAtViewAllUsers(this.state.searchValue.toString());
+        this.setState({searchValue: event.target.value}, () => {
+            searchUsersAtViewAllUsers(this.state.searchValue.toString());
+        });
     }
 
     componentDidMount() {
@@ -27,11 +28,13 @@ export class UsersLayout extends Component {
     }
 
     handleUserListChanged = () => {
+        console.log("UPDATE USER LIST")
         this.setState({chatList: allUsers})
+        this.forceUpdate()
     }
 
     render() {
-        const {userList} = this.props;
+        const userList = allUsers;
         const usersCells = [];
 
         for (let i = 0; i < userList.length; i++) {

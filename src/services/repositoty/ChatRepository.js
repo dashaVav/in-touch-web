@@ -73,21 +73,25 @@ function updateChat(chat) {
 export async function changeGroupNameInfo(chatId, changeGroupName1) {
     const chat = Chat.fromJSON(await changeGroupName(chatId, changeGroupName1));
     updateChat(chat);
+    return chat;
 }
 
 export async function addUserToChat(chatId, userId) {
     const chat = Chat.fromJSON(await addUser(chatId, userId));
     updateChat(chat);
+    return chat;
 }
 
 export async function removeUserFromChat(chatId, userId) {
     const chat = Chat.fromJSON(await removeUser(chatId, userId));
     updateChat(chat);
+    return chat;
 }
 
 export async function editPhoto(chatId, formData) {
     const chat = Chat.fromJSON(await (await uploadGroupChatPhoto(chatId, formData)).json());
     updateChat(chat);
+    return chat;
 }
 
 export function chatRepositoryClear() {

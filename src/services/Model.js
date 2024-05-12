@@ -99,8 +99,11 @@ export async function createNewGroupChat(groupRequest) {
 }
 
 export async function editGroupChatName(chatId, changeGroupName) {
-    await changeGroupNameInfo(chatId, changeGroupName);
-    notifyComponent("updateChatInfo");
+    const chat = await changeGroupNameInfo(chatId, changeGroupName);
+    console.log("CHANGING INFO")
+    notifyComponent("getNewMessage");
+    // notifyComponent("updateChatInfo");
+    return chat;
 }
 
 export async function changeUserInfo(newUser) {
@@ -139,7 +142,7 @@ export async function acceptNewMessage(payload) {
         }
     }
     moveUpChat(chat);
-    notifyComponent("updateChatList");
+    // notifyComponent("updateChatList");
 }
 
 export async function acceptNewChat(payload) {
@@ -156,22 +159,23 @@ export async function editUserPhoto(file) {
 }
 
 export async function addUserToGroupChat(userId) {
-    await addUserToChat(openedChat, userId);
-    notifyComponent("updateChatInfo");
+    return await addUserToChat(openedChat, userId);
+    // notifyComponent("updateChatInfo");
 }
 
 export async function removeUserFromGroupChat(userId) {
-    await removeUserFromChat(openedChat, userId);
+    const chat = await removeUserFromChat(openedChat, userId);
     if (userId === user.id) {
         removeChat(openedChat);
     } else {
-        notifyComponent("updateChatInfo");
+        // notifyComponent("updateChatInfo");
     }
+    return chat;
 }
 
 export async function editGroupChatPhoto(formData) {
-    await editPhoto(openedChat, formData);
-    notifyComponent("updateChatInfo");
+    // notifyComponent("updateChatInfo");
+    return await editPhoto(openedChat, formData);
 }
 
 export function logout() {

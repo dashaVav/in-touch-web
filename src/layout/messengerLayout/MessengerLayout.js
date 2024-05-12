@@ -132,8 +132,10 @@ export class MessengerLayout extends Component {
     }
 
     async handleAddUserToChat(user) {
-        await addUserToGroupChat(user.id);
-        this.setState({currentLayout: 'open chat'});
+        const chat = await addUserToGroupChat(user.id);
+        this.setState({selectedChat: chat},() => {
+            this.setState({currentLayout: 'open chat'});
+        });
     }
 
     async updateUser(user, photo) {
@@ -192,21 +194,29 @@ export class MessengerLayout extends Component {
 
     async handleEditGroupInformation(data) {
         if (data) {
-            await editGroupChatName(data[0], data[1]);
-            if (data[2].has("file")) {
-                await editGroupChatPhoto(data[2]);
-            }
-            this.handleSelectChat(this.state.selectedChat)
+            const chat = await editGroupChatName(data[0], data[1]);
+            this.setState({selectedChat: chat},async () => {
+                if (data[2].has("file")) {
+                    const chat1 = await editGroupChatPhoto(data[2]);
+                    this.setState({selectedChat: chat1},() => {
+                        this.handleSelectChat(this.state.selectedChat)
+                    });
+                } else {
+                    this.handleSelectChat(this.state.selectedChat)
+                }
+            });
         }
     }
 
     async handleRemoveUserClicked(user) {
-        await removeUserFromGroupChat(user.id)
-        if (user.id !== mySelf.id) {
-            this.handleSelectChat(this.state.selectedChat)
-        } else {
-            this.handleChatButtonClicked();
-        }
+        const chat = await removeUserFromGroupChat(user.id);
+        this.setState({selectedChat: chat},() => {
+            if (user.id !== mySelf.id) {
+                this.handleSelectChat(this.state.selectedChat)
+            } else {
+                this.handleChatButtonClicked();
+            }
+        });
     }
 
     handleCloseChat() {
