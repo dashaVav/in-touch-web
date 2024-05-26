@@ -179,11 +179,11 @@ export async function editGroupChatPhoto(formData) {
 }
 
 export function logout() {
+    disconnectSocketSession();
     chatRepositoryClear();
     messageRepositoryClear();
     selfRepositoryClear();
-    userRepositoryClear()
-    disconnectSocketSession()
+    userRepositoryClear();
 }
 
 export function closeChat() {
