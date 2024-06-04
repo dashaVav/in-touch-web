@@ -14,7 +14,6 @@ import {
     getChatById,
     moveUpChat,
     newChatCreated,
-    removeChat,
     removeUserFromChat,
     searchChats,
     updateConnectStatusForUsersInChats
@@ -137,12 +136,11 @@ export async function acceptNewMessage(payload) {
         sendReadChatSignal(new ReadNotification(user.id, openedChat));
         notifyComponent("getNewMessage");
     } else {
-        if (message.author.id !== user.id) {
+        if (message.author !== null && message.author.id !== user.id) {
             chat.unreadCount = isNaN(chat.unreadCount) ? 1 : chat.unreadCount + 1;
         }
     }
     moveUpChat(chat);
-    // notifyComponent("updateChatList");
 }
 
 export async function acceptNewChat(payload) {
@@ -160,30 +158,22 @@ export async function editUserPhoto(file) {
 
 export async function addUserToGroupChat(userId) {
     return await addUserToChat(openedChat, userId);
-    // notifyComponent("updateChatInfo");
 }
 
 export async function removeUserFromGroupChat(userId) {
-    const chat = await removeUserFromChat(openedChat, userId);
-    if (userId === user.id) {
-        removeChat(openedChat);
-    } else {
-        // notifyComponent("updateChatInfo");
-    }
-    return chat;
+    return await removeUserFromChat(openedChat, userId);
 }
 
 export async function editGroupChatPhoto(formData) {
-    // notifyComponent("updateChatInfo");
     return await editPhoto(openedChat, formData);
 }
 
 export function logout() {
+    disconnectSocketSession();
     chatRepositoryClear();
     messageRepositoryClear();
     selfRepositoryClear();
-    userRepositoryClear()
-    disconnectSocketSession()
+    userRepositoryClear();
 }
 
 export function closeChat() {
