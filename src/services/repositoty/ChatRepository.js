@@ -11,6 +11,7 @@ import {
     removeUser
 } from "../api/ChatApi.js";
 import {uploadGroupChatPhoto} from "../api/FileApi.js";
+import {byUserName, processingSearchString} from "../utils/Search.js";
 
 let orderedChats = [];
 
@@ -28,7 +29,6 @@ export async function fetchChats() {
                 orderedChats[i].unreadCount = unreadMap.get(orderedChats[i].id);
             }
         }
-        console.log(orderedChats);
     }
     return orderedChats;
 }
@@ -68,23 +68,49 @@ function updateChat(chat) {
 export async function changeGroupNameInfo(chatId, changeGroupName1) {
     const chat = Chat.fromJSON(await changeGroupName(chatId, changeGroupName1));
     updateChat(chat);
+    return chat;
 }
 
 export async function addUserToChat(chatId, userId) {
     const chat = Chat.fromJSON(await addUser(chatId, userId));
     updateChat(chat);
+    return chat;
 }
 
 export async function removeUserFromChat(chatId, userId) {
     const chat = Chat.fromJSON(await removeUser(chatId, userId));
     updateChat(chat);
+    return chat;
 }
 
 export async function editPhoto(chatId, formData) {
     const chat = Chat.fromJSON(await (await uploadGroupChatPhoto(chatId, formData)).json());
     updateChat(chat);
+    return chat;
 }
 
 export function chatRepositoryClear() {
     orderedChats.length = 0;
+}
+
+export function updateConnectStatusForUsersInChats(userId, status) {
+    orderedChats.forEach(chat => {
+        chat.members.forEach(member => {
+            if (member.id === userId) {
+                member.isOnline = status;
+            }
+        });
+    });
+}
+
+export function searchChats(request) {
+    const processedString = processingSearchString(request);
+    return orderedChats.filter(chat => {
+        if (chat.isPrivate) {
+            const user = chat.members.filter(u => u.id !== myself.id)[0];
+            return byUserName(user, processedString);
+        } else {
+            return chat.group.name.toLowerCase().startsWith(processedString);
+        }
+    });
 }

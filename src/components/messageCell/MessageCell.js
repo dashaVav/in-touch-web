@@ -2,8 +2,13 @@ import './MessageCell.css'
 import {UserPhoto} from "../userPhoto/UserPhoto.js";
 import {user as mySelf} from "../../services/Model.js";
 import {baseUrlForFiles} from "../../services/utils/Handler.js";
+import {useEffect, useState} from "react";
 
 export const MessageCell = ({ message, style, styleContainer }) => {
+
+    const [scaledWidth, setScaledWidth] = useState(0);
+    const [scaledHeight, setScaledHeight] = useState(0);
+    const [imgSrc] = useState(baseUrlForFiles + message.attachmentId);
 
     function formatDate(dateString) {
         const date = new Date(dateString);
@@ -18,7 +23,7 @@ export const MessageCell = ({ message, style, styleContainer }) => {
             const minutes = date.getMinutes().toString().padStart(2, '0');
             formattedDate = `${hours}:${minutes}`;
         } else if (daysPassed < 7) {
-            formattedDate = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'][date.getDay()];
+            formattedDate = ['sun ', 'mon ', 'tue ', 'wed ', 'thu ', 'fri ', 'sat '][date.getDay()];
         } else {
             const day = date.getDate().toString().padStart(2, '0');
             const month = (date.getMonth() + 1).toString().padStart(2, '0');
@@ -28,8 +33,31 @@ export const MessageCell = ({ message, style, styleContainer }) => {
         return formattedDate;
     }
 
+    useEffect(() => {
+        if (message.attachmentId) {
+            const img = new Image();
+            img.src = baseUrlForFiles + message.attachmentId;
+
+            img.onload = () => {
+                const ratioX = 350 / img.width;
+                const ratioY = 300 / img.height;
+                const ratio = Math.min(ratioX, ratioY);
+
+                const newWidth = Math.round(img.width * ratio);
+                const newHeight = Math.round(img.height * ratio);
+
+                setScaledWidth(newWidth);
+                setScaledHeight(newHeight);
+            };
+
+            return () => {
+                // Очистка ресурсов, если необходимо
+            };
+
+        }}, [imgSrc]);
+
     const photo = (message.attachmentId) ?
-        <img src={baseUrlForFiles + message.attachmentId} alt="картинка" /> : null
+        <img src={imgSrc} alt="картинка" style={{ width: `${scaledWidth}px`, height: `${scaledHeight}px` }}/> : null
 
     return (
         <div className="message-cell" style={style}>

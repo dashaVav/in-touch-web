@@ -2,26 +2,37 @@ import {setToken} from "./utils/Handler.js"
 import {AuthRequest} from "./dto/AuthRequest.js";
 import {AuthResponse} from "./dto/AuthResponse.js";
 import {Message} from "./dto/Message.js";
-import {connect, sendReadChatSignal} from "./api/StopmSession.js";
+import {connect, disconnectSocketSession, sendReadChatSignal} from "./api/StopmSession.js";
 import {
     addUserToChat,
-    changeGroupNameInfo, chatRepositoryClear,
+    changeGroupNameInfo,
+    chatRepositoryClear,
     createGroupChat,
-    createNewDialog, editPhoto,
+    createNewDialog,
+    editPhoto,
     fetchChats,
     getChatById,
     moveUpChat,
-    newChatCreated, removeUserFromChat
+    newChatCreated,
+    removeUserFromChat,
+    searchChats,
+    updateConnectStatusForUsersInChats
 } from "./repositoty/ChatRepository.js";
 import {
     changeUserInform,
     changeUserPassword,
-    changeUserProfileProto, selfRepositoryClear,
+    changeUserProfileProto,
+    selfRepositoryClear,
     setCompany,
     setMyself
 } from "./repositoty/SelfRepository.js";
 import {auth} from "./api/AuthApi.js";
-import {getAllUsers, userRepositoryClear} from "./repositoty/UsersRepository.js";
+import {
+    getAllUsers,
+    searchUsers,
+    updateConnectStatusForUsers,
+    userRepositoryClear
+} from "./repositoty/UsersRepository.js";
 import {
     acceptNewMessageFromOtherUser,
     getMessagesOfChat,
@@ -31,17 +42,18 @@ import {
 import {Chat} from "./dto/Chat.js";
 import {ReadNotification} from "./dto/ReadNotification.js";
 import {uploadFile} from "./api/FileApi.js";
+import {ConnectEvent} from "./dto/ConnectEvent.js";
 
 export var user;
 export var company;
-export var allUsers;
-export var allChats;
+export var allUsers = [];
+export var allChats = [];
 export var openedChat;
 export var openedChatMessages = [];
 
 export function setAllChats(chats) {
     allChats = chats;
-    notifyComponent("getNewMessage");
+    notifyComponent("updateChatList");
 }
 
 export async function login(login, password) {
@@ -56,9 +68,8 @@ export async function login(login, password) {
     setMyself(user);
     setCompany(company);
 
-
-    await chats();
-    await users();
+    chats();
+    users();
 }
 
 export async function users() {
@@ -87,7 +98,11 @@ export async function createNewGroupChat(groupRequest) {
 }
 
 export async function editGroupChatName(chatId, changeGroupName) {
-    await changeGroupNameInfo(chatId, changeGroupName)
+    const chat = await changeGroupNameInfo(chatId, changeGroupName);
+    console.log("CHANGING INFO")
+    notifyComponent("getNewMessage");
+    // notifyComponent("updateChatInfo");
+    return chat;
 }
 
 export async function changeUserInfo(newUser) {
@@ -99,7 +114,7 @@ export async function changePassword(changePasswordRequest) {
     return await changeUserPassword(changePasswordRequest);
 }
 
-export async function sendMessage(text, file) {
+export async function sendMessage(openedChat, text, file) {
     let fileId;
     if (file !== undefined) {
         fileId = await (await uploadFile(file)).text();
@@ -115,16 +130,17 @@ function notifyComponent(typeName) {
 export async function acceptNewMessage(payload) {
     const message = Message.fromJson(payloadToJson(payload));
     getChatById(message.chatId).lastMessage = message;
+    await acceptNewMessageFromOtherUser(message);
+    const chat = getChatById(message.chatId);
     if (message.chatId === openedChat) {
-        await acceptNewMessageFromOtherUser(message);
-        openedChatMessages.push(message);
-        moveUpChat(getChatById(message.chatId));
+        sendReadChatSignal(new ReadNotification(user.id, openedChat));
+        notifyComponent("getNewMessage");
     } else {
-        const chat = getChatById(message.chatId);
-        chat.unreadCount = isNaN(chat.unreadCount) ? 1 : chat.unreadCount + 1;
-        moveUpChat(chat);
+        if (message.author !== null && message.author.id !== user.id) {
+            chat.unreadCount = isNaN(chat.unreadCount) ? 1 : chat.unreadCount + 1;
+        }
     }
-    notifyComponent("getNewMessage");
+    moveUpChat(chat);
 }
 
 export async function acceptNewChat(payload) {
@@ -137,25 +153,55 @@ export function payloadToJson(payload) {
 }
 
 export async function editUserPhoto(file) {
-    await changeUserProfileProto(file);
+    user = await changeUserProfileProto(file);
 }
 
 export async function addUserToGroupChat(userId) {
-    await addUserToChat(openedChat, userId);
+    return await addUserToChat(openedChat, userId);
 }
 
 export async function removeUserFromGroupChat(userId) {
-    await removeUserFromChat(openedChat, userId);
+    return await removeUserFromChat(openedChat, userId);
 }
 
 export async function editGroupChatPhoto(formData) {
-    await editPhoto(openedChat, formData);
-    notifyComponent("getNewMessage");
+    return await editPhoto(openedChat, formData);
 }
 
 export function logout() {
+    disconnectSocketSession();
     chatRepositoryClear();
     messageRepositoryClear();
     selfRepositoryClear();
-    userRepositoryClear()
+    userRepositoryClear();
+}
+
+export function closeChat() {
+    openedChat = undefined;
+}
+
+export function acceptNewConnectionEvent(payload) {
+    const newConnect = ConnectEvent.fromJson(payloadToJson(payload));
+    updateConnectStatusForUsersInChats(newConnect.userId, newConnect.connect);
+    notifyComponent("updateChatList");
+    updateConnectStatusForUsers(newConnect.userId, newConnect.connect);
+    notifyComponent("updateUserList");
+}
+
+export async function searchUsersAtViewAllUsers(request) {
+    if (request === "" || request === null) {
+        await users();
+    } else {
+        allUsers = searchUsers(request);
+    }
+    notifyComponent("updateUserList");
+}
+
+export async function searchChatsAtViewAllChats(request) {
+    if (request === "" || request === null) {
+        await chats();
+    } else {
+        allChats = searchChats(request);
+    }
+    notifyComponent("updateChatList");
 }

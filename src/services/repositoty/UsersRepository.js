@@ -1,6 +1,7 @@
 import {User} from "../dto/User.js";
 import {myCompany, myself} from "./SelfRepository.js";
 import {fetchAllUsersOfCompany} from "../api/UsersApi.js";
+import {byUserName, processingSearchString} from "../utils/Search.js";
 
 let allUsers = [];
 
@@ -16,5 +17,14 @@ export function userRepositoryClear() {
     allUsers.length = 0;
 }
 
+export function updateConnectStatusForUsers(userId, status) {
+    allUsers.forEach(user => {
+        if (user.id === userId) {
+            user.isOnline = status;
+        }
+    });
+}
 
-
+export function searchUsers(request) {
+    return allUsers.filter(user => byUserName(user, processingSearchString(request)));
+}

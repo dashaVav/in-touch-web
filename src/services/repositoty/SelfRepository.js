@@ -16,9 +16,8 @@ export function setCompany(company) {
 }
 
 export async function changeUserInform(newUser) {
-    const newMyself = User.fromJson(await changeUserInfo(myself.id, newUser));
-    setMyself(newMyself);
-    return newMyself;
+    myself = User.fromJson(await changeUserInfo(myself.id, newUser));
+    return myself;
 }
 
 export async function changeUserPassword(changePasswordRequest) {
@@ -31,7 +30,8 @@ export async function changeUserPassword(changePasswordRequest) {
 }
 
 export async function changeUserProfileProto(formData) {
-    await uploadUserProfilePhoto(formData);
+    myself = User.fromJson(await (await uploadUserProfilePhoto(formData)).json());
+    return myself;
 }
 
 export function selfRepositoryClear() {

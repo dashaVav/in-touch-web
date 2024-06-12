@@ -19,7 +19,7 @@ export class ChatInfoLayout extends Component {
     }
 
     force() {
-        this.forceUpdate()
+        console.log("sfs");
     }
 
     render() {

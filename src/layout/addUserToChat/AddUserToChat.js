@@ -8,14 +8,34 @@ import {UserCell} from "../../components/userCell/UserCell.js";
 
 export class AddUserToChat extends Component {
 
+    constructor(props) {
+        super(props);
+        this.state = {
+            userList: allUsers
+        };
+    }
+
+    componentDidMount() {
+        window.addEventListener('updateUserList', this.handleUserListChanged);
+    }
+
+    componentWillUnmount() {
+        window.removeEventListener('updateUserList', this.handleUserListChanged);
+    }
+
+    handleUserListChanged = () => {
+        this.setState({userList: allUsers})
+        this.forceUpdate()
+    }
+
     render() {
         const selectedChat = this.props.selectedChat;
-
+        const selectedChatMembers = selectedChat.members.map(user => user.id);
         const usersCells = [];
 
         for (let i = 0; i < allUsers.length; i++) {
             const user = allUsers[i];
-            if (!selectedChat.members.includes(user)) {
+            if (!selectedChatMembers.includes(user.id)) {
                 usersCells.push(
                     <UserCell key={user.id} user={user} onClicked={() => this.props.onUserClicked(user)}/>
                 );

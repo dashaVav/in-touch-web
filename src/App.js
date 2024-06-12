@@ -1,22 +1,34 @@
 import MainLayout from "./layout/mainLayout/MainLayout.js";
 import './assets/App.css';
 import {LoginLayout} from "./layout/loginLayout/LoginLayout.js";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {MessengerLayout} from "./layout/messengerLayout/MessengerLayout.js";
+import {logout} from "./services/Model.js";
 
 function App() {
-    // State для хранения состояния вошел ли пользователь в систему или нет
     const [loggedIn, setLoggedIn] = useState(false);
 
-    // Обработчик события входа в систему
     const handleLogin = () => {
         setLoggedIn(true);
     };
 
-    // Обработчик события выхода в систему
     const handleLogout = () => {
         setLoggedIn(false);
     }
+
+    useEffect(() => {
+        const handleBeforeUnload = (event) => {
+            console.log('Пользователь покидает страницу');
+            event.returnValue = '';
+            logout();
+        };
+
+        window.addEventListener('beforeunload', handleBeforeUnload);
+
+        return () => {
+            window.removeEventListener('beforeunload', handleBeforeUnload);
+        };
+    }, []);
 
     return (
         <div className="app-main-pane">

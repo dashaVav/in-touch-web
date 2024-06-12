@@ -6,7 +6,7 @@ import phoneIcon from "../../assets/phone-icon.svg"
 import birthdayIcon from "../../assets/birthday-icon.svg"
 import companyIcon from "../../assets/company-icon.svg"
 import CustomButton from "../../components/button/CustomButton.js";
-import {user as mySelf} from "../../services/Model.js";
+import {company, user as mySelf} from "../../services/Model.js";
 import backIcon from "../../assets/back-icon.svg";
 import IconButton from "../../components/iconButton/IconButton.js";
 
@@ -62,6 +62,7 @@ export class ProfileLayout extends Component {
                         {backButton}
                         <div className="photo">
                             <UserPhoto className="photo" text={selectedUser.getInitials()} size={120} thumbnailPhotoId={selectedUser.thumbnailPhotoId}/>
+                            <div className="profile-circle" style={(selectedUser.isOnline) ? {backgroundColor: "#3E46FF"} : {backgroundColor: "transparent"}}></div>
                         </div>
                         <div className="username-data">
                             <div className="name-text-container">
@@ -73,7 +74,7 @@ export class ProfileLayout extends Component {
                             <div className="tags-container">
                                 <CustomTag icon={phoneIcon} text={selectedUser.phoneNumber != null ? selectedUser.phoneNumber : "no data"}/>
                                 <CustomTag icon={birthdayIcon} text={selectedUser.dateOfBirth != null ? this.formatDate(selectedUser.dateOfBirth) : "no data"}/>
-                                <CustomTag icon={companyIcon} text={"In Touch"}/>
+                                <CustomTag icon={companyIcon} text={company.name.toString()}/>
                             </div>
                             <div className="change-result">
                                 <text className={

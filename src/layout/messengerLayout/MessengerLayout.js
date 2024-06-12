@@ -9,10 +9,12 @@ import logoutIcon from "../../assets/logout-icon.svg"
 import "./MessengerLayout.css"
 import {ProfileLayout} from "../profileLayout/ProfileLayout.js";
 import {
+    addUserToGroupChat,
     allUsers,
     changePassword,
     changeUserInfo,
     chats,
+    closeChat,
     createDialogFromAllUsers,
     createNewGroupChat,
     editGroupChatName,
@@ -31,7 +33,6 @@ import {ChangePasswordLayout} from "../changePasswordLayout/ChangePasswordLayout
 import {CreateChatLayout} from "../createChatLayout/CreateChatLayout.js";
 import {EditGroupLayout} from "../editGroupLayout/EditGroupLayout.js";
 import {AddUserToChat} from "../addUserToChat/AddUserToChat.js";
-import {addUserToChat} from "../../services/repositoty/ChatRepository.js";
 
 /**
  * Класс отвечающий за представления главного и самого первого экрана приложения
@@ -131,8 +132,10 @@ export class MessengerLayout extends Component {
     }
 
     async handleAddUserToChat(user) {
-        await addUserToChat(this.state.selectedChat.id, user.id);
-        this.setState({currentLayout: 'open chat'});
+        const chat = await addUserToGroupChat(user.id);
+        this.setState({selectedChat: chat},() => {
+            this.setState({currentLayout: 'open chat'});
+        });
     }
 
     async updateUser(user, photo) {
@@ -185,32 +188,39 @@ export class MessengerLayout extends Component {
         if (data) {
             const chat = await createNewGroupChat(data);
             this.handleSelectChat(chat);
-            console.log("Создание новгого чата!!!", data);
+            console.log("Создание нового чата!!!", data);
         }
     }
 
     async handleEditGroupInformation(data) {
         if (data) {
-            console.log(data[0], data[1]);
-            await editGroupChatName(data[0], data[1]);
-            if (data[2].has("file")) {
-                await editGroupChatPhoto(data[2]);
-            }
-            this.handleSelectChat(this.state.selectedChat)
+            const chat = await editGroupChatName(data[0], data[1]);
+            this.setState({selectedChat: chat},async () => {
+                if (data[2].has("file")) {
+                    const chat1 = await editGroupChatPhoto(data[2]);
+                    this.setState({selectedChat: chat1},() => {
+                        this.handleSelectChat(this.state.selectedChat)
+                    });
+                } else {
+                    this.handleSelectChat(this.state.selectedChat)
+                }
+            });
         }
     }
 
     async handleRemoveUserClicked(user) {
-        await removeUserFromGroupChat(user.id)
-        if (user.id !== mySelf.id) {
-            this.handleSelectChat(this.state.selectedChat)
-        }
-        else {
-            this.handleChatButtonClicked();
-        }
+        const chat = await removeUserFromGroupChat(user.id);
+        this.setState({selectedChat: chat},() => {
+            if (user.id !== mySelf.id) {
+                this.handleSelectChat(this.state.selectedChat)
+            } else {
+                this.handleChatButtonClicked();
+            }
+        });
     }
 
     handleCloseChat() {
+        closeChat();
         // Чат, который надо закрыть: this.state.selectedChat (этот стэйт наверное лучше не очищать, не уверен)
     }
 
@@ -227,10 +237,10 @@ export class MessengerLayout extends Component {
                 <div className="buttons-container">
                     <SimpleButton buttonText="My profile" logoUrl={profileIcon}
                                   onClick={() => this.handleProfileButtonClicked(mySelf, "menu")}/>
-                    <SimpleButton buttonText="View my chats" logoUrl={chatIcon} onClick={this.handleChatButtonClicked}/>
-                    <SimpleButton buttonText="Create new chat" logoUrl={newChatIcon}
+                    <SimpleButton buttonText="Messages" logoUrl={chatIcon} onClick={this.handleChatButtonClicked}/>
+                    <SimpleButton buttonText="New group" logoUrl={newChatIcon}
                                   onClick={this.handleNewChatButtonClicked}/>
-                    <SimpleButton buttonText="View all users" logoUrl={userIcon}
+                    <SimpleButton buttonText="Colleagues" logoUrl={userIcon}
                                   onClick={this.handleUserButtonClicked}/>
                     <SimpleButton buttonText="Logout" logoUrl={logoutIcon} onClick={this.handleLogoutButtonClicked}/>
                 </div>

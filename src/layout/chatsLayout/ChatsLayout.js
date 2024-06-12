@@ -2,7 +2,7 @@ import React, {Component} from "react";
 import {ChatCell} from "../../components/chatCell/ChatCell.js";
 import './ChatsLayout.css'
 import icon from "../../assets/search-icon.svg"
-import {allChats} from "../../services/Model.js";
+import {allChats, searchChatsAtViewAllChats} from "../../services/Model.js";
 
 export class ChatsLayout extends Component {
     constructor(props) {
@@ -14,14 +14,17 @@ export class ChatsLayout extends Component {
         this.handleSearchChange = this.handleSearchChange.bind(this);
     }
 
-    handleSearchChange(event) {
-        this.setState({ searchValue: event.target.value });
-        console.log(this.state.searchValue)
+    async handleSearchChange(event) {
+        this.setState({searchValue: event.target.value}, () => {
+            searchChatsAtViewAllChats(this.state.searchValue.toString());
+        });
     }
 
     componentDidMount() {
         window.addEventListener('getNewMessage', this.handleUserChatChanged);
         window.addEventListener('updateChatList', this.handleUserChatChanged);
+
+        searchChatsAtViewAllChats("");
     }
 
     componentWillUnmount() {
@@ -34,7 +37,7 @@ export class ChatsLayout extends Component {
     }
 
     render() {
-        const {chatList} = this.state;
+        const chatList = allChats;
         const chatCells = [];
 
         for (let i = 0; i < chatList.length; i++) {

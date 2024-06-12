@@ -5,8 +5,8 @@ import {myself} from "./SelfRepository.js";
 const messagesByChatId = new Map();
 
 export async function acceptNewMessageFromOtherUser(message) {
-    if (messagesByChatId.has(message.id)) {
-        messagesByChatId.get(message.id).push(message);
+    if (messagesByChatId.has(message.chatId)) {
+        messagesByChatId.get(message.chatId).push(message);
     } else {
         await getMessagesOfChat(message.chatId);
     }
